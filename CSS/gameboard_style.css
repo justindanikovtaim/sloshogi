@@ -1,0 +1,49 @@
+
+
+#wholeBoard{
+display: block;
+width: 98vw;
+height: 135vw; 
+max-height: 100vh;
+right: 1vw;
+position: absolute;
+/*background-color: rgba(207, 175, 119, 0.979);
+/*background-image: url("../images/wood1.jpg"); */
+background-size:inherit;
+overflow: auto;
+}
+
+#board, #whiteMochigoma, #blackMochigoma{
+    display: inherit;
+}
+
+#whiteMochigoma{
+    margin-left: 13vw;
+    margin-top: 2vw;
+    margin-bottom: 1vw;
+    height: 9vw;
+    width: 70vw;
+    border-style: double;
+}
+
+#blackMochigoma{
+    margin-left: 13vw;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    height: 9vw;
+    width: 70vw;
+    border-style: double;
+}
+
+#board{
+    height: 90.2vw;
+    width: 90.2vw;
+    border-style: outset;
+    border-color: rgba(255, 228, 181, 0.589);
+    margin-left: 2.4vw;
+}
+#submitmovebutton{
+    position: absolute;
+    top: 120vw;
+    left: 45vw;
+}

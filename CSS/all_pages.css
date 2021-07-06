@@ -1,0 +1,7 @@
+@font-face {
+font-family: "8Bit";
+src: url("../fonts/misaki-gothic.ttf");
+}
+html{
+    font-family: "8Bit";
+}
