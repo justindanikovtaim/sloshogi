@@ -32,4 +32,5 @@
         <br>
         <button type = "submit">ログイン/Login</button>
     </form>
+    bgcolor="#f0e68c"
 </body>
