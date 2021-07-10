@@ -19,7 +19,7 @@
 
 </head>
 
-<body>
+<body bgcolor="#f0e68c">
 
     <h1>SLO 将棋</h1>
     <br>
@@ -32,5 +32,4 @@
         <br>
         <button type = "submit">ログイン/Login</button>
     </form>
-    bgcolor="#f0e68c"
 </body>
