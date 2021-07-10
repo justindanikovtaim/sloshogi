@@ -5,3 +5,7 @@ src: url("../fonts/misaki-gothic.ttf");
 html{
     font-family: "8Bit";
 }
+
+h1 {
+  font-size:3.0em;
+}
