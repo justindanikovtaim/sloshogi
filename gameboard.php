@@ -18,7 +18,7 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
 
 </head>
 
-<body>
+<body bgcolor="#f0e68c">
 
     <div id = wholeBoard>
     <div id = "whiteMochigoma"></div>
