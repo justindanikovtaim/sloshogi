@@ -21,7 +21,7 @@
 
 <body bgcolor="#f0e68c">
 
-    <h1>SLO 将棋</h1>
+    <h1>SLO 将棋-Shogi-</h1>
     <br>
     <form action = "verify_login.php" method ="post">
         <label for="username"><b>ユーザー名/Username</b></label>
