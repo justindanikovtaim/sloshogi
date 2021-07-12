@@ -1,0 +1,31 @@
+<?php
+session_start();
+
+$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+$getGameId = mysqli_query($link, "SELECT id FROM gamerecord WHERE  
+             blackplayer = '".$_COOKIE['current_user_cookie'] ."' OR whiteplayer = '".$_COOKIE['current_user_cookie'] ."'" );
+$gameidkenchris = mysqli_fetch_array($getGameId, MYSQLI_NUM);
+?>
+<!DOCTYPE HTML>
+<head>
+    <script>
+        function submitPostLink(){
+            document.postlink.submit();
+        }
+        function submitTestPostLink(){
+            document.testpostlink.submit();
+
+        }
+    </script>
+    <link href="CSS/all_pages.css" rel="stylesheet">
+ </head>
+ <body bgcolor="#f0e68c">
+<h1><?php echo $_COOKIE['current_user_cookie']."'s";?> Friends List</h1>
+<br>
+<h3>List</h3>
+<br>
+<br>
+<h3>Game Start</h3>
+<br>
+
+    </body>
