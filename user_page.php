@@ -28,23 +28,27 @@ $gameidkenchris = mysqli_fetch_array($getGameId, MYSQLI_NUM);
 </form>
 <a href=# onclick="submitPostLink()">Ken vs. Cru</a> 
 <br>
-<h3>Friends</h3>
+</form>
+<a href=# onclick="submitTestPostLink()">TEST GAME</a> 
+<br>
+     <h3>Friends</h3>
 <br>
 <form action="gameboard.php" name = "postlink" method = "post">
 <input type="hidden" name = "pdata" value = "<?php echo $gameidkenchris[0]; ?>">
 </form>
-<a href=# onclick="submitPostLink()">Ken vs. Cru</a> 
+<a href=# onclick="submitPostLink()">Friends List</a> 
+<br>
+</form>
+<a href=# onclick="submitPostLink()">Friend Request</a> 
+<br>
+</form>
+<a href=# onclick="submitPostLink()">Add new Friends</a> 
 <br>
 <form action="gameboard.php" name = "postlink" method = "post">
 <input type="hidden" name = "pdata" value = "<?php echo $gameidkenchris[0]; ?>">
-</form>
-<a href=# onclick="submitPostLink()">Ken vs. Cru</a> 
-
 
 <form action="gameboard.php" name = "testpostlink" method = "post">
 <input type="hidden" name = "pdata" value = "2">
-</form>
-<a href=# onclick="submitTestPostLink()">TEST GAME</a> 
 <!-- the above will need to be re-written with Javascript -->
 <br>
     </body>
