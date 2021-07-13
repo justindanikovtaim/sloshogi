@@ -19,7 +19,7 @@
 
 </head>
 
-<body bgcolor="#f0e68c">
+<body>
 
     <h1>SLO 将棋-Shogi-</h1>
     <br>
