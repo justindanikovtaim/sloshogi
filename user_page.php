@@ -18,7 +18,7 @@ $gameidkenchris = mysqli_fetch_array($getGameId, MYSQLI_NUM);
     </script>
     <link href="CSS/all_pages.css" rel="stylesheet">
  </head>
- <body bgcolor="#f0e68c">
+ <body>
 <h1><?php echo $_COOKIE['current_user_cookie']."'s";?> Page</h1>
 <br>
 <h3>Current Games</h3>
