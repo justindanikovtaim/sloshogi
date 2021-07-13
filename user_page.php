@@ -21,6 +21,7 @@ $gameidkenchris = mysqli_fetch_array($getGameId, MYSQLI_NUM);
  <body>
 <h1><?php echo $_COOKIE['current_user_cookie']."'s";?> Page</h1>
 <br>
+<div class="user">
 <h3>Current Games</h3>
 <br>
 <form action="gameboard.php" name = "postlink" method = "post">
@@ -30,8 +31,11 @@ $gameidkenchris = mysqli_fetch_array($getGameId, MYSQLI_NUM);
 <br>
 </form>
 <a href=# onclick="submitTestPostLink()">TEST GAME</a> 
+     </div>
 <br>
-     <h3>Friends</h3>
+
+<div class="user">
+<h3>Friends</h3>
 <br>
 <form action="gameboard.php" name = "postlink" method = "post">
 <input type="hidden" name = "pdata" value = "<?php echo $gameidkenchris[0]; ?>">
@@ -44,6 +48,8 @@ $gameidkenchris = mysqli_fetch_array($getGameId, MYSQLI_NUM);
 </form>
 <a href=# onclick="submitPostLink()">Add new Friends</a> 
 <br>
+</div>
+
 <form action="gameboard.php" name = "postlink" method = "post">
 <input type="hidden" name = "pdata" value = "<?php echo $gameidkenchris[0]; ?>">
 
