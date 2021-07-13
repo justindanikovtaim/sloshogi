@@ -13,3 +13,11 @@ h1 {
 body{
   background-color:#CCCC99;
 }
+
+.user{
+  width:200px; 
+  height:150px;
+  margin:5px; 
+  padding:10px; 
+  border:1px solid black;
+}
