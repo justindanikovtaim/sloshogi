@@ -3,58 +3,39 @@ session_start();
 
 $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
 $getGameId = mysqli_query($link, "SELECT id FROM gamerecord WHERE  blackplayer = '".$_COOKIE['current_user_cookie'] ."' OR whiteplayer = '".$_COOKIE['current_user_cookie'] ."'" );
-$gameidkenchris = mysqli_fetch_array($getGameId, MYSQLI_NUM);
+$gameIdArray =  [];
+while($row = mysqli_fetch_array($getGameId)){
+    array_push($gameIdArray, $row['id']);//add each gameid related to the user to an array
+}
 ?>
+
 <!DOCTYPE HTML>
 <head>
     <script>
-        function submitPostLink(){
-            document.postlink.submit();
-        }
-        function submitTestPostLink(){
-            document.testpostlink.submit();
-
-        }
+        var gameIdArray = <?php echo json_encode($gameIdArray) ; ?>;
     </script>
     <link href="CSS/all_pages.css" rel="stylesheet">
  </head>
  <body>
 <h1><?php echo $_COOKIE['current_user_cookie']."'s";?> Page</h1>
 <br>
-<div class="user">
+<!--<a  href = "join_game.html.php">Find an Open Game</a>
+<br> -->
+<a href = "new_challenge.html.php">Challenge a Friend</a>
+<br>
+<!--<a href = "create_open_game.html.php">Create a New Open Game</a>
+<br>-->
+
+<div class="user"> 
 <h3>Current Games</h3>
 <br>
-<form action="gameboard.php" name = "postlink" method = "post">
-<input type="hidden" name = "pdata" value = "<?php echo $gameidkenchris[0]; ?>">
-</form>
-<a href=# onclick="submitPostLink()">Ken vs. Cru</a> 
-<br>
-</form>
-<a href=# onclick="submitTestPostLink()">TEST GAME</a> 
-     </div>
-<br>
+
+<div id = "allGames"></div>
+</div>
 
 <div class="user">
 <h3>Friends</h3>
-<br>
-<form action="gameboard.php" name = "postlink" method = "post">
-<input type="hidden" name = "pdata" value = "<?php echo $gameidkenchris[0]; ?>">
-</form>
-<a href=# onclick="submitPostLink()">Friends List</a> 
-<br>
-</form>
-<a href=# onclick="submitPostLink()">Friend Request</a> 
-<br>
-</form>
-<a href=# onclick="submitPostLink()">Add new Friends</a> 
-<br>
 </div>
 
-<form action="gameboard.php" name = "postlink" method = "post">
-<input type="hidden" name = "pdata" value = "<?php echo $gameidkenchris[0]; ?>">
-
-<form action="gameboard.php" name = "testpostlink" method = "post">
-<input type="hidden" name = "pdata" value = "2">
-<!-- the above will need to be re-written with Javascript -->
-<br>
     </body>
+    <script src = "scripts/get_games.js"></script>
