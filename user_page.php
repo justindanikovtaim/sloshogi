@@ -7,6 +7,9 @@ $gameIdArray =  [];
 while($row = mysqli_fetch_array($getGameId)){
     array_push($gameIdArray, $row['id']);//add each gameid related to the user to an array
 }
+
+$getUserInfo = mysqli_query($link, "SELECT * FROM users WHERE username = '".$_COOKIE['current_user_cookie']."'");
+$userInfoArray = mysqli_fetch_array($getUserInfo);
 ?>
 
 <!DOCTYPE HTML>
@@ -19,6 +22,9 @@ while($row = mysqli_fetch_array($getGameId)){
  <body>
 <h1><?php echo $_COOKIE['current_user_cookie']."'s";?> Page</h1>
 <br>
+<h2>段級: <?=$userInfoArray['rating']?></h2>
+<h2>勝敗レコード: <?=$userInfoArray['record']?> </h2>
+
 <!--<a  href = "join_game.html.php">Find an Open Game</a>
 <br> -->
 <a href = "new_challenge.html.php">Challenge a Friend</a>
