@@ -276,9 +276,13 @@ function resetGame(){
         console.log('Error: ' + ajax.status); // An error occurred during the request.
     }
   }
+  let json = JSON.stringify({
+    id: currentGameID,
+  });
+console.log(json);
     ajax.open("POST", 'reset.php', true); //asyncronous
-    //ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-    ajax.send("gameToReset = "+ currentGameId);//(sendToDatabase);
+    ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+    ajax.send(json);//(sendToDatabase);
 }
 loadGameState();
 }
@@ -373,7 +377,7 @@ function pieceClick(id) {
    if(!usersTurn){
        deselectAll();
    } else if ((((turn % 2 == 0) && gameState[id].charAt(0) != "W") || ((turn % 2 !== 0) && gameState[id].charAt(0) != "B")) &&
-        justChecking === false && (selectedPiece != null && boardSquare[id].style.background.substr(0,7) != "rgb(226")) {
+        justChecking === false && boardSquare[id].style.background.substr(0,7) != "rgb(226"){
         deselectAll();
         //do nothing
     } else {
@@ -1088,8 +1092,7 @@ function showMoveGYOKU(square, color) {
 }
 
 function movePiece(id) {
-
-
+    gameState[82] = gameState[id];//a temporary placeholder for the clicked place
     if (selectedPiece < 81) { //if it's other than the mochigoma
         //see if piece can promote
         if ((gameState[selectedPiece].charAt(1) !== "N") && //if the piece isn't already promoted (the second letter isn't N)
@@ -1113,7 +1116,7 @@ function movePiece(id) {
     if(turn === 1){
         //on the first turn, we don't want to start by sending a comma in the data
         sendToDatabase = JSON.stringify({"newmoves": selectedPiece.toString() + "," 
-            + id.toString() + "," + gameState[selectedPiece] });//make the move into JSON object
+            + id.toString() + "," + gameState[selectedPiece], "gameId": currentGameID });//make the move into JSON object
     }else{
         //otherwise, check if it is white and flip the move if it is
         let moveFromSend;
@@ -1131,9 +1134,10 @@ function movePiece(id) {
         }
         //also, start by sending a comma to separate the move from the last one stored
         sendToDatabase = JSON.stringify({"newmoves": "," + moveFromSend.toString() + "," 
-        + moveToSend.toString() + "," + gameState[selectedPiece] });//make the move into JSON object
+        + moveToSend.toString() + "," + gameState[selectedPiece], "gameId": currentGameID });//make the move into JSON object
     }
     
+        
     gameState[id] = gameState[selectedPiece]; //move the piece to the new square
     gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
     
@@ -1167,6 +1171,14 @@ function movePiece(id) {
 
 }
 
+function disableAll(){
+    for(i=0; i<81; i++){
+        boardSquare[i].setAttribute("onClick", null);
+    }
+    for(x = 0; x<14; x ++){
+        mochiGoma[x].setAttribute("onClick", null);
+    }
+}
 function promotePiece() {
     if (gameState[selectedPiece].charAt(1) !== "N" && //if the piece is not promoted yet
         gameState[selectedPiece].substr(1, 3) !== "KIN" &&
@@ -1193,7 +1205,6 @@ function deselectAll() {
     move = [];
     isCheck = null;
     checkingPieces = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    sendToDatabase = null;
 }
 
 function placePiece(piece) {
@@ -1288,6 +1299,51 @@ function placePiece(piece) {
         }
 }
 
+}
+function removeMG(gamePiece){
+    let gamePieceColor;
+    if (gamePiece.charAt(1) === "N") {//if it's a promoted piece
+        gamePiece = gamePiece.replace("N", ""); //remove the N
+    }
+    if (gamePiece.charAt(0) === "B") {
+        gamePieceColor = 0;
+    } else {
+        gamePieceColor = 7; //if it's a white piece, start at the 7th array spot
+    }
+    switch (gamePiece.substr(1, gamePiece.length)) { // return the piece name minus thethe color 
+
+        case "F":
+            mochiGomaArray[0 + gamePieceColor] -= 1; //add a fu to the fu place
+            break;
+
+        case "KO":
+            mochiGomaArray[1 + gamePieceColor] -= 1;//add a ko to the ko place
+            break;
+
+        case "KEI":
+            mochiGomaArray[2 + gamePieceColor] -= 1;//add a kei to the kei place
+            break;
+
+        case "GIN":
+            mochiGomaArray[3 + gamePieceColor] -= 1;//add a gin to the gin place
+            break;
+
+        case "KIN":
+            mochiGomaArray[4 + gamePieceColor] -= 1;//add a kin to the kin place
+            break;
+
+        case "KAKU":
+            mochiGomaArray[5 + gamePieceColor] -= 1;//add a kaku to the kaku place
+            break;
+
+        case "HI":
+            mochiGomaArray[6 + gamePieceColor] -= 1;//add a hi to the hi place
+            break;
+        default:
+            console.log("piece name is incorrect");
+            break;
+
+    } 
 }
 
 // 15   8    9     
@@ -1996,5 +2052,5 @@ function checkForMate(color) {
 }
 
 function disableSubmit(){
-    document.getElementById("submitmovebutton").disabled = true;
+    document.getElementById("submitmovebutton").style.visibility = "hidden";
 }
