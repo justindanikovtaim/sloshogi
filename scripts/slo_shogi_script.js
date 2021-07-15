@@ -1134,16 +1134,32 @@ function movePiece(id) {
         + moveToSend.toString() + "," + gameState[selectedPiece] });//make the move into JSON object
     }
     
-        
     gameState[id] = gameState[selectedPiece]; //move the piece to the new square
     gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
-    deselectAll();
-    selectedPiece = null;
-    drawBoard();
+    
 
+    drawBoard();     
+    
     drawMochigoma();
+    setTimeout(function(){if(confirm("Confirm Move?")){ //timeout ensures that piece will be moved before popup displays
     turn++; //increase the turn counter
+        //send move to database
+        sendMoveData();
+    disableAll();
+    }else{
+        gameState[selectedPiece] = gameState[id];
+        gameState[id] = gameState[82];
+        drawBoard();
+        if(gameState[82].charAt(0) !== "e"){
+            removeMG()
+        }
+        drawMochigoma();
+    }
+    selectedPiece = null;
+    deselectAll();
+},100);
 
+    
     // console.log(checkForCheck("B"));
     // console.log(checkForMate("B"));
     //  console.log(checkForCheck("W"));
