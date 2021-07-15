@@ -278,7 +278,7 @@ function resetGame(){
   }
     ajax.open("POST", 'reset.php', true); //asyncronous
     //ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-    ajax.send();//(sendToDatabase);
+    ajax.send("gameToReset = "+ currentGameId);//(sendToDatabase);
 }
 loadGameState();
 }
@@ -1177,6 +1177,7 @@ function deselectAll() {
     move = [];
     isCheck = null;
     checkingPieces = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    sendToDatabase = null;
 }
 
 function placePiece(piece) {

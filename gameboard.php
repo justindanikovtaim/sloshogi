@@ -1,6 +1,6 @@
 <?php 
 session_start();
-$gameID = $_POST['pdata'];
+$gameID = $_GET['id'];
 echo $gameID;
 $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
@@ -25,10 +25,8 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
     <div id = "board"></div>
     <div id = "blackMochigoma"></div>
     </div>
-    <input type = "submit", id = "submitmovebutton", value = "submit move", onclick = "sendMoveData(), disableSubmit()">
-    <input type = "submit", value = "reset game", id = "resetbutton", onclick = "resetGame()">
  <h3 id = "playerPrompt"></h3>   
-<a href="user_page.php" id = "toUserPage">Back to User Page</a> 
+<a href="user_page.php"> <img src = "images/return.png"  id = "toUserPage"> </a>
 
 </body>
 
@@ -39,6 +37,7 @@ array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"]);
  ?>
  
  <script>
+ var currentGameID = <?php echo $gameID;?>;
    var gameHistory = <?php echo json_encode($temparray) ; ?>;
    var phpColor = "<?php echo $_COOKIE['current_user_cookie']; ?>";
     console.log(gameHistory);
