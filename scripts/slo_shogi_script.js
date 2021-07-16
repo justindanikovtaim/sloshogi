@@ -1092,6 +1092,7 @@ function showMoveGYOKU(square, color) {
 }
 
 function movePiece(id) {
+    let isMochiGoma;
     gameState[82] = gameState[id];//a temporary placeholder for the clicked place
     if (selectedPiece < 81) { //if it's other than the mochigoma
         //see if piece can promote
@@ -1110,6 +1111,7 @@ function movePiece(id) {
     if (selectedPiece === 81) {//if it is a mochigoma
         let mochigomaPlace = mochiGomaOrder.indexOf("M" + gameState[selectedPiece]); //find the place where it is
         mochiGomaArray[mochigomaPlace]--; //remove a piece from the array
+        isMochiGoma = gameState[81];
     }
 
     
@@ -1156,6 +1158,9 @@ function movePiece(id) {
         drawBoard();
         if(gameState[82].charAt(0) !== "e"){
             removeMG()
+        }
+        if(selectedPiece == 81){//if it was a mochigoma
+            mochiGomaArray[mochiGomaOrder.indexOf("M" + isMochiGoma)] ++;
         }
         drawMochigoma();
     }
