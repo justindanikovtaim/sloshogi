@@ -16,8 +16,7 @@ body{
 
 .user{
   width:200px; 
-  height:150px;
-  margin:5px; 
-  padding:10px; 
-  border:1px solid black;
+  margin:5px 0px; 
+  padding:0px 5px; 
+  border:1.5px solid black;
 }
