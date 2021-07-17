@@ -25,12 +25,6 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
 <h2>段級: <?=$userInfoArray['rating']?></h2>
 <h2>勝敗レコード: <?=$userInfoArray['record']?> </h2>
 
-<!--<a  href = "join_game.html.php">Find an Open Game</a>
-<br> -->
-<a href = "new_challenge.html.php">Challenge a Friend</a>
-<br>
-<!--<a href = "create_open_game.html.php">Create a New Open Game</a>
-<br>-->
 
 <div class="user"> 
 <h3>Current Games</h3>
@@ -41,6 +35,13 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
 
 <div class="user">
 <h3>Friends</h3>
+<!--<a  href = "join_game.html.php">Find an Open Game</a>
+<br> -->
+<a href = "new_challenge.html.php">Challenge a Friend</a>
+<br>
+<a href = "#">Add New Friends</a>
+<!--<a href = "create_open_game.html.php">Create a New Open Game</a>
+<br>-->
 </div>
 
     </body>

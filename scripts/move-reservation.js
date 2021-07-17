@@ -1,6 +1,6 @@
-//Slow Shogi by Christopher DeLong
+//Slow Shogi move reservation
 //copyright 2021
-//This is an image-based shogi program
+
 let selectedPiece = null; //the currently highlighted piece 
 let possibleMoves = []; //the possible moves for the currently selected piece
 let turn = 1; //odd turns = black, even turns = white
@@ -26,8 +26,9 @@ let boardSquare = [];
 let rowCounter = 13.5;
 let columnCounter = 5;
 let sC = 0; //square counter
-let sendToDatabase; //an object used to pass JSON data of the move made to PHP
-let 
+let reservationCounter = 0;
+var reservationString = "";
+var sendToDatabase; //an object used to pass JSON data of the move made to PHP
 //initialize gameboard
 let playerColor;
 if(gameHistory[1] == phpColor){//blackplayer is stored in gameHistory[1]
@@ -212,12 +213,7 @@ function loadGameState(){//loads the current game state from the database (slo S
     }
 
 }
-if((turn %2 != 0 && playerColor == "B") || (turn % 2 == 0 && playerColor == "W")){
-    //set whether or not it is the user's turn
-    usersTurn = true;
-}else{
-    usersTurn = false;
-}
+usersTurn = true;
 
 if(playerColor == "W"){
     //If it is the white player, flip the borard around so they're not playing upside down
@@ -228,18 +224,16 @@ if(playerColor == "W"){
     gameState = flipGamestate; //put the flipped gamestate into gameState
 }
 
-if(turn % 2 == 0){    //update the prompt showing which player's turn it is
-//White's turn
-    document.getElementById("playerPrompt").innerHTML = gameHistory[2] + " to play";
+    document.getElementById("playerPrompt").innerHTML = "予約中";
+    document.getElementById("submitButton").style.visibility = "hidden";//hide the submit button at first
 
-}
-else{
-    //black's turn
-    document.getElementById("playerPrompt").innerHTML = gameHistory[1] + " to play";
-}
+
 }
 
 function sendMoveData(){
+
+    sendToDatabase = JSON.stringify({"reservationmoves": reservationString, "gameId": currentGameID });//make the reservation into JSON object
+
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function()
   {
@@ -253,40 +247,16 @@ function sendMoveData(){
         console.log('Error: ' + ajax.status); // An error occurred during the request.
     }
   }
-    ajax.open("POST", 'send.php', true); //asyncronous
+    ajax.open("POST", 'reserve.php', true); //asyncronous
     ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     ajax.send(sendToDatabase);//(sendToDatabase);
     
+  document.getElementById("submitButton").style.visibility = "hidden";//hide submit button
+  disableAll();//prevent further clicks
 
 }
 
-function resetGame(){
-    let confirmreset = confirm("本当にリセットする？");
-    if(confirmreset){
 
-    var ajax = new XMLHttpRequest();
-    ajax.onreadystatechange = function()
-  {
-    // If ajax.readyState is 4, then the connection was successful
-    // If ajax.status (the HTTP return code) is 200, the request was successful
-    if(ajax.readyState == 4 && ajax.status == 200)
-    {
-      // Use ajax.responseText to get the raw response from the server
-      console.log(ajax.responseText);
-    }else {
-        console.log('Error: ' + ajax.status); // An error occurred during the request.
-    }
-  }
-  let json = JSON.stringify({
-    id: currentGameID,
-  });
-console.log(json);
-    ajax.open("POST", 'reset.php', true); //asyncronous
-    ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-    ajax.send(json);//(sendToDatabase);
-}
-loadGameState();
-}
 //Starting formation
 function drawBoard() {
     for (i = 0; i < 81; i++) {
@@ -406,10 +376,10 @@ function pieceClick(id) {
                 boardSquare[id].style.filter = "saturate(7)"; //highlight the selected piece only if not checking for checkmate
             }
 
-            if (komaColor === "B") { //if it's black
+            if (komaColor == "B" && playerColor == "B" || komaColor == "W" && playerColor == "W") { //if it's black
                 forward = -1; //forward direction is negative
             } else {
-                forward = -1; //otherwise it's white, so forward is positive
+                forward = 1; //otherwise it's white, so forward is positive
             }
 
             switch (gameState[id].substr(1, 5)) { //take the string minus the first letter (eg. the B or W)
@@ -540,7 +510,7 @@ function showMoveKIN(square, color) {
     let onEdge = ""; //a string to hold a code showing which edges the piece is on
     let kinMoves;
 
-    onEdge += "B";//color; //add the color as the first part of the string ######## changed
+    onEdge += color; //add the color as the first part of the string ######## changed
 
     if (board9Row.includes(square)) {//fill string with 1 for yes, 0 for no
         onEdge += "1";
@@ -642,7 +612,7 @@ function showMoveGIN(square, color) {
     let onEdge = ""; //a string to hold a code showing which edges the piece is on
     let ginMoves;
 
-    onEdge += "B"//color; //add the color as the first part of the string
+    onEdge += color; //add the color as the first part of the string
 
     if (board9Row.includes(square)) {//fill string with 1 for yes, 0 for no
         onEdge += "1";
@@ -993,7 +963,7 @@ function showMoveGYOKU(square, color) {
     let onEdge = ""; //a string to hold a code showing which edges the piece is on
     let ouMoves;
 
-    onEdge += "B";//color; //add the color as the first part of the string
+    onEdge += color; //add the color as the first part of the string
 
     if (board9Row.includes(square)) {//fill string with 1 for yes, 0 for no
         onEdge += "1";
@@ -1097,9 +1067,15 @@ function movePiece(id) {
     gameState[82] = gameState[id];//a temporary placeholder for the clicked place
     if (selectedPiece < 81) { //if it's other than the mochigoma
         //see if piece can promote
-        if ((gameState[selectedPiece].charAt(1) !== "N") && //if the piece isn't already promoted (the second letter isn't N)
-            id < 27 ||// or if it is an odd turn and the piece will move into the third row or less
-            selectedPiece < 27) { //or the piece is already within the first 3 rows
+        if ((gameState[selectedPiece].charAt(1) !== "N" && //if the piece isn't already promoted (the second letter isn't N)
+        ((gameState[selectedPiece].charAt(0) == "B" && playerColor == "B") ||
+        (gameState[selectedPiece].charAt(0) == "W" && playerColor == "W"))
+         && (id < 27 || selectedPiece < 27)) ||
+
+            (((gameState[selectedPiece].charAt(0) == "w" && playerColor == "B") ||
+        (gameState[selectedPiece].charAt(0) == "B" && playerColor == "W")) 
+        && (id > 52 || selectedPiece > 52)
+             )) { //or the piece is already within the first 3 rows
 
             promotePiece();
         }
@@ -1116,58 +1092,37 @@ function movePiece(id) {
     }
 
     
-    if(turn === 1){
-        //on the first turn, we don't want to start by sending a comma in the data
-        sendToDatabase = JSON.stringify({"newmoves": selectedPiece.toString() + "," 
-            + id.toString() + "," + gameState[selectedPiece], "gameId": currentGameID });//make the move into JSON object
-    }else{
-        //otherwise, check if it is white and flip the move if it is
+    
         let moveFromSend;
         let moveToSend;
-        if(turn % 2 == 0){
-            if(selectedPiece == 81){
-                moveFromSend = 81; //mochi goma will be 81 no matter what
-            }else{
-                moveFromSend = 80 - selectedPiece;
-            }
-            moveToSend = 80 - id;
-        }else{
+        
             moveFromSend = selectedPiece
             moveToSend = id;
+
+        reservationString += ";" + moveFromSend + "," + moveToSend + "," + gameState[selectedPiece];
+        reservationCounter ++;
+        if(reservationCounter > 0 && reservationCounter %2 == 0){
+            //if 2 or more moves have been made (an even number of moves)
+            document.getElementById("submitButton").style.visibility = "visible";
+        }else{
+            document.getElementById("submitButton").style.visibility = "hidden";
         }
-        //also, start by sending a comma to separate the move from the last one stored
-        sendToDatabase = JSON.stringify({"newmoves": "," + moveFromSend.toString() + "," 
-        + moveToSend.toString() + "," + gameState[selectedPiece], "gameId": currentGameID });//make the move into JSON object
-    }
+    
     
         
     gameState[id] = gameState[selectedPiece]; //move the piece to the new square
     gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
+    boardSquare[id].style.opacity = "0.5";
     
 
     drawBoard();     
     
     drawMochigoma();
-    setTimeout(function(){if(confirm("Confirm Move?")){ //timeout ensures that piece will be moved before popup displays
+   
     turn++; //increase the turn counter
-        //send move to database
-        sendMoveData();
-    disableAll();
-    }else{
-        gameState[selectedPiece] = gameState[id];
-        gameState[id] = gameState[82];
-        drawBoard();
-        if(gameState[82].charAt(0) !== "e"){
-            removeMG()
-        }
-        if(selectedPiece == 81){//if it was a mochigoma
-            mochiGomaArray[mochiGomaOrder.indexOf("M" + isMochiGoma)] ++;
-        }
-        drawMochigoma();
-    }
     selectedPiece = null;
     deselectAll();
-},100);
+
 
     
     // console.log(checkForCheck("B"));

@@ -1,6 +1,7 @@
 <?php 
 session_start();
 $gameID = $_GET['id'];
+echo "Reserve Moves";
 $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
 
@@ -10,7 +11,7 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
 <html onload ="drawBoard()">
 <head>
     <meta charset="utf-8">
-    <title>Slo Shogi</title>
+    <title>Slo Shogi - Reserve</title>
     
     <link href="CSS/Gameboard_style_sheet.css" rel="stylesheet">
     <link href="CSS/all_pages.css" rel="stylesheet">
@@ -26,20 +27,19 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
     </div>
  <h3 id = "playerPrompt"></h3>   
 <a href="user_page.php"> <img src = "images/return.png"  id = "toUserPage"> </a>
-<a href="move_reservation.php?id=<?=$gameID?>" id = "toReservation">予約</a>
+<img src = "images/submit.png" id = "submitButton" onClick = "sendMoveData()">
 </body>
 
 <?php
 $temparray = array();
 $row = mysqli_fetch_array($result);
-array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"], $row["reservation"]); 
+array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"]); 
  ?>
  
  <script>
  var currentGameID = <?php echo $gameID;?>;
    var gameHistory = <?php echo json_encode($temparray) ; ?>;
    var phpColor = "<?php echo $_COOKIE['current_user_cookie']; ?>";
-    console.log(gameHistory);
     </script>
 
-<script src= "scripts/slo_shogi_script.js"></script>
+<script src= "scripts/move-reservation.js"></script>

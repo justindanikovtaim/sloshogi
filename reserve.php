@@ -6,7 +6,7 @@ $gametofind = $decoded['gameId'];
 
 $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
 
-    $updatecommand = 'UPDATE gamerecord SET moves = CONCAT(moves, "' . $decoded['newmoves'] . '") WHERE id ='; 
+    $updatecommand = 'UPDATE gamerecord SET reservation = "' . $decoded['reservationmoves'] . '" WHERE id ='; 
 
 echo $updatecommand;
 

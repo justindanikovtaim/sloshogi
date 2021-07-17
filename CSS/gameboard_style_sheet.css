@@ -52,3 +52,9 @@
         position: absolute;
         top: 120vw;
     }
+
+    #toReservation, #submitButton{
+        position: absolute;
+        top: 130vw;
+        right: 25vw;
+    }
