@@ -27,7 +27,8 @@ let rowCounter = 13.5;
 let columnCounter = 5;
 let sC = 0; //square counter
 let sendToDatabase; //an object used to pass JSON data of the move made to PHP
-let 
+let reservationArray = gameHistory[3].split(";"); //get the reserved moves and put each sequence into its own space in an array
+console.log(reservationArray); //REMOVE
 //initialize gameboard
 let playerColor;
 if(gameHistory[1] == phpColor){//blackplayer is stored in gameHistory[1]
@@ -286,6 +287,44 @@ console.log(json);
     ajax.send(json);//(sendToDatabase);
 }
 loadGameState();
+}
+function resign(){
+    let confirmresign = confirm("本当に投了しますか？");
+    if(confirmresign){
+
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function()
+  {
+    // If ajax.readyState is 4, then the connection was successful
+    // If ajax.status (the HTTP return code) is 200, the request was successful
+    if(ajax.readyState == 4 && ajax.status == 200)
+    {
+      // Use ajax.responseText to get the raw response from the server
+      console.log(ajax.responseText);
+    }else {
+        console.log('Error: ' + ajax.status); // An error occurred during the request.
+    }
+  }
+  let winnerName;
+  let loserName;
+  //set the winner and loser by finding the usernames of the players from the gamehistory array
+  if(playerColor == "B"){
+      winnerName = gameHistory[2];
+      loserName = gameHistory[1];
+  }else{
+      winnerName = gameHistory[1];
+      loserName = gameHistory[2];
+  }
+
+  let json = JSON.stringify({
+    id: currentGameID, winner: winnerName, loser: loserName
+  });
+
+console.log(json);
+    ajax.open("POST", 'resign.php', true); //asyncronous
+    ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+    ajax.send(json);//(sendToDatabase);
+}
 }
 //Starting formation
 function drawBoard() {
@@ -1059,8 +1098,8 @@ function showMoveGYOKU(square, color) {
 
         case "B1001": //black in bottom left corner
         case "W0110": //white in top right corner
-            ouMoves = [square + (forward * 10), square + (forward * -9),
-            square + (forward * -1), square + (forward * 9)];
+            ouMoves = [square + (forward * 9), square + (forward * 10),
+            square + (forward * 1)];
             break;
 
         default:
@@ -1094,6 +1133,9 @@ function showMoveGYOKU(square, color) {
 
 function movePiece(id) {
     let isMochiGoma;
+    let moveFromSend;
+    let moveToSend;
+
     gameState[82] = gameState[id];//a temporary placeholder for the clicked place
     if (selectedPiece < 81) { //if it's other than the mochigoma
         //see if piece can promote
@@ -1122,8 +1164,7 @@ function movePiece(id) {
             + id.toString() + "," + gameState[selectedPiece], "gameId": currentGameID });//make the move into JSON object
     }else{
         //otherwise, check if it is white and flip the move if it is
-        let moveFromSend;
-        let moveToSend;
+        
         if(turn % 2 == 0){
             if(selectedPiece == 81){
                 moveFromSend = 81; //mochi goma will be 81 no matter what
@@ -1152,7 +1193,9 @@ function movePiece(id) {
     turn++; //increase the turn counter
         //send move to database
         sendMoveData();
-    disableAll();
+        if(handleReservations(moveFromSend, moveToSend, gameState[id]) == false){ //if handleReservations returns false
+            disableAll();
+        }
     }else{
         gameState[selectedPiece] = gameState[id];
         gameState[id] = gameState[82];
@@ -1175,6 +1218,27 @@ function movePiece(id) {
     //  console.log(checkForCheck("W"));
     // console.log(checkForMate("W"));
 
+}
+function handleReservations(movedFrom, movedto, movedPiece){
+    if(reservationArray.length <2){//if there are no moves reserved
+        return false;
+    }else{
+        let reservedMoves = [];
+        for(r = 1; r < reservationArray.length; r++){ //starts at 1 since the first space in the array is always empty
+            reservedMoves[r - 1] = reservationArray[r].split(",");//nested array of each move sequence
+        }
+
+        if(reservedMoves[0][0] == movedFrom && reservedMoves[0][1] == movedto && reservedMoves[0][2] == movedPiece){
+            //if the reservation perfectly macthes the move made
+            alert("Reserved move triggered");
+            gameHistory[0] = reservedMoves[1][0] + reservedMoves[1][1] + reservedMoves[1][2];
+            loadGameState();
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 }
 
 function disableAll(){

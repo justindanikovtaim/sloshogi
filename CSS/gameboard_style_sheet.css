@@ -44,8 +44,9 @@
     
     #toUserPage{
         position: absolute;
-        top: 125vw;
+        top: 130vw;
         min-width: 10vw;
+        width: 20vw;
     }
     
     #playerPrompt{
@@ -53,8 +54,16 @@
         top: 120vw;
     }
 
-    #toReservation, #submitButton{
+    #toReservation{
         position: absolute;
         top: 130vw;
-        right: 25vw;
+        right: 50vw;
+        
+    }
+
+    #resignButton{
+        position: absolute;
+        top: 130vw;
+        right: 5vw;
+        width: 20vw;
     }

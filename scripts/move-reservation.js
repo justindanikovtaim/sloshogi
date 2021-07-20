@@ -37,7 +37,7 @@ if(gameHistory[1] == phpColor){//blackplayer is stored in gameHistory[1]
     playerColor = "W";
 }
 let usersTurn;//defined after gamestate is loaded
-
+let flipped;
 
 
 for (i = 0; i < 9; i++) {
@@ -369,14 +369,21 @@ function pieceClick(id) {
             selectedPiece = null;
 
         } else { //otherwise, highlight the possible moves
-
-            let komaColor = gameState[id].charAt(0); //set komaColor to be B or W based on the piece clicked
+            
+            let komaColor;
+            if ((turn % 2 == 0 && playerColor == "B") || (turn % 2 != 0 && playerColor == "W")){
+                komaColor = "W";
+                flipped = true;
+            } else{
+                komaColor = "B";
+            }
             if (justChecking === false) {
                 selectedPiece = id; // define the selected piece
                 boardSquare[id].style.filter = "saturate(7)"; //highlight the selected piece only if not checking for checkmate
             }
 
-            if (komaColor == "B" && playerColor == "B" || komaColor == "W" && playerColor == "W") { //if it's black
+            if ((turn % 2 != 0 && playerColor == "B") 
+                || turn % 2 == 0 && playerColor == "W") { //if it's the player's turn and it's their turn
                 forward = -1; //forward direction is negative
             } else {
                 forward = 1; //otherwise it's white, so forward is positive
@@ -433,8 +440,14 @@ function pieceClick(id) {
         }
     }
 }
-function showMoveF(square, color) {
-
+function showMoveF(square, color) { 
+    if(flipped){
+        if(color == "B"){
+            color = "W";
+        }else{
+            color = "B";
+        }
+    }
     if (gameState[square + (forward * 9)].charAt(0) !== color) {
         move[0] = square + (forward * 9); //set the only possible move
     }
@@ -461,6 +474,13 @@ function showMoveKEI(square, color) {
     } else {
         move = [square + (forward * 19), square + (forward * 17)]; //otherwise, it can move to either space
     }
+    if(flipped){
+        if(color == "B"){
+            color = "W";
+        }else{
+            color = "B";
+        }
+    }
 
     eliminateIllegalMoves(color); //will remove all moves from move array that would result in check to own gyoku
 
@@ -478,8 +498,16 @@ function showMoveKEI(square, color) {
 }
 
 function showMoveKO(square, color) {
+
     let pieceBlocking = false;
     let advanceRow = 0;
+    if(flipped){
+        if(color == "B"){
+            color = "W";
+        }else{
+            color = "B";
+        }
+    }
     while (pieceBlocking === false) {
         if ((square + (9 * forward) + advanceRow) < 81 &&
             (square + (9 * forward) + advanceRow) > -1) {//if square is on the board
@@ -507,6 +535,7 @@ function showMoveKO(square, color) {
 }
 
 function showMoveKIN(square, color) {
+
     let onEdge = ""; //a string to hold a code showing which edges the piece is on
     let kinMoves;
 
@@ -584,7 +613,13 @@ function showMoveKIN(square, color) {
             square + (forward * -1), square + (forward * 9)];
             break;
     }
-
+    if(flipped){
+        if(color == "B"){
+            color = "W";
+        }else{
+            color = "B";
+        }
+    }
     for (i = kinMoves.length - 1; i > -1; i--) {
         if (gameState[kinMoves[i]].charAt(0) === color) {//if own piece is in the square
             //do nothing
@@ -681,6 +716,13 @@ function showMoveGIN(square, color) {
             square + (forward * 10), square + (forward * 9)];
             break;
     }
+    if(flipped){
+        if(color == "B"){
+            color = "W";
+        }else{
+            color = "B";
+        }
+    }
 
     for (i = ginMoves.length - 1; i > -1; i--) {
         if (gameState[ginMoves[i]].charAt(0) === color) {//if own piece is in the square
@@ -709,6 +751,13 @@ function showMoveGIN(square, color) {
 function showMoveHI(square, color) {
     let pieceBlocking = false;
     let advanceRow = 0;
+    if(flipped){
+        if(color == "B"){
+            color = "W";
+        }else{
+            color = "B";
+        }
+    }
     while (pieceBlocking === false) {//check the forward row
         if ((square + (9 * forward) + advanceRow) < 81 &&
             (square + (9 * forward) + advanceRow) > -1) {//if square is on the board
@@ -816,6 +865,13 @@ function showMoveHI(square, color) {
 function showMoveKAKU(square, color) {
     let pieceBlocking = false;
     let advanceRow = 0;
+    if(flipped){
+        if(color == "B"){
+            color = "W";
+        }else{
+            color = "B";
+        }
+    }
     if ((color === "B" && board1Row.includes(square)) ||//if it is black and on right edge
         color === "W" && board9Row.includes(square)) {//or white and on left edge
         pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
@@ -1029,8 +1085,8 @@ function showMoveGYOKU(square, color) {
 
         case "B1001": //black in bottom left corner
         case "W0110": //white in top right corner
-            ouMoves = [square + (forward * 10), square + (forward * -9),
-            square + (forward * -1), square + (forward * 9)];
+            ouMoves = [square + (forward * 9), square + (forward * 10),
+            square + (forward * 1)];
             break;
 
         default:
@@ -1038,7 +1094,13 @@ function showMoveGYOKU(square, color) {
             square + (forward * -1), square + (forward * -8), square + (forward * -9), square + (forward * -10)];
             break;
     }
-
+    if(flipped){
+        if(color == "B"){
+            color = "W";
+        }else{
+            color = "B";
+        }
+    }
     for (i = ouMoves.length - 1; i > -1; i--) {
         if (gameState[ouMoves[i]].charAt(0) === color) {//if own piece is in the square
             //do nothing
@@ -1051,6 +1113,7 @@ function showMoveGYOKU(square, color) {
 
 
     if (justChecking === false) {
+        
         for (i = move.length - 1; i > -1; i--) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
@@ -1938,6 +2001,14 @@ function checkForCheck(gyokuColor) {
 }
 
 function eliminateIllegalMoves(color) {
+
+    if(flipped){
+        if(color == "B"){
+            color = "W";
+        }else{
+            color = "B";
+        }
+    }
 
     let moveFromHolder;
     let moveToHolder;

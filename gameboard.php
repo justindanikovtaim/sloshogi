@@ -27,6 +27,7 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
  <h3 id = "playerPrompt"></h3>   
 <a href="user_page.php"> <img src = "images/return.png"  id = "toUserPage"> </a>
 <a href="move_reservation.php?id=<?=$gameID?>" id = "toReservation">予約</a>
+<img src = "images/resign.png" id = "resignButton" onClick = "resign()">
 </body>
 
 <?php
@@ -40,6 +41,7 @@ array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"], $
    var gameHistory = <?php echo json_encode($temparray) ; ?>;
    var phpColor = "<?php echo $_COOKIE['current_user_cookie']; ?>";
     console.log(gameHistory);
+
     </script>
 
 <script src= "scripts/slo_shogi_script.js"></script>
