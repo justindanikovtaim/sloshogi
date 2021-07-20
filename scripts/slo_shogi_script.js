@@ -171,7 +171,9 @@ let tempGameState = [];
 loadGameState();
 drawBoard();
 drawMochigoma();
-
+if(!usersTurn || gameHistory[4] == "3"){//if not the user's turn or the game has ended
+    disableAll();
+}
 
 function loadGameState(){//loads the current game state from the database (slo Shogi v.1)
     if(gameHistory[0] != ""){

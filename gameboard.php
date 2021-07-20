@@ -33,7 +33,7 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
 <?php
 $temparray = array();
 $row = mysqli_fetch_array($result);
-array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"], $row["reservation"]); 
+array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"], $row["reservation"], $row["status"]); 
  ?>
  
  <script>
