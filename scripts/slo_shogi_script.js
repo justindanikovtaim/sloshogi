@@ -1250,6 +1250,9 @@ function disableAll(){
     for(x = 0; x<14; x ++){
         mochiGoma[x].setAttribute("onClick", null);
     }
+    if(gameHistory[4] == "3"){//if the game is finished
+        document.getElementById("resignButton").style.visibility = "hidden";
+    }
 }
 function promotePiece() {
     if (gameState[selectedPiece].charAt(1) !== "N" && //if the piece is not promoted yet

@@ -7,7 +7,15 @@ html{
 }
 
 h1 {
+  text-align: center;
   font-size:3.0em;
+}
+
+h3{
+  font-size: 8vw;
+}
+a{
+  font-size: 10vw;
 }
 
 body{

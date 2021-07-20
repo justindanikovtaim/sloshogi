@@ -45,19 +45,19 @@
     #toUserPage{
         position: absolute;
         top: 130vw;
-        min-width: 10vw;
+        left: 5vw;
         width: 20vw;
     }
     
     #playerPrompt{
         position: absolute;
-        top: 120vw;
+        top: 110vw;
     }
 
     #toReservation{
         position: absolute;
         top: 130vw;
-        right: 50vw;
+        right: 40vw;
         
     }
 
