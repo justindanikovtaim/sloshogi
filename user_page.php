@@ -8,6 +8,19 @@ $currentGameIdArray =  [];
 while($row = mysqli_fetch_array($getCurrentGameId)){
     array_push($currentGameIdArray, $row['id']);//add each gameid related to the user to an array
 }
+$opponentNameArray = [];
+for($i = 0; $i < sizeof($currentGameIdArray); $i++){
+    $getOpponent = mysqli_query($link, "SELECT blackplayer, whiteplayer FROM gamerecord WHERE id = '".$currentGameIdArray[$i]."'");
+    $getOpponentArray = mysqli_fetch_array($getOpponent);
+    if($getOpponentArray['blackplayer'] == $_COOKIE['current_user_cookie']){
+
+        array_push($opponentNameArray, $getOpponentArray['whiteplayer']);
+    }else{
+        array_push($opponentNameArray, $getOpponentArray['blackplayer']);
+    }
+}
+
+
 
 $getPastGameId = mysqli_query($link, "SELECT id FROM gamerecord WHERE status = 3 AND 
 ( blackplayer = '".$_COOKIE['current_user_cookie'] ."' OR whiteplayer = '".$_COOKIE['current_user_cookie'] ."')" );
@@ -15,6 +28,18 @@ $pastGameIdArray =  [];
 while($row = mysqli_fetch_array($getPastGameId)){
     array_push($pastGameIdArray, $row['id']);//add each gameid related to the user to an array
 }
+$pastOpponentNameArray = [];
+for($i = 0; $i < sizeof($pastGameIdArray); $i++){
+    $getOpponent = mysqli_query($link, "SELECT blackplayer, whiteplayer FROM gamerecord WHERE id = '".$pastGameIdArray[$i]."'");
+    $getOpponentArray = mysqli_fetch_array($getOpponent);
+    if($getOpponentArray['blackplayer'] == $_COOKIE['current_user_cookie']){
+
+        array_push($pastOpponentNameArray, $getOpponentArray['whiteplayer']);
+    }else{
+        array_push($pastOpponentNameArray, $getOpponentArray['blackplayer']);
+    }
+}
+
 $getUserInfo = mysqli_query($link, "SELECT * FROM users WHERE username = '".$_COOKIE['current_user_cookie']."'");
 $userInfoArray = mysqli_fetch_array($getUserInfo);
 ?>
@@ -22,8 +47,10 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
 <!DOCTYPE HTML>
 <head>
     <script>
-        var currentGameIdArray = <?php echo json_encode($currentGameIdArray) ; ?>;
+        let currentGameIdArray = <?php echo json_encode($currentGameIdArray) ; ?>;
+        let currentGameOpponentArray = <?php echo json_encode($opponentNameArray) ; ?>;
         let pastGameIdArray = <?php echo json_encode($pastGameIdArray) ; ?>;
+        let pastGameOpponentArray = <?php echo json_encode($pastOpponentNameArray) ; ?>;
     </script>
     <link href="CSS/all_pages.css" rel="stylesheet">
  </head>

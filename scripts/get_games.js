@@ -5,7 +5,7 @@ let pastGameLink = [];
 for(i = 0; i < currentGameIdArray.length; i ++){
     currentGameLink[i] = document.createElement("a");
     currentGameLink[i].href = "gameboard.php?id=" + currentGameIdArray[i];
-    currentGameLink[i].innerHTML = "Game " + currentGameIdArray[i];
+    currentGameLink[i].innerHTML = "SLO" + currentGameIdArray[i] +" vs. " + currentGameOpponentArray[i];
     document.getElementById("allGames").appendChild(currentGameLink[i]);
     let lineBreak = document.createElement("br");
     document.getElementById("allGames").appendChild(lineBreak);
@@ -14,7 +14,7 @@ for(i = 0; i < currentGameIdArray.length; i ++){
 for(i = 0; i < pastGameIdArray.length; i ++){
     pastGameLink[i] = document.createElement("a");
     pastGameLink[i].href = "gameboard.php?id=" + pastGameIdArray[i];
-    pastGameLink[i].innerHTML = "Game " + pastGameIdArray[i];
+    pastGameLink[i].innerHTML = "SLO" + pastGameIdArray[i]+" vs. " + pastGameOpponentArray[i];
     document.getElementById("finishedGames").appendChild(pastGameLink[i]);
     let lineBreak = document.createElement("br");
     document.getElementById("finishedGames").appendChild(lineBreak);
