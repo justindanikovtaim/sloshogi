@@ -820,8 +820,7 @@ function showMoveHI(square, color) {
 
     advanceRow = 0; //reset the row counter
 
-    if ((color === "B" && board1Row.includes(square)) ||//if it is black and on right edge
-        color === "W" && board9Row.includes(square)) {//or white and on left edge
+    if (board1Row.includes(square)){
         pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
     } else {
         pieceBlocking = false;
@@ -847,8 +846,7 @@ function showMoveHI(square, color) {
 
     advanceRow = 0; //reset the row counter
 
-    if ((color === "B" && board9Row.includes(square)) ||//if it is black and on left edge
-        color === "W" && board1Row.includes(square)) {//or white and on right edge
+    if ( board9Row.includes(square)){//or white and on right edge
         pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
     } else {
         pieceBlocking = false;
@@ -1283,10 +1281,10 @@ function deselectAll() {
 }
 
 function placePiece(piece) {
-    if ((mochiGoma[mochiGomaOrder.indexOf(piece)].style.filter === "saturate(7)") && justChecking === false 
-    || piece.charAt(1) != playerColor) { //if the currently selected piece is clicked again
+    if ((mochiGoma[mochiGomaOrder.indexOf(piece)].style.filter === "saturate(7)") && justChecking === false
+        || piece.charAt(1) != playerColor) { //if the currently selected piece is clicked again
         deselectAll();
-    } else{
+    } else {
         selectedPiece = 81; //set selected piece to number outside of the board
         gameState[81] = piece.substr(1, piece.length); //put the piece in the 81st spot of the gameState array
         let startingPlace = 0;
@@ -1315,11 +1313,7 @@ function placePiece(piece) {
                         possibleFuRows[i] = 0; //otherwise there is a fu already, so it is set to 0
                     }
                 }
-                if (MGColor === "B") { // we need to skip the last row becasue fu can't be placed there
-                    fuStartingPlace = 1;
-                } else {
-                    fuStartingPlace = 0;
-                }
+                fuStartingPlace = 1;
 
                 for (i = 0; i < 9; i++) {//go through to find all the possible rows again
                     if (possibleFuRows[i] === 1) {
@@ -1334,19 +1328,13 @@ function placePiece(piece) {
 
             case "KO"://Ko can't be placed on last row
                 endAfter = 72; //count for 72 squares (all but the last row)
-                if (piece.charAt(1) === "B") {//IF IT'S Black piece
-                    startingPlace = 9;
-                } else {
-                    startingPlace = 0;
-                }
+                startingPlace = 9;
+
             case "KEI": //kei can't be placed in the last 2 rows since they couldn't move
-                if (piece.substr(1, 3) === "BKE") {//IF IT'S Black kei
-                    startingPlace = 18;
-                    endAfter = 63;
-                } else if (piece.substr(1, 3) === "WKE") {
-                    startingPlace = 0;
-                    endAfter = 63;
-                }
+
+                startingPlace = 18;
+                endAfter = 63;
+
 
                 for (i = startingPlace; i < startingPlace + endAfter; i++) {//cycle through each square in the board that is possible for that color
                     if (gameState[i] === "empty") {
@@ -1372,7 +1360,7 @@ function placePiece(piece) {
                 }
             }
         }
-}
+    }
 
 }
 function removeMG(gamePiece){
