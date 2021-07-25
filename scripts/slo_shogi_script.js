@@ -171,8 +171,11 @@ let tempGameState = [];
 loadGameState();
 drawBoard();
 drawMochigoma();
+document.getElementById("toReservation").style.visibility = "hidden";
 if(!usersTurn || gameHistory[4] == "3"){//if not the user's turn or the game has ended
     disableAll();
+    document.getElementById("toReservation").style.visibility = "visible";
+
 }
 
 function loadGameState(){//loads the current game state from the database (slo Shogi v.1)
@@ -1210,6 +1213,8 @@ function movePiece(id) {
     }
     selectedPiece = null;
     deselectAll();
+    document.getElementById("toReservation").style.visibility = "visible";
+
 },100);
 
     
