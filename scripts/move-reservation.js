@@ -1159,8 +1159,18 @@ function movePiece(id) {
         let moveFromSend;
         let moveToSend;
         
+        if(playerColor == "W"){
+            if(selectedPiece != 81){
+                moveFromSend = selectedPiece
+            }else{
+                moveFromSend = 80 - selectedPiece
+            }
+            moveToSend = 80 - id;
+        }else{
             moveFromSend = selectedPiece
             moveToSend = id;
+        }
+            
 
         reservationString += ";" + moveFromSend + "," + moveToSend + "," + gameState[selectedPiece];
         reservationCounter ++;

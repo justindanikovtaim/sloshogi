@@ -67,3 +67,15 @@
         right: 5vw;
         width: 20vw;
     }
+
+    #forward{
+        position: absolute;
+        top: 120vw;
+        right: 5vw;
+    }
+
+    #back{
+        position:absolute;
+        top: 120vw;
+        right: 20VW;
+    }

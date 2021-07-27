@@ -4,6 +4,7 @@
 let selectedPiece = null; //the currently highlighted piece 
 let possibleMoves = []; //the possible moves for the currently selected piece
 let turn = 1; //odd turns = black, even turns = white
+let viewTurn; //variable for keeping track of the turn being viewed with the forward and back buttons
 let forward; //used for storing the forward direction of a piece
 let board1Row = [0, 9, 18, 27, 36, 45, 54, 63, 72]; //all of the squares that are on the right edge
 let board2Row = [1, 10, 19, 28, 37, 46, 55, 64, 73];
@@ -37,7 +38,10 @@ if(gameHistory[1] == phpColor){//blackplayer is stored in gameHistory[1]
     playerColor = "W";
 }
 let usersTurn;//defined after gamestate is loaded
-
+let movesHistory;
+if(gameHistory[0] != ""){
+     movesHistory = gameHistory[0].split(","); //break the moves into an array 
+}
 
 
 for (i = 0; i < 9; i++) {
@@ -152,11 +156,10 @@ if(playerColor == "B"){
         spacer = 75;
     }
 }
+let gameState = [];
 
-
-
-
-let gameState = ["WKO", "WKEI", "WGIN", "WKIN", "WGYOKU", "WKIN", "WGIN", "WKEI", "WKO",
+function resetGameState(){
+    gameState = ["WKO", "WKEI", "WGIN", "WKIN", "WGYOKU", "WKIN", "WGIN", "WKEI", "WKO",
     "empty", "WKAKU", "empty", "empty", "empty", "empty", "empty", "WHI", "empty",
     "WF", "WF", "WF", "WF", "WF", "WF", "WF", "WF", "WF",
     "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty",
@@ -166,9 +169,13 @@ let gameState = ["WKO", "WKEI", "WGIN", "WKIN", "WGYOKU", "WKIN", "WGIN", "WKEI"
     "empty", "BHI", "empty", "empty", "empty", "empty", "empty", "BKAKU", "empty",
     "BKO", "BKEI", "BGIN", "BKIN", "BGYOKU", "BKIN", "BGIN", "BKEI", "BKO", "empty"];
 // set each square in initial gamestate plus one extra at the end for mochigoma placements
+    turn = 1;
+}
+
+resetGameState();
 
 let tempGameState = [];
-loadGameState();
+loadGameState(1);
 drawBoard();
 drawMochigoma();
 document.getElementById("toReservation").style.visibility = "hidden";
@@ -178,12 +185,8 @@ if(!usersTurn || gameHistory[4] == "3"){//if not the user's turn or the game has
 
 }
 
-function loadGameState(){//loads the current game state from the database (slo Shogi v.1)
-    if(gameHistory[0] != ""){
-
-    let movesHistory = gameHistory[0].split(","); //break the moves into an array 
-    
-
+function loadGameState(placeCalled){//loads the current game state from the database (slo Shogi v.1)
+    if(movesHistory != undefined){
 
     for(g = 0; g < movesHistory.length; g+= 3){
         if(movesHistory[g] == "81"){
@@ -225,7 +228,7 @@ if((turn %2 != 0 && playerColor == "B") || (turn % 2 == 0 && playerColor == "W")
     usersTurn = false;
 }
 
-if(playerColor == "W"){
+if(playerColor == "W" && placeCalled == 1){
     //If it is the white player, flip the borard around so they're not playing upside down
     let flipGamestate = [];
     for(f = 0; f <81; f++){
@@ -243,6 +246,7 @@ else{
     //black's turn
     document.getElementById("playerPrompt").innerHTML = gameHistory[1] + " to play";
 }
+viewTurn = turn - 1; // viewing the current game state
 }
 
 function sendMoveData(){
@@ -291,7 +295,7 @@ console.log(json);
     ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     ajax.send(json);//(sendToDatabase);
 }
-loadGameState();
+loadGameState(1);
 }
 function resign(){
     let confirmresign = confirm("本当に投了しますか？");
@@ -418,11 +422,12 @@ function drawMochigoma() {
 }
 function pieceClick(id) {
     
-    //first, make sure that the piece cicked is your own
-   if(!usersTurn){
+   //make sure that it is the users turn and that a past state is not being displayed on the board
+   if(!usersTurn || viewTurn < turn - 1){
        deselectAll();
    } else if ((((turn % 2 == 0) && gameState[id].charAt(0) != "W") || ((turn % 2 !== 0) && gameState[id].charAt(0) != "B")) &&
         justChecking === false && boardSquare[id].style.background.substr(0,7) != "rgb(226"){
+             // make sure that the piece cicked is your own
         deselectAll();
         //do nothing
     } else {
@@ -1194,10 +1199,16 @@ function movePiece(id) {
     drawMochigoma();
     setTimeout(function(){if(confirm("Confirm Move?")){ //timeout ensures that piece will be moved before popup displays
     turn++; //increase the turn counter
-        //send move to database
-        sendMoveData();
+        
         if(handleReservations(moveFromSend, moveToSend, gameState[id]) == false){ //if handleReservations returns false
             disableAll();
+            //send move to database
+             sendMoveData();
+            document.getElementById("toReservation").style.visibility = "visible";
+        }else{
+            deselectAll();
+            loadGameState(2);
+            drawBoard();
         }
     }else{
         gameState[selectedPiece] = gameState[id];
@@ -1213,7 +1224,7 @@ function movePiece(id) {
     }
     selectedPiece = null;
     deselectAll();
-    document.getElementById("toReservation").style.visibility = "visible";
+   
 
 },100);
 
@@ -1224,7 +1235,7 @@ function movePiece(id) {
     // console.log(checkForMate("W"));
 
 }
-function handleReservations(movedFrom, movedto, movedPiece){
+function handleReservations(movedFrom, movedTo, movedPiece){
     if(reservationArray.length <2){//if there are no moves reserved
         return false;
     }else{
@@ -1233,11 +1244,17 @@ function handleReservations(movedFrom, movedto, movedPiece){
             reservedMoves[r - 1] = reservationArray[r].split(",");//nested array of each move sequence
         }
 
-        if(reservedMoves[0][0] == movedFrom && reservedMoves[0][1] == movedto && reservedMoves[0][2] == movedPiece){
+        if(reservedMoves[0][0] == movedFrom && reservedMoves[0][1] == movedTo && reservedMoves[0][2] == movedPiece){
             //if the reservation perfectly macthes the move made
             alert("Reserved move triggered");
-            gameHistory[0] = reservedMoves[1][0] + reservedMoves[1][1] + reservedMoves[1][2];
-            loadGameState();
+            gameHistory[0] = reservedMoves[1][0] + "," +reservedMoves[1][1] + "," + reservedMoves[1][2];
+
+            sendToDatabase = JSON.stringify({"newmoves": "," + movedFrom +"," + movedTo + "," + movedPiece + "," +
+             gameHistory[0], "gameId": currentGameID });
+             //send the user's move and the triggerd move together
+            sendMoveData();
+
+
             return true;
         }else{
             return false;
@@ -1427,7 +1444,7 @@ function checkForCheck(gyokuColor) {
     let gyokuOnRightColumn;
     let gyokuOnLeftColumn;
 
-    if (gyokuColor === "B") {
+ 
         gyokuForward = -1; //black ou moves negatively to go forward
         //this will check to see if the gyoku is on any of the edges of the board and set the corresponding spot
         //in the checkingPieces array to 2, which will prevent it from being checked in the next part
@@ -1456,34 +1473,7 @@ function checkForCheck(gyokuColor) {
             checkingPieces[7] = 2;
             gyokuOnLeftColumn = true;
         }
-    } else {
-        gyokuForward = 1; //white ou moves positively to go forward
-
-        if (boardTopEdge.includes(gyokuPosition)) {//if on bottom row, there can't be any pieces below it
-            checkingPieces[5] = 2;
-            checkingPieces[4] = 2;
-            checkingPieces[3] = 2;
-            gyokuOnBottomRow = true;
-        }
-        if (boardBottomEdge.includes(gyokuPosition)) { //if on top row, there can't be any pieces above it
-            checkingPieces[0] = 2;
-            checkingPieces[1] = 2;
-            checkingPieces[7] = 2;
-            gyokuOnTopRow = true;
-        }
-        if (board1Row.includes(gyokuPosition)) {//none to the left
-            checkingPieces[5] = 2;
-            checkingPieces[6] = 2;
-            checkingPieces[7] = 2;
-            gyokuOnLeftColumn = true;
-        }
-        if (board9Row.includes(gyokuPosition)) {//none to the right
-            checkingPieces[1] = 2;
-            checkingPieces[2] = 2;
-            checkingPieces[3] = 2;
-            gyokuOnRightColumn = true;
-        }
-    }
+    
 
     //check the square in front of the gyoku
     if (checkingPieces[0] !== 2 && gameState[gyokuPosition + (gyokuForward * 9)].charAt(0) != "e" &&
@@ -2121,4 +2111,34 @@ function checkForMate(color) {
 
 function disableSubmit(){
     document.getElementById("submitmovebutton").style.visibility = "hidden";
+}
+
+function stepForward(){
+    //if it's not the first move and it's not displaying the current turn
+    if(turn > 1 && viewTurn < turn ){
+        viewTurn ++;
+        movesHistory = gameHistory[0].split(",");
+        movesHistory.splice(3 * viewTurn, movesHistory.length - (3 * viewTurn));
+        console.log(movesHistory);
+        resetGameState();
+        deselectAll();
+        loadGameState(2);
+        drawBoard();
+    }
+
+}
+
+function stepBack(){
+    //if it's not the first move and it's not displaying the first move
+    if(turn > 1 && viewTurn > 1){
+        viewTurn --; //go back one turn 
+        movesHistory = gameHistory[0].split(",");
+        movesHistory.splice(3 * viewTurn, movesHistory.length - (3 * viewTurn));
+        console.log(movesHistory);
+        resetGameState();
+        deselectAll();
+        loadGameState(2);
+        drawBoard();
+    }
+
 }
