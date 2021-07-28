@@ -1,4 +1,5 @@
 
+
 #wholeBoard{
     display: block;
     width: 98vw;
@@ -51,7 +52,8 @@
     
     #playerPrompt{
         position: absolute;
-        top: 110vw;
+        top: 115vw;
+        font-size: 4vw;
     }
 
     #toReservation{
@@ -71,18 +73,16 @@
     #forward{
         position: absolute;
         top: 118vw;
-        right: 11vw;
+        right: 13vw;
         font-size: 8vw;
-        width: 8vw;
         background-color: rgb(238, 166, 32);
     }
 
     #back{
         position:absolute;
         top: 118vw;
-        right: 20VW;
+        right: 21VW;
         font-size: 8vw;
-        width: 8vw;
         background-color: rgb(238, 166, 32);
     }
     #skipForward{
@@ -90,7 +90,6 @@
         top: 118vw;
         right: 1vw;
         font-size: 8vw;
-        width: 8vw;
         background-color: rgb(238, 166, 32);
     }
 
@@ -99,7 +98,6 @@
         top: 118vw;
         right: 30VW;
         font-size: 8vw;
-        width: 8vw;
         background-color: rgb(238, 166, 32);
 
     }
