@@ -70,12 +70,36 @@
 
     #forward{
         position: absolute;
-        top: 120vw;
-        right: 5vw;
+        top: 118vw;
+        right: 11vw;
+        font-size: 8vw;
+        width: 8vw;
+        background-color: rgb(238, 166, 32);
     }
 
     #back{
         position:absolute;
-        top: 120vw;
+        top: 118vw;
         right: 20VW;
+        font-size: 8vw;
+        width: 8vw;
+        background-color: rgb(238, 166, 32);
+    }
+    #skipForward{
+        position: absolute;
+        top: 118vw;
+        right: 1vw;
+        font-size: 8vw;
+        width: 8vw;
+        background-color: rgb(238, 166, 32);
+    }
+
+    #skipBack{
+        position:absolute;
+        top: 118vw;
+        right: 30VW;
+        font-size: 8vw;
+        width: 8vw;
+        background-color: rgb(238, 166, 32);
+
     }

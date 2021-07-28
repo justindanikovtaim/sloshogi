@@ -2116,11 +2116,10 @@ function disableSubmit(){
 
 function stepForward(){
     //if it's not the first move and it's not displaying the current turn
-    if(turn > 1 && viewTurn < turn ){
+    if(realTurn > 1 && viewTurn < turn ){
         viewTurn ++;
         movesHistory = gameHistory[0].split(",");
         movesHistory.splice(3 * viewTurn, movesHistory.length - (3 * viewTurn));
-        console.log(movesHistory);
         resetGameState();
         deselectAll();
         loadGameState(1);
@@ -2129,6 +2128,15 @@ function stepForward(){
     }
 
 }
+function skipForward(){
+    viewTurn = realTurn - 1;
+    movesHistory = gameHistory[0].split(",");
+    resetGameState();
+        deselectAll();
+        loadGameState(1);
+        drawBoard();
+        drawMochigoma();
+}
 
 function stepBack(){
     //if it's not the first move and it's not displaying the first move
@@ -2136,7 +2144,6 @@ function stepBack(){
         viewTurn --; //go back one turn 
         movesHistory = gameHistory[0].split(",");
         movesHistory.splice(3 * viewTurn, movesHistory.length - (3 * viewTurn));
-        console.log(movesHistory);
         resetGameState();
         deselectAll();
         loadGameState(1);
@@ -2144,4 +2151,13 @@ function stepBack(){
         drawMochigoma();
     }
 
+}
+function skipBack(){
+    viewTurn = 0;
+    movesHistory = undefined;
+    resetGameState();
+        deselectAll();
+        loadGameState(1);
+        drawBoard();
+        drawMochigoma();
 }

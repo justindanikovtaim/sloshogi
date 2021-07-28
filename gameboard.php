@@ -25,8 +25,10 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
     <div id = "blackMochigoma"></div>
     </div>
  <h3 id = "playerPrompt"></h3> 
- <button id = "forward" onClick = "stepForward()">⇨</button>
- <button id = "back" onClick = "stepBack()">⇦</button>
+ <button id = "forward" onClick = "stepForward()"> > </button>
+ <button id = "back" onClick = "stepBack()"> < </button>
+ <button id = "skipForward" onClick = "skipForward()">≫</button>
+ <button id = "skipBack" onClick = "skipBack()">≪</button>
   
 <a href="user_page.php"> <img src = "images/return.png"  id = "toUserPage"> </a>
 <a href="move_reservation.php?id=<?=$gameID?>" id = "toReservation">予約</a>
