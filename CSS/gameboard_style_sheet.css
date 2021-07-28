@@ -45,7 +45,7 @@
     
     #toUserPage{
         position: absolute;
-        top: 130vw;
+        top: 125vw;
         left: 5vw;
         width: 20vw;
     }
@@ -70,34 +70,14 @@
         width: 20vw;
     }
 
-    #forward{
-        position: absolute;
-        top: 118vw;
-        right: 13vw;
-        font-size: 8vw;
-        background-color: rgb(238, 166, 32);
-    }
-
-    #back{
+    #skipButtons{
         position:absolute;
         top: 118vw;
-        right: 21VW;
+        right: 5VW;
+    }
+    
+    .skipButton{
         font-size: 8vw;
         background-color: rgb(238, 166, 32);
     }
-    #skipForward{
-        position: absolute;
-        top: 118vw;
-        right: 1vw;
-        font-size: 8vw;
-        background-color: rgb(238, 166, 32);
-    }
-
-    #skipBack{
-        position:absolute;
-        top: 118vw;
-        right: 30VW;
-        font-size: 8vw;
-        background-color: rgb(238, 166, 32);
-
-    }
+   
