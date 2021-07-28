@@ -169,6 +169,7 @@ function resetGameState(){
     "empty", "BHI", "empty", "empty", "empty", "empty", "empty", "BKAKU", "empty",
     "BKO", "BKEI", "BGIN", "BKIN", "BGYOKU", "BKIN", "BGIN", "BKEI", "BKO", "empty"];
 // set each square in initial gamestate plus one extra at the end for mochigoma placements
+ mochiGomaArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     turn = 1;
 }
 
@@ -2122,8 +2123,9 @@ function stepForward(){
         console.log(movesHistory);
         resetGameState();
         deselectAll();
-        loadGameState(2);
+        loadGameState(1);
         drawBoard();
+        drawMochigoma();
     }
 
 }
@@ -2137,8 +2139,9 @@ function stepBack(){
         console.log(movesHistory);
         resetGameState();
         deselectAll();
-        loadGameState(2);
+        loadGameState(1);
         drawBoard();
+        drawMochigoma();
     }
 
 }
