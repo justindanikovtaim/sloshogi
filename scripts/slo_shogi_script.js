@@ -4,6 +4,7 @@
 let selectedPiece = null; //the currently highlighted piece 
 let possibleMoves = []; //the possible moves for the currently selected piece
 let turn = 1; //odd turns = black, even turns = white
+let realTurn;
 let viewTurn; //variable for keeping track of the turn being viewed with the forward and back buttons
 let forward; //used for storing the forward direction of a piece
 let board1Row = [0, 9, 18, 27, 36, 45, 54, 63, 72]; //all of the squares that are on the right edge
@@ -177,6 +178,7 @@ resetGameState();
 
 let tempGameState = [];
 loadGameState(1);
+realTurn = turn; //needed to make sure that the user can't play when looking at a previous game state
 drawBoard();
 drawMochigoma();
 document.getElementById("toReservation").style.visibility = "hidden";
@@ -267,8 +269,6 @@ function sendMoveData(){
     ajax.open("POST", 'send.php', true); //asyncronous
     ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     ajax.send(sendToDatabase);//(sendToDatabase);
-    
-
 }
 
 function resetGame(){
@@ -424,7 +424,7 @@ function drawMochigoma() {
 function pieceClick(id) {
     
    //make sure that it is the users turn and that a past state is not being displayed on the board
-   if(!usersTurn || viewTurn < turn - 1){
+   if(!usersTurn || viewTurn < realTurn - 1){
        deselectAll();
    } else if ((((turn % 2 == 0) && gameState[id].charAt(0) != "W") || ((turn % 2 !== 0) && gameState[id].charAt(0) != "B")) &&
         justChecking === false && boardSquare[id].style.background.substr(0,7) != "rgb(226"){
@@ -1166,11 +1166,14 @@ function movePiece(id) {
         isMochiGoma = gameState[81];
     }
 
-    
+    let tempMoveForGameHistory;
     if(turn === 1){
         //on the first turn, we don't want to start by sending a comma in the data
         sendToDatabase = JSON.stringify({"newmoves": selectedPiece.toString() + "," 
             + id.toString() + "," + gameState[selectedPiece], "gameId": currentGameID });//make the move into JSON object
+
+            //this is for the forward and back buttons
+            tempMoveForGameHistory = selectedPiece.toString() + ","  + id.toString() + "," + gameState[selectedPiece];
     }else{
         //otherwise, check if it is white and flip the move if it is
         
@@ -1188,6 +1191,10 @@ function movePiece(id) {
         //also, start by sending a comma to separate the move from the last one stored
         sendToDatabase = JSON.stringify({"newmoves": "," + moveFromSend.toString() + "," 
         + moveToSend.toString() + "," + gameState[selectedPiece], "gameId": currentGameID });//make the move into JSON object
+
+        //for Forward and Back buttons
+        tempMoveForGameHistory = "," + moveFromSend.toString() + "," + moveToSend.toString() + "," + gameState[selectedPiece];
+        
     }
     
         
@@ -1200,31 +1207,24 @@ function movePiece(id) {
     drawMochigoma();
     setTimeout(function(){if(confirm("Confirm Move?")){ //timeout ensures that piece will be moved before popup displays
     turn++; //increase the turn counter
-        
+    gameHistory[0] += tempMoveForGameHistory; //for forward and back buttons
+    movesHistory = gameHistory[0].split(","); //break the moves into an array 
+    
         if(handleReservations(moveFromSend, moveToSend, gameState[id]) == false){ //if handleReservations returns false
             disableAll();
             //send move to database
              sendMoveData();
             document.getElementById("toReservation").style.visibility = "visible";
-        }else{
-            deselectAll();
-            loadGameState(2);
-            drawBoard();
+            
         }
-    }else{
-        gameState[selectedPiece] = gameState[id];
-        gameState[id] = gameState[82];
-        drawBoard();
-        if(gameState[82].charAt(0) !== "e"){
-            removeMG()
-        }
-        if(selectedPiece == 81){//if it was a mochigoma
-            mochiGomaArray[mochiGomaOrder.indexOf("M" + isMochiGoma)] ++;
-        }
-        drawMochigoma();
+        
     }
+            deselectAll();
+            resetGameState();
+            loadGameState(1);
+            drawBoard();
+            drawMochigoma();
     selectedPiece = null;
-    deselectAll();
    
 
 },100);
