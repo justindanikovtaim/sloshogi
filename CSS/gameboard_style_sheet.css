@@ -45,14 +45,14 @@
     
     #toUserPage{
         position: absolute;
-        top: 125vw;
+        top: 124vw;
         left: 5vw;
         width: 20vw;
     }
     
     #playerPrompt{
         position: absolute;
-        top: 114vw;
+        top: 112vw;
         font-size: 4vw;
     }
 
@@ -73,7 +73,7 @@
     #skipButtons{
         position:absolute;
         top: 120vw;
-        right: 5VW;
+        right: 1VW;
     }
     
     .skipButton{
