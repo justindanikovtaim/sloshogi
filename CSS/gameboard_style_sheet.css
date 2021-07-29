@@ -52,7 +52,7 @@
     
     #playerPrompt{
         position: absolute;
-        top: 115vw;
+        top: 114vw;
         font-size: 4vw;
     }
 
@@ -72,12 +72,12 @@
 
     #skipButtons{
         position:absolute;
-        top: 118vw;
+        top: 120vw;
         right: 5VW;
     }
     
     .skipButton{
-        font-size: 8vw;
+        font-size: 6vw;
         background-color: rgb(238, 166, 32);
     }
    
