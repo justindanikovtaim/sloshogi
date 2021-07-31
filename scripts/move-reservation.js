@@ -373,7 +373,11 @@ function pieceClick(id) {
             let komaColor;
             if ((turn % 2 == 0 && playerColor == "B") || (turn % 2 != 0 && playerColor == "W")){
                 komaColor = "W";
-                flipped = true;
+               if(playerColor== "W"){
+                   flipped = true;
+               }else{
+                   flipped = false;
+               }
             } else{
                 komaColor = "B";
             }
@@ -1160,7 +1164,7 @@ function movePiece(id) {
         let moveToSend;
         
         if(playerColor == "W"){
-            if(selectedPiece != 81){
+            if(selectedPiece == 81){
                 moveFromSend = selectedPiece
             }else{
                 moveFromSend = 80 - selectedPiece

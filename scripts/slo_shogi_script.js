@@ -427,7 +427,7 @@ function pieceClick(id) {
    if(!usersTurn || viewTurn < realTurn - 1){
        deselectAll();
    } else if ((((turn % 2 == 0) && gameState[id].charAt(0) != "W") || ((turn % 2 !== 0) && gameState[id].charAt(0) != "B")) &&
-        justChecking === false && boardSquare[id].style.background.substr(0,7) != "rgb(226"){
+        justChecking === false && boardSquare[id].style.background.substr(0,7) != "rgb(230"){
              // make sure that the piece cicked is your own
         deselectAll();
         //do nothing
@@ -438,12 +438,12 @@ function pieceClick(id) {
         if (justChecking === false) {
             console.log(id);
         }
-        if (boardSquare[id].style.background.substr(0,7) == "rgb(226") { 
+        if (boardSquare[id].style.background.substr(0,7) == "rgb(230") { 
             //if the clicked square is highlighted as a possible move
             movePiece(id);
 
         } else if (selectedPiece !== null && (id === selectedPiece ||
-            id !== selectedPiece && boardSquare[id].style.background.substr(0,7) != "rgb(226")) {
+            id !== selectedPiece && boardSquare[id].style.background.substr(0,7) != "rgb(230")) {
             //if the same piece is clicked again or another unrelated place is clicked
             deselectAll();
             selectedPiece = null;
@@ -453,7 +453,7 @@ function pieceClick(id) {
             let komaColor = gameState[id].charAt(0); //set komaColor to be B or W based on the piece clicked
             if (justChecking === false) {
                 selectedPiece = id; // define the selected piece
-                boardSquare[id].style.filter = "saturate(7)"; //highlight the selected piece only if not checking for checkmate
+                boardSquare[id].style.filter = "brightness(1.5)";//highlight the selected piece only if not checking for checkmate
             }
 
             if (komaColor === "B") { //if it's black
@@ -523,7 +523,7 @@ function showMoveF(square, color) {
     if (justChecking === false) {
         for (i = move.length - 1; i > -1; i--) {
             if (move[i] !== null) {
-                boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
             }
         }
     }
@@ -549,7 +549,7 @@ function showMoveKEI(square, color) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
 
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }
@@ -580,7 +580,7 @@ function showMoveKO(square, color) {
     if (justChecking === false) {
         for (i = move.length - 1; i > -1; i--) {
             if (move[i] !== null) {
-                boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
             }
         }
     }
@@ -680,7 +680,7 @@ function showMoveKIN(square, color) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
 
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }
@@ -778,7 +778,7 @@ function showMoveGIN(square, color) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
 
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }
@@ -884,7 +884,7 @@ function showMoveHI(square, color) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
 
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }
@@ -1020,7 +1020,7 @@ function showMoveKAKU(square, color) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
 
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }
@@ -1133,7 +1133,7 @@ function showMoveGYOKU(square, color) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
 
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }
@@ -1248,10 +1248,10 @@ function handleReservations(movedFrom, movedTo, movedPiece){
         if(reservedMoves[0][0] == movedFrom && reservedMoves[0][1] == movedTo && reservedMoves[0][2] == movedPiece){
             //if the reservation perfectly macthes the move made
             alert("Reserved move triggered");
-            gameHistory[0] = reservedMoves[1][0] + "," +reservedMoves[1][1] + "," + reservedMoves[1][2];
+            movesHistory.push(reservedMoves[1][0], reservedMoves[1][1], reservedMoves[1][2]);
 
             sendToDatabase = JSON.stringify({"newmoves": "," + movedFrom +"," + movedTo + "," + movedPiece + "," +
-             gameHistory[0], "gameId": currentGameID });
+            reservedMoves[1][0] + "," + reservedMoves[1][1] + "," + reservedMoves[1][2], "gameId": currentGameID });
              //send the user's move and the triggerd move together
             sendMoveData();
 
@@ -1304,7 +1304,7 @@ function deselectAll() {
 }
 
 function placePiece(piece) {
-    if ((mochiGoma[mochiGomaOrder.indexOf(piece)].style.filter === "saturate(7)") && justChecking === false
+    if ((mochiGoma[mochiGomaOrder.indexOf(piece)].style.filter === "brightness(1.5)") && justChecking === false
         || piece.charAt(1) != playerColor) { //if the currently selected piece is clicked again
         deselectAll();
     } else {
@@ -1316,7 +1316,7 @@ function placePiece(piece) {
 
         if (justChecking === false) {
             let mochigomaPlace = mochiGomaOrder.indexOf("M" + gameState[selectedPiece]); //find the place where it is
-            mochiGoma[mochigomaPlace].style.filter = "saturate(7)"; //highlight the selected piece 
+            mochiGoma[mochigomaPlace].style.filter = "brightness(1.5)"; //highlight the selected piece 
         }
 
         switch (piece.substr(2, piece.length)) {//fu have special rules about place ment
@@ -1379,7 +1379,7 @@ function placePiece(piece) {
         if (justChecking === false) {
             for (i = move.length - 1; i > -1; i--) {
                 if (move[i] !== null) {
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }

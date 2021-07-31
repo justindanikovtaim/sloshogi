@@ -1,7 +1,6 @@
 <?php 
 session_start();
 $gameID = $_GET['id'];
-echo "Reserve Moves";
 $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
 
@@ -13,7 +12,7 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
     <meta charset="utf-8">
     <title>Slo Shogi - Reserve</title>
     
-    <link href="CSS/Gameboard_style_sheet.css" rel="stylesheet">
+    <link href="CSS/reservation.css" rel="stylesheet">
     <link href="CSS/all_pages.css" rel="stylesheet">
 
 </head>
@@ -26,7 +25,7 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
     <div id = "blackMochigoma"></div>
     </div>
  <h3 id = "playerPrompt"></h3>   
-<a href="user_page.php"> <img src = "images/return.png"  id = "toUserPage"> </a>
+<a href="gameboard.php?id=<?=$_GET['id']?>"> <img src = "images/return.png"  id = "toUserPage"> </a>
 <img src = "images/submit.png" id = "submitButton" onClick = "sendMoveData()">
 </body>
 
