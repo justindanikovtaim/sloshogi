@@ -37,8 +37,12 @@ if(gameHistory[1] == phpColor){//blackplayer is stored in gameHistory[1]
     playerColor = "W";
 }
 let usersTurn;//defined after gamestate is loaded
-let flipped;
-
+let flipped;   
+   if(playerColor== "W"){
+       flipped = true;
+   }else{
+       flipped = false;
+   }
 
 for (i = 0; i < 9; i++) {
     for (x = 0; x < 9; x++) {
@@ -1246,8 +1250,15 @@ function deselectAll() {
 }
 
 function placePiece(piece) {
+    let turnColor;
+    if(turn %2 == 0){
+        turnColor = "W";
+    }else{
+        turnColor = "B";
+    }//just set the player color based on the turn to get the following if statement to work
+
     if ((mochiGoma[mochiGomaOrder.indexOf(piece)].style.filter === "saturate(7)") && justChecking === false 
-    || piece.charAt(1) != playerColor) { //if the currently selected piece is clicked again
+    || piece.charAt(1) != turnColor) { //if the currently selected piece is clicked again
         deselectAll();
     } else{
         selectedPiece = 81; //set selected piece to number outside of the board
@@ -2016,13 +2027,13 @@ function checkForCheck(gyokuColor) {
 
 function eliminateIllegalMoves(color) {
 
-    if(flipped){
+  /*  if(flipped){
         if(color == "B"){
             color = "W";
         }else{
             color = "B";
         }
-    }
+    }*/
 
     let moveFromHolder;
     let moveToHolder;
