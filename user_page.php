@@ -68,16 +68,10 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
 <div id = "allGames"></div>
 </div>
 
-<div class="user">
-<h3>Friends</h3>
-<!--<a  href = "join_game.html.php">Find an Open Game</a>
-<br> -->
-<a href = "new_challenge.html.php">Challenge a Friend</a>
-<br>
-<a href = "#">Add New Friends</a>
-<!--<a href = "create_open_game.html.php">Create a New Open Game</a>
-<br>-->
-</div>
+<h3><a href = "newGame.html.php">New Game</a></h3>
+<h3><a href = "friends.php">Friends</a></h3>
+
+
 
 <div class="user">
 <h3>Finished Games</h3>

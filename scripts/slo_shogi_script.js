@@ -1248,14 +1248,14 @@ function handleReservations(movedFrom, movedTo, movedPiece){
         if(reservedMoves[0][0] == movedFrom && reservedMoves[0][1] == movedTo && reservedMoves[0][2] == movedPiece){
             //if the reservation perfectly macthes the move made
             alert("Reserved move triggered");
-            movesHistory.push(reservedMoves[1][0], reservedMoves[1][1], reservedMoves[1][2]);
+            movesHistory.push(movedFrom.toString(), movedTo.toString(), movedPiece, reservedMoves[1][0], reservedMoves[1][1], reservedMoves[1][2]);
 
             sendToDatabase = JSON.stringify({"newmoves": "," + movedFrom +"," + movedTo + "," + movedPiece + "," +
             reservedMoves[1][0] + "," + reservedMoves[1][1] + "," + reservedMoves[1][2], "gameId": currentGameID });
              //send the user's move and the triggerd move together
             sendMoveData();
 
-
+            reservationArray.splice(1,2);
             return true;
         }else{
             return false;

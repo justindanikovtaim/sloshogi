@@ -1,5 +1,5 @@
+<?php
 
-<?php 
 $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
 $userVar = "'".$_COOKIE['current_user_cookie']."'";
 $getFriends =  mysqli_query($link, 'SELECT friends FROM users WHERE username = '.$userVar); 
@@ -11,50 +11,35 @@ $numOfFriends = count($friendIds);
     $findFriends[$x] = mysqli_fetch_row($getData)[0];
     }
     
-
 ?>
 <!DOCTYPE html>
 <head>
 <link href="CSS/all_pages.css" rel="stylesheet">
 </head>
 <body>
-<a id = "backButton" href = "newGame.html.php">≪</a>
-<br>
-<h1>Choose a Friend to Challenge</h1>
+<a id = "backButton" href = "user_page.php">≪</a>
+<h1>Friends</h1>
 <div id = "drawFriends"></div>
-<form action="new_challenge.php" name = "challengeData" method = "post">
-<input type="hidden" name = "opponent" id = "opponentField">
-<p>Opponent: <span id = "showOpponent"></span></p>
-<h3>User Color</h3>
-<input type = "radio" id = "userColorBlack" name = "userColor" value = "blackplayer">
-<label for="userColorBlack">黒</label><br>
-<input type = "radio" id = "userColorWhite" name = "userColor" value = "whiteplayer">
-<label for="userColorWhite">白</label><br>
-<input type="submit" value="Send Challenge">
-</form>
+<br>
+<a href = "#">Add New Friends</a>
+<br>
+<a href = "#">Send Email Invite</a>
 
 </body>
 <script>
-function fillInName(opponent){
-    document.getElementById("opponentField").value = opponent;
-    document.getElementById("showOpponent").innerHTML = opponent;
-}
 
 let friendsArrayLength = Number(<?php echo $numOfFriends; ?>);
 let friendLinks = [];
 let counter = 0;
 
-//make a php foreach loop to create each name in the friendLinks array as a p element in the DOM
+//make a php foreach loop to create each name in the friendLinks array as a a element in the DOM
 <?php foreach($findFriends as $i){?>
         
-        friendLinks[counter] = document.createElement("a");
+   friendLinks[counter] = document.createElement("a");
    friendLinks[counter].innerHTML = "<?=$i?>";
-   friendLinks[counter].setAttribute("onClick", "fillInName('<?=$i?>')");
-   friendLinks[counter].setAttribute("href", "#");
+   friendLinks[counter].setAttribute("href", "view_friend.php?friendName=<?=$i?>");
    document.getElementById("drawFriends").appendChild(friendLinks[counter]);
    document.getElementById("drawFriends").innerHTML += "<br>";
    counter++
   <?php  }   ?>
 </script>
-
-

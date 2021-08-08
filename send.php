@@ -11,5 +11,6 @@ $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi')
 echo $updatecommand;
 
     mysqli_query($link, $updatecommand.$gametofind);
+    mysqli_query($link, 'UPDATE gamerecord SET reservation = "" WHERE id = '.$gametofind);//empty the reservation
 
  ?>

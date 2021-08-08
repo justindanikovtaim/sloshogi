@@ -1143,7 +1143,7 @@ function movePiece(id) {
         (gameState[selectedPiece].charAt(0) == "W" && playerColor == "W"))
          && (id < 27 || selectedPiece < 27)) ||
 
-            (((gameState[selectedPiece].charAt(0) == "w" && playerColor == "B") ||
+            (((gameState[selectedPiece].charAt(0) == "W" && playerColor == "B") ||
         (gameState[selectedPiece].charAt(0) == "B" && playerColor == "W")) 
         && (id > 52 || selectedPiece > 52)
              )) { //or the piece is already within the first 3 rows

@@ -28,3 +28,35 @@ body{
   padding:0px 5px; 
   border:1.5px solid black;
 }
+
+input[type=radio] {
+  border: 0px;
+  width: 8vw;
+  height: 8vw;
+}
+
+input{
+  font-size: 8vw;
+  font-family: "8Bit";
+
+}
+
+form{
+  font-size: 8vw;
+}
+
+#backButton{
+  position:absolute;
+  font-size: 10vw;
+  top: 0vh;
+  margin: 0;
+  text-decoration: none;
+}
+
+a:link {
+  color: black;
+}
+
+a:visited {
+  color: black;
+}
