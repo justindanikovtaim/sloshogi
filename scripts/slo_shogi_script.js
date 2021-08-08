@@ -311,6 +311,7 @@ function resign(){
     {
       // Use ajax.responseText to get the raw response from the server
       console.log(ajax.responseText);
+      window.location.reload();
     }else {
         console.log('Error: ' + ajax.status); // An error occurred during the request.
     }
