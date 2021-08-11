@@ -33,10 +33,13 @@ let reservationArray = gameHistory[3].split(";"); //get the reserved moves and p
 console.log(reservationArray); //REMOVE
 //initialize gameboard
 let playerColor;
+let opponentColor;
 if(gameHistory[1] == phpColor){//blackplayer is stored in gameHistory[1]
     playerColor = "B";
+    opponentColor = "W";
 }else{
     playerColor = "W";
+    opponentColor = "B";
 }
 let usersTurn;//defined after gamestate is loaded
 let flipped;   
@@ -434,7 +437,7 @@ function pieceClick(id) {
    if(!usersTurn){
        deselectAll();
    } else if ((((turn % 2 == 0) && gameState[id].charAt(0) != "W") || ((turn % 2 !== 0) && gameState[id].charAt(0) != "B")) &&
-        justChecking === false && boardSquare[id].style.background.substr(0,7) != "rgb(226"){
+        justChecking === false && boardSquare[id].style.background.substr(0,7) != "rgb(230"){
         deselectAll();
         //do nothing
     } else {
@@ -444,12 +447,12 @@ function pieceClick(id) {
         if (justChecking === false) {
             console.log(id);
         }
-        if (boardSquare[id].style.background.substr(0,7) == "rgb(226") { 
+        if (boardSquare[id].style.background.substr(0,7) == "rgb(230") { 
             //if the clicked square is highlighted as a possible move
             movePiece(id);
 
         } else if (selectedPiece !== null && (id === selectedPiece ||
-            id !== selectedPiece && boardSquare[id].style.background.substr(0,7) != "rgb(226")) {
+            id !== selectedPiece && boardSquare[id].style.background.substr(0,7) != "rgb(230")) {
             //if the same piece is clicked again or another unrelated place is clicked
             deselectAll();
             selectedPiece = null;
@@ -469,7 +472,7 @@ function pieceClick(id) {
             }
             if (justChecking === false) {
                 selectedPiece = id; // define the selected piece
-                boardSquare[id].style.filter = "saturate(7)"; //highlight the selected piece only if not checking for checkmate
+                boardSquare[id].style.filter = "brightness(1.5)"; //highlight the selected piece only if not checking for checkmate
             }
 
             if ((turn % 2 != 0 && playerColor == "B") 
@@ -546,7 +549,7 @@ function showMoveF(square, color) {
     if (justChecking === false) {
         for (i = move.length - 1; i > -1; i--) {
             if (move[i] !== null) {
-                boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
             }
         }
     }
@@ -579,7 +582,7 @@ function showMoveKEI(square, color) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
 
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }
@@ -618,7 +621,7 @@ function showMoveKO(square, color) {
     if (justChecking === false) {
         for (i = move.length - 1; i > -1; i--) {
             if (move[i] !== null) {
-                boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
             }
         }
     }
@@ -725,7 +728,7 @@ function showMoveKIN(square, color) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
 
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }
@@ -830,7 +833,7 @@ function showMoveGIN(square, color) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
 
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }
@@ -945,7 +948,7 @@ function showMoveHI(square, color) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
 
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }
@@ -1088,7 +1091,7 @@ function showMoveKAKU(square, color) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
 
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }
@@ -1208,7 +1211,7 @@ function showMoveGYOKU(square, color) {
             if (move[i] !== null) {
                 if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
 
-                    boardSquare[move[i]].style.background = "rgb(226, 180, 26)";//highlight each possible square to move into
+                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
                 }
             }
         }
@@ -1297,6 +1300,7 @@ function movePiece(id) {
             deselectAll();
             resetGameState();
             loadGameState(1);
+            console.log(checkForMate(opponentColor));
             drawBoard();
             drawMochigoma();
     selectedPiece = null;
