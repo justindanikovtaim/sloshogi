@@ -1,7 +1,7 @@
 <?php
 
 $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
-    if($_POST["userColor"] == "black"){
+    if($_POST["userColor"] == "blackplayer"){
         $blackPlayer = $_COOKIE["current_user_cookie"];
         $whitePlayer = $_POST["opponent"];
     }else{
@@ -16,8 +16,11 @@ $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi')
 <!DOCTYPE html>
 <head>
     <title>Slo Shogi Challenge</title>
+    <link href="CSS/all_pages.css" rel="stylesheet">
 </head>
-<h2>
+<body>
+<a id = "backButton" href = "newGame.html.php">≪</a>
+<h1>
 <?php
     if(mysqli_query($link, $newChallenge)){
         echo "Challenge Sent!";
@@ -25,10 +28,7 @@ $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi')
         echo "ERROR: Not able to execute $newChallenge. " . mysqli_error($link);
     }
  ?>
- </h2>
- <br>
- <a href = "user_page.php">
-     <img src = "images/return.png">
-</a>
+ </h1>
 
+</body>
  </html>

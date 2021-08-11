@@ -2162,3 +2162,40 @@ function skipBack(){
         drawBoard();
         drawMochigoma();
 }
+
+function endGame(){
+    alert("勝ちました。おめでとう！");
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function()
+  {
+    // If ajax.readyState is 4, then the connection was successful
+    // If ajax.status (the HTTP return code) is 200, the request was successful
+    if(ajax.readyState == 4 && ajax.status == 200)
+    {
+      // Use ajax.responseText to get the raw response from the server
+      console.log(ajax.responseText);
+      window.location.reload();
+    }else {
+        console.log('Error: ' + ajax.status); // An error occurred during the request.
+    }
+  }
+  let winnerName;
+  let loserName;
+  //set the winner and loser by finding the usernames of the players from the gamehistory array
+  if(playerColor == "W"){
+      winnerName = gameHistory[2];
+      loserName = gameHistory[1];
+  }else{
+      winnerName = gameHistory[1];
+      loserName = gameHistory[2];
+  }
+
+  let json = JSON.stringify({
+    id: currentGameID, winner: winnerName, loser: loserName
+  });
+
+console.log(json);
+    ajax.open("POST", 'resign.php', true); //asyncronous
+    ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+    ajax.send(json);//(sendToDatabase);
+}
