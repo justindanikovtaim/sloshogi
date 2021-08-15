@@ -22,6 +22,7 @@ $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi')
     //add one to the losses
 //echo $loserRecord;
     $resignCommand = 'UPDATE gamerecord SET status = 3 WHERE id ='; 
+    $addWinnerCommand = "UPDATE gamerecord SET winner = '".$decoded['winner']."' WHERE id = '".$gametofind."'";
     $plusWinCommand = "UPDATE users SET record = '" .$winnerRecord. "' WHERE username = '" .$decoded['winner']."'";
     $plusLossCommand =  "UPDATE users SET record = '" .$loserRecord. "' WHERE username = '" .$decoded['loser']."'";
 
@@ -30,6 +31,7 @@ echo $plusWinCommand;
 echo $plusLossCommand;
 
     mysqli_query($link, $resignCommand.$gametofind);
+    mysqli_query($link, $addWinnerCommand);
     mysqli_query($link, $plusWinCommand);
     mysqli_query($link, $plusLossCommand);
  ?>

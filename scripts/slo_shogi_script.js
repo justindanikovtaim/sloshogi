@@ -249,7 +249,10 @@ if(playerColor == "W" && placeCalled == 1){
     gameState = flipGamestate; //put the flipped gamestate into gameState
 }
 
-if(turn % 2 == 0){    //update the prompt showing which player's turn it is
+if(gameHistory[5] != null){//if a winner has been set
+    document.getElementById("playerPrompt").innerHTML = gameHistory[5] + " が勝ちました";
+    
+}else if(turn % 2 == 0){    //update the prompt showing which player's turn it is
 //White's turn
     document.getElementById("playerPrompt").innerHTML = gameHistory[2] + " to play";
 
@@ -434,7 +437,7 @@ function drawMochigoma() {
 function pieceClick(id) {
     
     //first, make sure that the piece cicked is your own
-   if(!usersTurn){
+   if(!usersTurn && !justChecking){
        deselectAll();
    } else if ((((turn % 2 == 0) && gameState[id].charAt(0) != "W") || ((turn % 2 !== 0) && gameState[id].charAt(0) != "B")) &&
         justChecking === false && boardSquare[id].style.background.substr(0,7) != "rgb(230"){
@@ -451,7 +454,7 @@ function pieceClick(id) {
             //if the clicked square is highlighted as a possible move
             movePiece(id);
 
-        } else if (selectedPiece !== null && (id === selectedPiece ||
+        } else if (!justChecking && selectedPiece !== null && (id === selectedPiece ||
             id !== selectedPiece && boardSquare[id].style.background.substr(0,7) != "rgb(230")) {
             //if the same piece is clicked again or another unrelated place is clicked
             deselectAll();
@@ -1300,7 +1303,9 @@ function movePiece(id) {
             deselectAll();
             resetGameState();
             loadGameState(1);
-            console.log(checkForMate(opponentColor));
+            if(checkForMate(opponentColor)){
+                endGame();
+            }
             drawBoard();
             drawMochigoma();
     selectedPiece = null;
@@ -1524,7 +1529,7 @@ function checkForCheck(gyokuColor) {
     let gyokuOnRightColumn;
     let gyokuOnLeftColumn;
 
-    if (gyokuColor === "B") {
+    if (!justChecking) {
         gyokuForward = -1; //black ou moves negatively to go forward
         //this will check to see if the gyoku is on any of the edges of the board and set the corresponding spot
         //in the checkingPieces array to 2, which will prevent it from being checked in the next part
@@ -2165,6 +2170,15 @@ function eliminateIllegalMoves(color) {
         isCheck = null; //needs to be reset, otherwise if previous spots check returned true, it will still return true
     }
 
+    //if there are any null values in the array, they need to be removed:
+    let tempMoveArray = [];
+    for(i = 0; i < move.length; i++){
+        if(move[i] != null){
+          tempMoveArray.push(move[i]);
+        }
+    }
+    move = tempMoveArray;
+    console.log(move);
 }
 let justChecking = false;
 let isCheckMate = false;
@@ -2174,6 +2188,7 @@ function checkForMate(color) {
     for (s = 0; s < 81; s++) {
 
         if (gameState[s].charAt(0) === color) {//if it's an own piece
+            selectedPiece = s;
             pieceClick(s);//call the piececlick function to get the moves
 
             for (b = 0; b < move.length; b++) {
@@ -2196,7 +2211,7 @@ function checkForMate(color) {
         }
         for (v = startCountingMG; v < startCountingMG + 7; v++) {
             if (mochiGomaArray[v] > 0) {//if there is actually a mochigoma in that spot
-                placePiece(v);
+                placePiece(mochiGomaOrder[v]);
 
                 for (b = 0; b < move.length; b++) {
                     counterForMove += move[b];
