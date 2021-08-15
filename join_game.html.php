@@ -2,22 +2,16 @@
 session_start();
 
 $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
-$getOpenGameId = mysqli_query($link, "SELECT id FROM gamerecord WHERE status = 1 AND 
-( blackplayer != '".$_COOKIE['current_user_cookie'] ."' OR whiteplayer != '".$_COOKIE['current_user_cookie'] ."')" );
+$getOpenGameId = mysqli_query($link, "SELECT id FROM gamerecord WHERE status = 1 AND creator != '".$_COOKIE['current_user_cookie'] ."'" );
 $openGameIdArray =  [];
 while($row = mysqli_fetch_array($getOpenGameId)){
     array_push($openGameIdArray, $row['id']);//add each open game id that user didn't make
 }
 $opponentNameArray = [];
 for($i = 0; $i < sizeof($openGameIdArray); $i++){
-    $getOpponent = mysqli_query($link, "SELECT blackplayer, whiteplayer FROM gamerecord WHERE id = '".$openGameIdArray[$i]."'");
+    $getOpponent = mysqli_query($link, "SELECT creator FROM gamerecord WHERE id = '".$openGameIdArray[$i]."'");
     $getOpponentArray = mysqli_fetch_array($getOpponent);
-    if($getOpponentArray['blackplayer'] == $_COOKIE['current_user_cookie']){
-
-        array_push($opponentNameArray, $getOpponentArray['whiteplayer']);
-    }else{
-        array_push($opponentNameArray, $getOpponentArray['blackplayer']);
-    }
+    array_push($opponentNameArray, $getOpponentArray['creator']);
 }
 ?>
 
@@ -39,7 +33,7 @@ for($i = 0; $i < sizeof($openGameIdArray); $i++){
 
     for(i = 0; i < getOpenGamesArray.length; i ++){
     openGamesArray[i] = document.createElement("a");
-    openGamesArray[i].href = "gameboard.php?id=" + openGamesArray[i];
+    openGamesArray[i].href = "join_open_game.php?id=" + getOpenGamesArray[i];
     openGamesArray[i].innerHTML = "SLO" + getOpenGamesArray[i] +" vs. " + currentGameOpponentArray[i];
     document.getElementById("drawOpenGames").appendChild(openGamesArray[i]);
     let lineBreak = document.createElement("br");
