@@ -196,6 +196,12 @@ if(!usersTurn || gameHistory[4] == "3"){//if not the user's turn or the game has
     document.getElementById("toReservation").style.visibility = "visible";
 
 }
+backArrow = document.createElement("a");
+backArrow.id = "backButton";
+backArrow.href = "user_page.php";
+backArrow.innerHTML="≪";
+document.getElementById("backArrow").appendChild(backArrow);
+
 
 function loadGameState(placeCalled){//loads the current game state from the database (slo Shogi v.1)
     if(movesHistory != undefined){
@@ -251,7 +257,7 @@ if(playerColor == "W" && placeCalled == 1){
 
 if(gameHistory[5] != null){//if a winner has been set
     document.getElementById("playerPrompt").innerHTML = gameHistory[5] + " が勝ちました";
-    
+
 }else if(turn % 2 == 0){    //update the prompt showing which player's turn it is
 //White's turn
     document.getElementById("playerPrompt").innerHTML = gameHistory[2] + " to play";

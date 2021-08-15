@@ -19,11 +19,13 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
 
 <body bgcolor="#f0e68c">
 
+    
     <div id = wholeBoard>
     <div id = "whiteMochigoma"></div>
     <div id = "board"></div>
     <div id = "blackMochigoma"></div>
     </div>
+    <div id="backArrow"></div>
  <h3 id = "playerPrompt"></h3> 
 
  <div id = "skipButtons">
