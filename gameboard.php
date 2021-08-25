@@ -26,6 +26,7 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
     <div id = "blackMochigoma"></div>
     </div>
     <div id="backArrow"></div>
+    <button id="undo" onClick = "window.location.reload()">⎌</button>
  <h3 id = "playerPrompt"></h3> 
 
  <div id = "skipButtons">

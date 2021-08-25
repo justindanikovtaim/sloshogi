@@ -268,6 +268,7 @@ else{
     document.getElementById("playerPrompt").innerHTML = gameHistory[1] + " to play";
 }
 viewTurn = turn - 1; // viewing the current game state
+document.getElementById("undo").style.visibility = "hidden";
 }
 
 function sendMoveData(){
@@ -1292,40 +1293,45 @@ function movePiece(id) {
     drawBoard();     
     
     drawMochigoma();
-    setTimeout(function(){if(confirm("Confirm Move?")){ //timeout ensures that piece will be moved before popup displays
-    turn++; //increase the turn counter
-    gameHistory[0] += tempMoveForGameHistory; //for forward and back buttons
-    movesHistory = gameHistory[0].split(","); //break the moves into an array 
-    
-        if(handleReservations(moveFromSend, moveToSend, gameState[id]) == false){ //if handleReservations returns false
-            disableAll();
-            //send move to database
-             sendMoveData();
-            document.getElementById("toReservation").style.visibility = "visible";
-            
-        }
-        
-    }
-            deselectAll();
-            resetGameState();
-            loadGameState(1);
-            if(checkForMate(opponentColor)){
-                endGame();
-            }
-            drawBoard();
-            drawMochigoma();
-    selectedPiece = null;
-   
 
-},100);
+    disableAll();
+     //only the piece that was moved can be clicked, and it will trigger the confirmMove function and pass it the needed variables
+    boardSquare[id].setAttribute("onclick", "confirmMove(" + moveFromSend+ ","+ moveToSend+ ", '"+ tempMoveForGameHistory+"'," + id+")");  
+    document.getElementById("undo").style.visibility="visible";
+    document.getElementById("playerPrompt").innerHTML="再度クリックで承認｜Click again to confirm";
 
-    
-    // console.log(checkForCheck("B"));
-    // console.log(checkForMate("B"));
-    //  console.log(checkForCheck("W"));
-    // console.log(checkForMate("W"));
+
 
 }
+function confirmMove(moveFromSend, moveToSend, tempMoveForGameHistory, currentPlace){
+        turn++; //increase the turn counter
+        gameHistory[0] += tempMoveForGameHistory; //for forward and back buttons
+        movesHistory = gameHistory[0].split(","); //break the moves into an array 
+
+            if(turn > 1){
+
+            if(handleReservations(moveFromSend, moveToSend, gameState[currentPlace]) == false){ //if handleReservations returns false
+                disableAll();
+                //send move to database
+                 sendMoveData();
+                document.getElementById("toReservation").style.visibility = "visible";
+                
+            }
+        }
+
+                deselectAll();
+                resetGameState();
+                loadGameState(1);
+                if(checkForMate(opponentColor)){
+                    endGame();
+                }
+                drawBoard();
+                drawMochigoma();
+        selectedPiece = null;
+       
+    
+}
+
 function handleReservations(movedFrom, movedTo, movedPiece){
     if(reservationArray.length <2){//if there are no moves reserved
         return false;
