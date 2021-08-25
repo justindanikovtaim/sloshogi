@@ -49,6 +49,14 @@
         left: 5vw;
         width: 20vw;
     }
+
+    #undo{
+        position: absolute;
+        top: 107vw;
+        font-size: 8vw;
+        height: 9vw;
+        background-color:red;
+    }
     
     #playerPrompt{
         position: absolute;
