@@ -5,7 +5,7 @@ $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi')
 $enteredPW = htmlspecialchars($_POST['pw']);
 $currentUser = htmlspecialchars($_POST['userData']);
 
-$verifyPWQuery = mysqli_query($link, "SELECT password FROM users WHERE username = '".$currentUser ."'");
+$verifyPWQuery = mysqli_query($link, "SELECT pass FROM users WHERE username = '".$currentUser ."'");
 
 $verifyPW = mysqli_fetch_array($verifyPWQuery, MYSQLI_NUM); //make numeric array
 

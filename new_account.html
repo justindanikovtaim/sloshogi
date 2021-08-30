@@ -1,0 +1,31 @@
+
+<!DOCTYPE HTML>
+<head>
+    <meta charset="utf-8">
+    <title>Slo Shogi Account Creation</title>
+    
+    <link href="CSS/all_pages.css" rel="stylesheet">
+
+    <script>
+        function submitPostLink(){
+            document.postlink.submit();
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <h1>SLO 将棋　アカウント作成</h1>
+    <br>
+    <form action = "verify_creation.php" method ="post">
+        <label for="userData"><b>ユーザー名/Username</b></label>
+        <input title="4~20文字；数字、A-Z、_, - のみ；スペース禁止｜4-20 characters; numbers, letters, _, - only; no spaces" 
+       pattern = "[A-Za-z0-9\-_\.]{4,20}" type = "text" placeholder="Enter Username" name = "userData" maxlength = "20" required>
+        <br>
+        <label for = "address"><b>Email Address</b></label>
+        <input type = "email" placeholder = "youremail@website.com" name ="address" autocomplete = "on" required>
+        <br>
+        <button type = "submit">アカウント作成/Create Account</button>
+    </form>
+</body>
