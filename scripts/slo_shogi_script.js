@@ -973,8 +973,7 @@ function showMoveKAKU(square, color) {
             color = "B";
         }
     }
-    if ((color === "B" && board1Row.includes(square)) ||//if it is black and on right edge
-        color === "W" && board9Row.includes(square)) {//or white and on left edge
+    if (board1Row.includes(square)) {//if on the right edge
         pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
     } else {
         pieceBlocking = false;
@@ -1003,8 +1002,7 @@ function showMoveKAKU(square, color) {
     }
     advanceRow = 0; //reset the row counter
 
-    if ((color === "B" && board1Row.includes(square)) ||//if it is black and on right edge
-        color === "W" && board9Row.includes(square)) {//or white and on left edge
+    if (board1Row.includes(square)){//if on the right edge
         pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
     } else {
         pieceBlocking = false;
@@ -1033,8 +1031,7 @@ function showMoveKAKU(square, color) {
     }
     advanceRow = 0; //reset the row counter
 
-    if ((color === "B" && board9Row.includes(square)) ||//if it is black and on left edge
-        color === "W" && board1Row.includes(square)) {//or white and on right edge
+    if (board9Row.includes(square)) {//if on the left edge
         pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
     } else {
         pieceBlocking = false;
@@ -1062,8 +1059,7 @@ function showMoveKAKU(square, color) {
     }
     advanceRow = 0; //reset the row counter
 
-    if ((color === "B" && board9Row.includes(square)) ||//if it is black and on left edge
-        color === "W" && board1Row.includes(square)) {//or white and on right edge
+    if (board9Row.includes(square)) {//if on the left edge
         pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
     } else {
         pieceBlocking = false;
