@@ -21,6 +21,7 @@ let boardTopEdge = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 let boardBottomEdge = [72, 73, 74, 75, 76, 77, 78, 79, 80];
 let mochiGomaArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //array for black mochi goma 
 //(Wfu, WKo, Wkei, Wgin, Wkin, Wkaku, Whi, Bfu, BKo, Bkei, Bgin, Bkin, Bkaku, Bhi)
+let mochiGomaAlreadySelected = false;
 let isCheck = null; //keep track of if it is check or not
 let checkingPieces = [];
 let move = [];
@@ -1397,9 +1398,15 @@ function placePiece(piece) {
     if ((mochiGoma[mochiGomaOrder.indexOf(piece)].style.filter === "brightness(1.5)") && justChecking === false
         || piece.charAt(1) != playerColor) { //if the currently selected piece is clicked again
         deselectAll();
-    } else {
+        mochiGomaAlreadySelected = false;
+    } else if(mochiGomaAlreadySelected){
+        //if a mochigoma is already selected, this makes sure that multiple pieces can't be highlighted at the same time
+        deselectAll();
+        mochiGomaAlreadySelected = false;
+    }else{
         selectedPiece = 81; //set selected piece to number outside of the board
         gameState[81] = piece.substr(1, piece.length); //put the piece in the 81st spot of the gameState array
+        mochiGomaAlreadySelected = true;
         let startingPlace = 0;
         let endAfter;
         let MGColor = piece.charAt(1);
