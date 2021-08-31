@@ -17,6 +17,9 @@ h3{
 a{
   font-size: 10vw;
 }
+#logoutButton{
+  font-size: 6vw;
+}
 
 body{
   background-color:#CCCC99;
@@ -59,4 +62,8 @@ a:link {
 
 a:visited {
   color: black;
+}
+
+#screenshot{
+  width: 90vw;
 }
