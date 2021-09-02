@@ -20,6 +20,24 @@ for($i = 0; $i < sizeof($currentGameIdArray); $i++){
     }
 }
 
+$getNewChallenges = mysqli_query($link, "SELECT id FROM gamerecord WHERE status = 1 AND creator != '".$_COOKIE['current_user_cookie']."' AND
+( blackplayer = '".$_COOKIE['current_user_cookie'] ."' OR whiteplayer = '".$_COOKIE['current_user_cookie'] ."')" );
+//get challenges that the user didn't create themselves
+$challengesIdArray =  [];
+while($row = mysqli_fetch_array($getNewChallenges)){
+    array_push($challengesIdArray, $row['id']);//add each gameid related to the user to an array
+}
+$challengingOpponentArray = [];
+for($i = 0; $i < sizeof($challengesIdArray); $i++){
+    $getOpponent = mysqli_query($link, "SELECT blackplayer, whiteplayer FROM gamerecord WHERE id = '".$challengesIdArray[$i]."'");
+    $getOpponentArray = mysqli_fetch_array($getOpponent);
+    if($getOpponentArray['blackplayer'] == $_COOKIE['current_user_cookie']){
+
+        array_push($challengingOpponentArray, $getOpponentArray['whiteplayer']);
+    }else{
+        array_push($challengingOpponentArray, $getOpponentArray['blackplayer']);
+    }
+}
 
 
 $getPastGameId = mysqli_query($link, "SELECT id FROM gamerecord WHERE status = 3 AND 
@@ -49,6 +67,8 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
     <script>
         let currentGameIdArray = <?php echo json_encode($currentGameIdArray) ; ?>;
         let currentGameOpponentArray = <?php echo json_encode($opponentNameArray) ; ?>;
+        let newChallengesArray = <?php echo json_encode($challengesIdArray) ; ?>;
+        let challengesOpponentArray = <?php echo json_encode($challengingOpponentArray) ; ?>;
         let pastGameIdArray = <?php echo json_encode($pastGameIdArray) ; ?>;
         let pastGameOpponentArray = <?php echo json_encode($pastOpponentNameArray) ; ?>;
 
@@ -72,6 +92,12 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
 <h3><a href = "newGame.html.php">New Game</a></h3>
 <h3><a href = "friends.php">Friends</a></h3>
 
+<div class ="user">
+    <h3>New Challenges</h3>
+    <br>
+
+<div id = "newChallenges"></div>
+</div>
 
 
 <div class="user">

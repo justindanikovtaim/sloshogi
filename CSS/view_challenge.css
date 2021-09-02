@@ -1,0 +1,9 @@
+
+#boardPhoto{
+    width: 90vw;
+  }
+#accept{
+    position: inherit;
+    top: 50vh;
+    left: 50vw;
+}

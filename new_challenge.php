@@ -10,7 +10,7 @@ $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi')
     }
 
     $newChallenge = 'INSERT INTO gamerecord (moves, blackplayer, whiteplayer, status, creator)
-     VALUES ( "", "' .$blackPlayer.'", "'.$whitePlayer.'", "2", "' .$_COOKIE["current_user_cookie"].'");'; 
+     VALUES ( "", "' .$blackPlayer.'", "'.$whitePlayer.'", "1", "' .$_COOKIE["current_user_cookie"].'");'; 
 
 ?> 
 <!DOCTYPE html>
