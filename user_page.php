@@ -71,9 +71,8 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
         let challengesOpponentArray = <?php echo json_encode($challengingOpponentArray) ; ?>;
         let pastGameIdArray = <?php echo json_encode($pastGameIdArray) ; ?>;
         let pastGameOpponentArray = <?php echo json_encode($pastOpponentNameArray) ; ?>;
-
+    
     </script>
-    <script src = "scripts/get_games.js"></script>
 
     <link href="CSS/all_pages.css" rel="stylesheet">
  </head>
@@ -108,5 +107,5 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
 </div>
 <a href = "logout.php" id = logoutButton>ログアウトLog Out</a>
 
-
+<script src = "scripts/get_games.js"></script>
     </body>
