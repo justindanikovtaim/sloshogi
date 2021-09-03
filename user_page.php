@@ -73,6 +73,8 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
         let pastGameOpponentArray = <?php echo json_encode($pastOpponentNameArray) ; ?>;
 
     </script>
+    <script src = "scripts/get_games.js"></script>
+
     <link href="CSS/all_pages.css" rel="stylesheet">
  </head>
  <body>
@@ -89,7 +91,7 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
 <div id = "allGames"></div>
 </div>
 
-<h3><a href = "newGame.html.php">New Game</a></h3>
+<h3><a href = "newGame.php">New Game</a></h3>
 <h3><a href = "friends.php">Friends</a></h3>
 
 <div class ="user">
@@ -105,5 +107,6 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
 <div id = "finishedGames"></div>
 </div>
 <a href = "logout.php" id = logoutButton>ログアウトLog Out</a>
+
+
     </body>
-    <script src = "scripts/get_games.js"></script>
