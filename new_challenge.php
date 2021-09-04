@@ -19,7 +19,7 @@ $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi')
     <link href="CSS/all_pages.css" rel="stylesheet">
 </head>
 <body>
-<a id = "backButton" href = "newGame.html.php">≪</a>
+<a id = "backButton" href = "newGame.php">≪</a>
 <h1>
 <?php
     if(mysqli_query($link, $newChallenge)){

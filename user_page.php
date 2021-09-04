@@ -88,6 +88,7 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
     </script>
 
     <link href="CSS/all_pages.css" rel="stylesheet">
+    <link href="CSS/user_page.css" rel="stylesheet">
  </head>
  <body>
 <h1><?php echo $_COOKIE['current_user_cookie']."'s";?> Page</h1>
@@ -118,7 +119,8 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
 <h3>Finished Games</h3>
 <div id = "finishedGames"></div>
 </div>
-<a href = "logout.php" id = logoutButton>ログアウトLog Out</a>
+<br>
+<h1><a href = "logout.php" id = logoutButton>ログアウトLog Out</a></h1>
 
 <script src = "scripts/get_games.js"></script>
     </body>

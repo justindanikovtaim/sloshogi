@@ -67,12 +67,12 @@ for($i = 0; $i < sizeof($recievedChallengesIdArray); $i++){
 <br>
 
 <div class = "user">
-    <h1>新チャレンジ<br>　New Challenges</h1>
+    <h1>新着チャレンジ<br>Newly-Recieved Challenges</h1>
 <div id = "recievedChallenges"></div>
 </div>
 
 <div class = "user">
-    <h1>承認待ちチャレンジ　<br>Pending Challenges</h1>
+    <h1><?=$_COOKIE['current_user_cookie']?>のチャレンジ　<br><?=$_COOKIE['current_user_cookie']?>'s Challenges</h1>
 <div id = "sentChallenges"></div>
 </div>
 
