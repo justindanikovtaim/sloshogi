@@ -10,13 +10,26 @@ while($row = mysqli_fetch_array($getCurrentGameId)){
 }
 $opponentNameArray = [];
 for($i = 0; $i < sizeof($currentGameIdArray); $i++){
-    $getOpponent = mysqli_query($link, "SELECT blackplayer, whiteplayer FROM gamerecord WHERE id = '".$currentGameIdArray[$i]."'");
+    $getOpponent = mysqli_query($link, "SELECT blackplayer, whiteplayer, turn FROM gamerecord WHERE id = '".$currentGameIdArray[$i]."'");
     $getOpponentArray = mysqli_fetch_array($getOpponent);
     if($getOpponentArray['blackplayer'] == $_COOKIE['current_user_cookie']){
 
         array_push($opponentNameArray, $getOpponentArray['whiteplayer']);
+
+        if($getOpponentArray['turn'] %2 == 0){//see if it is even turn (white)
+            array_push($opponentNameArray, 0);//add on a 0 for false, beause it is not the player's turn
+        }else{
+            array_push($opponentNameArray, 1);//add on a 1 for true becase it is the player's turn
+        }
+
     }else{
         array_push($opponentNameArray, $getOpponentArray['blackplayer']);
+
+        if($getOpponentArray['turn'] %2 == 0){//see if it is even turn (white)
+            array_push($opponentNameArray, 1);//add on a 1 for true becase it is the player's turn
+        }else{
+            array_push($opponentNameArray, 0);//add on a 0 for false, beause it is not the player's turn
+        }
     }
 }
 
@@ -71,7 +84,7 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
         let challengesOpponentArray = <?php echo json_encode($challengingOpponentArray) ; ?>;
         let pastGameIdArray = <?php echo json_encode($pastGameIdArray) ; ?>;
         let pastGameOpponentArray = <?php echo json_encode($pastOpponentNameArray) ; ?>;
-    
+
     </script>
 
     <link href="CSS/all_pages.css" rel="stylesheet">

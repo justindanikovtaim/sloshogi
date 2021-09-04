@@ -1253,7 +1253,7 @@ function movePiece(id) {
     if(turn === 1){
         //on the first turn, we don't want to start by sending a comma in the data
         sendToDatabase = JSON.stringify({"newmoves": selectedPiece.toString() + "," 
-            + id.toString() + "," + gameState[selectedPiece], "gameId": currentGameID });//make the move into JSON object
+            + id.toString() + "," + gameState[selectedPiece], "gameId": currentGameID, "turn": turn });//make the move into JSON object
 
             //this is for the forward and back buttons
             tempMoveForGameHistory = selectedPiece.toString() + ","  + id.toString() + "," + gameState[selectedPiece];
@@ -1273,7 +1273,7 @@ function movePiece(id) {
         }
         //also, start by sending a comma to separate the move from the last one stored
         sendToDatabase = JSON.stringify({"newmoves": "," + moveFromSend.toString() + "," 
-        + moveToSend.toString() + "," + gameState[selectedPiece], "gameId": currentGameID });//make the move into JSON object
+        + moveToSend.toString() + "," + gameState[selectedPiece], "gameId": currentGameID, "turn": turn });//make the move into JSON object
 
         //for Forward and Back buttons
         tempMoveForGameHistory = "," + moveFromSend.toString() + "," + moveToSend.toString() + "," + gameState[selectedPiece];
@@ -1300,6 +1300,7 @@ function movePiece(id) {
 }
 function confirmMove(moveFromSend, moveToSend, tempMoveForGameHistory, currentPlace){
         turn++; //increase the turn counter
+        
         gameHistory[0] += tempMoveForGameHistory; //for forward and back buttons
         movesHistory = gameHistory[0].split(","); //break the moves into an array 
 
