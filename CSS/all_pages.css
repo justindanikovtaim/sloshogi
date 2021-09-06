@@ -8,9 +8,12 @@ html{
 
 h1 {
   text-align: center;
-  font-size:3.0em;
+  font-size:10vw;
 }
 
+h2{
+  font-size: 6vw;
+}
 h3{
   font-size: 8vw;
 }
@@ -27,9 +30,9 @@ body{
 
 .user{
   width:95vw; 
-  margin:5px 0px; 
-  padding:0px 5px; 
-  border:1.5px solid black;
+  margin:2vw 0px; 
+  padding:0px 2vw; 
+  border:.5vw solid black;
 }
 
 input[type=radio] {

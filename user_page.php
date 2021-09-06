@@ -91,10 +91,12 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
     <link href="CSS/user_page.css" rel="stylesheet">
  </head>
  <body>
-<h1><?php echo $_COOKIE['current_user_cookie']."'s";?> Page</h1>
-<br>
-<h2>段級: <?=$userInfoArray['rating']?></h2>
-<h2>勝敗レコード: <?=$userInfoArray['record']?> </h2>
+     <div id = "nameIconRating">
+<h1 class = "floatLeft"><?=$_COOKIE['current_user_cookie']?></h1>
+<h2 class = "floatLeft">段級: <?=$userInfoArray['rating']?></h2>
+<h2 class = "floatLeft">勝敗レコード: <?=$userInfoArray['record']?> </h2>
+</div>
+<a href ="update_icon.php"><img src= "images/icons/<?=$_COOKIE['icon']?>_icon.png" id = "userIcon"></a>
 
 
 <div class="user"> 

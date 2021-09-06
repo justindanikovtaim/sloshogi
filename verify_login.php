@@ -14,7 +14,11 @@ if($enteredPW != $verifyPW[0]){
     die("couldn't be found");
 }
 
+$getUserIcon = mysqli_query($link, "SELECT icon FROM users WHERE username = '".$currentUser ."'");//get the set icon
+$icon = mysqli_fetch_array($getUserIcon);
 
-setcookie('current_user_cookie', $currentUser, time() + (86400 * 30), "/"); // 86400 = 1 day
+setcookie('current_user_cookie', $currentUser, time() + (86400 * 365), "/"); // 86400 = 1 day
+setcookie('icon', $icon['icon'], time() + (86400 * 365), "/");
+
 header('Location: user_page.php');
 ?>
