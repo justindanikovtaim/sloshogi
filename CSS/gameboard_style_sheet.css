@@ -12,6 +12,27 @@
     background-size:inherit;
     overflow: auto;
     }
+
+    #opInfo{
+        position: absolute;
+        height: 15vw;
+        right: 0vw;
+    }
+#opIcon{
+    position: relative;
+    height: 9vw;
+    top: 0vw;
+    right: 0vw;
+
+}
+#opName{
+    font-size: 3vw;
+    line-height: 0vw;
+    position: relative;
+    text-align: right;
+    top: -2rem;
+    right: .4rem;
+}
     
     #board, #whiteMochigoma, #blackMochigoma{
         display: inherit;

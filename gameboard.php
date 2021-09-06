@@ -3,6 +3,20 @@ session_start();
 $gameID = $_GET['id'];
 $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
+$temparray = array();
+$row = mysqli_fetch_array($result);
+array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"], $row["reservation"], $row["status"], $row["winner"]); 
+
+if($row['blackplayer'] == $_COOKIE['current_user_cookie']){
+    //get the opponent's username
+    $opponentName = $row['whiteplayer'];
+}else{
+    $opponentName = $row['blackplayer'];
+}
+
+$getUserInfo = mysqli_query($link, 'SELECT rating, icon FROM users WHERE username = "'.$opponentName.'"');
+$opInfo = mysqli_fetch_array($getUserInfo);
+
 
 ?>
 
@@ -18,9 +32,8 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
 </head>
 
 <body bgcolor="#f0e68c">
-
-    
     <div id = wholeBoard>
+
     <div id = "whiteMochigoma"></div>
     <div id = "board"></div>
     <div id = "blackMochigoma"></div>
@@ -36,25 +49,20 @@ $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); /
  <button class = "skipButton" id = "skipForward" onClick = "skipForward()">≫</button>
  
 </div>
+<div id = "opInfo"></div>
 
 
 <a href="user_page.php"> <img src = "images/return.png"  id = "toUserPage"> </a>
 <a href="move_reservation.php?id=<?=$gameID?>" id = "toReservation">予約</a>
 <img src = "images/resign.png" id = "resignButton" onClick = "resign()">
 </body>
-
-<?php
-$temparray = array();
-$row = mysqli_fetch_array($result);
-array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"], $row["reservation"], $row["status"], $row["winner"]); 
- ?>
  
  <script>
  var currentGameID = <?php echo $gameID;?>;
-   var gameHistory = <?php echo json_encode($temparray) ; ?>;
+   var gameHistory = <?php echo json_encode($temparray);?>;
    var phpColor = "<?php echo $_COOKIE['current_user_cookie']; ?>";
-    console.log(gameHistory);
-
+    var opIconName = "<?php echo $opInfo['icon'];?>";
+    var OpNameRating = "<?php echo $opponentName. " ".$opInfo['rating'];?>";    
     </script>
 
 <script src= "scripts/slo_shogi_script.js"></script>

@@ -197,11 +197,21 @@ if(!usersTurn || gameHistory[4] == "3"){//if not the user's turn or the game has
     document.getElementById("toReservation").style.visibility = "visible";
 
 }
-backArrow = document.createElement("a");
+let backArrow = document.createElement("a");
 backArrow.id = "backButton";
 backArrow.href = "user_page.php";
 backArrow.innerHTML="≪";
 document.getElementById("backArrow").appendChild(backArrow);
+
+let opIcon = document.createElement("img");
+opIcon.src = "images/icons/" + opIconName + "_icon.png";
+opIcon.id = "opIcon";
+document.getElementById("opInfo").appendChild(opIcon);
+
+let opName = document.createElement("h4");
+opName.innerHTML = OpNameRating;
+opName.id = "opName";
+document.getElementById("opInfo").appendChild(opName);
 
 
 function loadGameState(placeCalled){//loads the current game state from the database (slo Shogi v.1)
