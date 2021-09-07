@@ -94,7 +94,7 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
      <div id = "nameIconRating">
 <h1 class = "floatLeft"><?=$_COOKIE['current_user_cookie']?></h1>
 <h2 class = "floatLeft">段級: <?=$userInfoArray['rating']?></h2>
-<h2 class = "floatLeft">勝敗レコード: <?=$userInfoArray['record']?> </h2>
+<h2 class = "floatLeft">勝敗レコード: <?=$userInfoArray['record']?>&nbsp&nbsp <a href = "settings.php"id = "settings" >設定 Settings</a></h2>
 </div>
 <a href ="update_icon.php"><img src= "images/icons/<?=$_COOKIE['icon']?>_icon.png" id = "userIcon"></a>
 

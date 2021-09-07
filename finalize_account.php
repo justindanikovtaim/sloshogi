@@ -19,6 +19,7 @@ if($enteredPass1 != $enteredPass2){
     $getNewAccountInfo = mysqli_fetch_array($result);
     $newEmail = $getNewAccountInfo['email'];
     $newUsername = $getNewAccountInfo['username'];
+    $enteredPass1 = password_hash($enteredPass1, PASSWORD_DEFAULT);
 
     $addUserQuery = "INSERT INTO users (username, email, pass) VALUES ('".$newUsername."', '".$newEmail."', '".$enteredPass1."')";
     if(mysqli_query($link, $addUserQuery)){

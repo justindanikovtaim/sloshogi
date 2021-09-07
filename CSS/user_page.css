@@ -17,3 +17,8 @@
 .floatLeft{
     text-align: left;
 }
+
+#settings{
+    text-align: right;
+    font-size: 3vw;
+}
