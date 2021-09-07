@@ -22,3 +22,11 @@
     text-align: right;
     font-size: 3vw;
 }
+
+#passForm{
+    visibility: hidden;
+}
+
+.formLabel{
+    font-size: 4vw;
+}

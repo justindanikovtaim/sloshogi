@@ -2,6 +2,13 @@
 font-family: "8Bit";
 src: url("../fonts/PixelMplus10-Regular.ttf");
 }
+
+button{
+  font-family: "8Bit";
+  font-size: 15px;
+  padding: 10px 20px;
+}
+
 html{
     font-family: "8Bit";
 }

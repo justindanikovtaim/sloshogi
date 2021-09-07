@@ -18,11 +18,11 @@ if($result){
 
     echo     "<form action = 'finalize_account.php' method ='post'>
     <label for='pass'><b>パスワード Password</b></label>
-    <input title='4~20文字；数字、A-Z、_, - のみ；スペース禁止｜4-20 characters; numbers, letters, _, - only; no spaces' 
-   pattern = '[A-Za-z0-9\-_\.]{4,20}' type = 'password' placeholder='Enter Password' name = 'pass' maxlength = '20' required>
+    <input title='3~20文字｜3-20 characters' 
+   pattern = '{3,20}' type = 'password' placeholder='Enter Password' name = 'pass' maxlength = '20' required>
     <br>
     <label for = 'confirmPass'><b>パスワード再入力/Re-enter Password</b></label>
-    <input type = 'password' placeholder = 'confirm password' name ='confirmPass' required>
+    <input type = 'password'  pattern = '{3,20}' placeholder = 'confirm password' name ='confirmPass' required>
     <br>
     <input type = 'hidden' name = 'OTP' value = ".$_GET['OTP'].">
     <button type = 'submit'>アカウントを確定/Finalize Account</button>
