@@ -15,7 +15,7 @@ $allIcons = glob("images/icons/*.png"); //https://www.tutorialspoint.com/get-all
      
      foreach($allIcons as $icon){
          //isolate only the name of the icon without the _icon.php at the end
-         echo '<a href = "set_icon.php?newIcon='.substr($icon, 12, (strlen($icon) - 21 )).'"> 
+         echo '<a href = "set_icon.php?newIcon='.substr($icon, 13, (strlen($icon) - 22 )).'"> 
          <img src="'.$icon.'" class = "iconSelect" id = "'.$icon.'"></a> <br>';
      }
      ?>
