@@ -1,7 +1,8 @@
 <?php
 
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
-    if($_POST["userColor"] == "blackplayer"){
+require 'connect.php';
+
+if($_POST["userColor"] == "blackplayer"){
         $blackPlayer = $_COOKIE["current_user_cookie"];
         $whitePlayer = $_POST["opponent"];
     }else{

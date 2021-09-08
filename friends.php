@@ -1,6 +1,6 @@
 <?php
 
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 $userVar = "'".$_COOKIE['current_user_cookie']."'";
 $getFriends =  mysqli_query($link, 'SELECT friends FROM users WHERE username = '.$userVar); 
 $friendIds = explode(',', mysqli_fetch_array($getFriends)['friends']);//should separate the friend list by commas

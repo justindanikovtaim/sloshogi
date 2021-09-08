@@ -1,6 +1,6 @@
 
 <?php 
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
   
 
 ?>
@@ -9,7 +9,7 @@ $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi')
 <link href="CSS/all_pages.css" rel="stylesheet">
 </head>
 <body>
-<a id = "backButton" href = "newGame.html.php">≪</a>
+<a id = "backButton" href = "newGame.php">≪</a>
 <h1>オープン対戦を作成</h1>
 
 <form action="new_open_game.php" name = "openGameData" method = "post">

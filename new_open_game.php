@@ -1,6 +1,6 @@
 <?php
 
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 
     $userColor = $_POST["userColor"];
 
@@ -13,7 +13,7 @@ $link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi')
     <title>Slo Shogi New Game</title>
 </head>
 <h2>
-<a id = "backButton" href = "newGame.html.php">≪</a>
+<a id = "backButton" href = "newGame.php">≪</a>
 
 <?php
     if(mysqli_query($link, $newChallenge)){

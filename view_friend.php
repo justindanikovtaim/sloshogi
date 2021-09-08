@@ -1,5 +1,5 @@
 <?php
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 $getUserInfo = mysqli_query($link, "SELECT rating, record, icon FROM users WHERE username = '".$_GET['friendName']."'");
 $userInfoArray = mysqli_fetch_array($getUserInfo);
 

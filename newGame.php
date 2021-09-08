@@ -1,5 +1,5 @@
 <?php
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 
 $getNewChallenges = mysqli_query($link, "SELECT id FROM gamerecord WHERE status = 1 AND creator = '".$_COOKIE['current_user_cookie']."' AND
 ( blackplayer = '".$_COOKIE['current_user_cookie'] ."' OR whiteplayer = '".$_COOKIE['current_user_cookie'] ."')" );

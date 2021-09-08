@@ -1,6 +1,6 @@
 <?php
 
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 
     if(mysqli_query($link, "SELECT blackplayer FROM gamerecord WHERE id = '".$_GET['id']."'") == "NULL"){
         //if blackplayer is null, the opponent is the other color, so the user should become blackplayer

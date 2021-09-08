@@ -4,7 +4,7 @@ $json = file_get_contents('php://input');
 $decoded = json_decode($json, true);
 $gametofind = $decoded['id'];
 
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 
     $getUserRecord = mysqli_query($link, "SELECT record FROM users WHERE username = '".$decoded['winner']."'");
     $userRecordArray = mysqli_fetch_row($getUserRecord);

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 $getOpenGameId = mysqli_query($link, "SELECT id FROM gamerecord WHERE status = 1 AND creator != '".$_COOKIE['current_user_cookie'] ."'" );
 $openGameIdArray =  [];
 while($row = mysqli_fetch_array($getOpenGameId)){
@@ -20,7 +20,7 @@ for($i = 0; $i < sizeof($openGameIdArray); $i++){
 <link href="CSS/all_pages.css" rel="stylesheet">
 </head>
 <body>
-<a id = "backButton" href = "newGame.html.php">≪</a>
+<a id = "backButton" href = "newGame.php">≪</a>
 <h1>Open Games</h1>
 <div id = "drawOpenGames"></div>
 

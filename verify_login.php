@@ -1,6 +1,6 @@
 <?php
 session_start();
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 
 $enteredPW = htmlspecialchars($_POST['pw']);
 $currentUser = htmlspecialchars($_POST['userData']);

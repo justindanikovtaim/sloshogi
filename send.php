@@ -5,7 +5,7 @@ $decoded = json_decode($in, true);
 $gametofind = $decoded['gameId'];
 $turn = $decoded['turn'];
 
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 
     $updatecommand = 'UPDATE gamerecord SET moves = CONCAT(moves, "' . $decoded['newmoves'] . '"), turn = "'.$turn.'" WHERE id ='; 
 

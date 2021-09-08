@@ -1,6 +1,6 @@
 <?php 
 $gameID = $_GET['id'];
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current info about the game
 $row = mysqli_fetch_array($result);
 ?>

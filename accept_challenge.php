@@ -1,6 +1,6 @@
 <?php
 
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 if(mysqli_query($link,"UPDATE gamerecord SET status = 2 WHERE id = '".$_GET['id']."'")){
     header('Location: gameboard.php?id='.$_GET['id']);
 }else{

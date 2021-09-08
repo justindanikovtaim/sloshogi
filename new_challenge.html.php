@@ -1,6 +1,6 @@
 
 <?php 
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 $userVar = "'".$_COOKIE['current_user_cookie']."'";
 $getFriends =  mysqli_query($link, 'SELECT friends FROM users WHERE username = '.$userVar); 
 $friendIds = explode(',', mysqli_fetch_array($getFriends)['friends']);//should separate the friend list by commas
@@ -18,7 +18,7 @@ $numOfFriends = count($friendIds);
 <link href="CSS/all_pages.css" rel="stylesheet">
 </head>
 <body>
-<a id = "backButton" href = "newGame.html.php">≪</a>
+<a id = "backButton" href = "newGame.php">≪</a>
 <br>
 <h1>Choose a Friend to Challenge</h1>
 <div id = "drawFriends"></div>

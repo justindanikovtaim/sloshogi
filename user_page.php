@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 $getCurrentGameId = mysqli_query($link, "SELECT id FROM gamerecord WHERE status = 2 AND 
 ( blackplayer = '".$_COOKIE['current_user_cookie'] ."' OR whiteplayer = '".$_COOKIE['current_user_cookie'] ."')" );
 $currentGameIdArray =  [];

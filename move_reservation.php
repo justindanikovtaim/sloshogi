@@ -1,7 +1,8 @@
 <?php 
+require 'connect.php';
+
 session_start();
 $gameID = $_GET['id'];
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
 
 ?>

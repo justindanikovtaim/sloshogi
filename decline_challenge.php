@@ -1,6 +1,6 @@
 <?php
 
-$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
+require 'connect.php';
 if(mysqli_query($link,"DELETE FROM gamerecord WHERE id = '".$_GET['id']."'")){
     header('Location: user_page.php');
 }else{
