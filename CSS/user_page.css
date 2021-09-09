@@ -1,26 +1,60 @@
+#all{
+margin: auto;
+width: 98vw;
+height: 98vh;
+}
+
 .gameURL{
     font-size: 6vw;
+    margin: 0px;
+    padding: 0%;
 }
 
 #nameIconRating{
-    display: inline-block;
-    height: 15vh;
-    line-height: .5;
+    position: relative;
+    height: 15%;
+    width: 100%;
+}
+#iconBox{
+    position: absolute;
+    height: 70%;
+    width: 20%;
+    right: 0%;
+    top: 0%;
+    border: 2px solid;
 }
 
 #userIcon{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+#userName{
+    width: 100%;
+    text-align: center;
+    font-size: 5vw;
+    position:absolute;
+    margin: 0px;
+    top:0%;
+}
+#rating{
+    font-size: 5vw;
     position: absolute;
-    right:2vw;
-    width: 25vw;
+    top: 10%
 }
-
-.floatLeft{
-    text-align: left;
+#record{
+    font-size: 5vw;
+    position: absolute;
+    top: 50%
 }
-
 #settings{
+    position:absolute;
+    right: 0%;
+    top:80%;
+    width:20%;
     text-align: right;
-    font-size: 3vw;
+    font-size: 2.5vw;
 }
 
 #passForm{
