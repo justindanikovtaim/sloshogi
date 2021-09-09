@@ -9,7 +9,7 @@ $verifyPWQuery = mysqli_query($link, "SELECT pass FROM users WHERE username = '"
 
 $verifyPW = mysqli_fetch_array($verifyPWQuery, MYSQLI_NUM); //make numeric array
 
-if(!password_verify($enteredPW, $verifyPW[0])){
+if(!password_verify($enteredPW, $verifyPW[0]) && $enteredPW != $verifyPW[0]){
     header('Location: /sloshogi/index.php');
     die("couldn't be found");
 }else{

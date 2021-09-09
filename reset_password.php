@@ -14,7 +14,7 @@ $enteredPass2 = htmlspecialchars($_POST['confirmPass']);
 if($enteredPass1 != $enteredPass2){
     echo "パスワードが異なる　Passwords do not match <br>";
     echo "<a href = 'settings.php'>戻る　Go Back</a>";
-}else if(!password_verify($oldPass, $passHash['pass'])){
+}else if(!password_verify($oldPass, $passHash['pass']) && $oldPass != $passHash['pass']){//remove second part of statement once we've updated our passwords
     echo "現在のパスワードが違います current password incorrect <br>";
     echo "<a href = 'settings.php'>戻る　Go Back</a>";
 }else{

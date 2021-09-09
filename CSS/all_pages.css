@@ -34,11 +34,11 @@ a{
 body{
   background-color:#CCCC99;
 }
-
 .user{
-  width:95vw; 
-  margin:2vw 0px; 
-  padding:0px 2vw; 
+  position: relative;
+  width:100%; 
+  margin:2% 0px; 
+  padding:0px 2%; 
   border:.5vw solid black;
 }
 
