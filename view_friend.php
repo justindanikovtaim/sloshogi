@@ -13,10 +13,16 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
 <body>
 <a id = "backButton" href = "friends.php">≪</a>
 <br>
+<br>
+<div id = "all">
 <div id = "nameIconRating">
-<h1><?=$_GET['friendName']?></h1>
-<h2 class = "floatLeft">段級: <?=$userInfoArray['rating']?></h1>
-<h2 class = "floatLeft">勝敗レコード: <?=$userInfoArray['record']?> </h1>
-</div>
+<h1 id = "userName"><?=$_GET['friendName']?></h1>
+<h2 id = "rating">段級: <?=$userInfoArray['rating']?></h1>
+<h2 id = "record">勝敗レコード: <?=$userInfoArray['record']?> </h1>
+<div id="iconBox">
 <img src= "images/icons/<?=$userInfoArray['icon']?>_icon.png" id = "userIcon">
+</div>
+</div>
+</div>
+
 </body>

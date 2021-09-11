@@ -15,7 +15,7 @@ if($row['blackplayer'] == $_COOKIE['current_user_cookie']){
     $opponentName = $row['blackplayer'];
 }
 
-$getUserInfo = mysqli_query($link, 'SELECT rating, icon FROM users WHERE username = "'.$opponentName.'"');
+$getUserInfo = mysqli_query($link, 'SELECT rating, icon, username FROM users WHERE username = "'.$opponentName.'"');
 $opInfo = mysqli_fetch_array($getUserInfo);
 
 
@@ -39,7 +39,8 @@ $opInfo = mysqli_fetch_array($getUserInfo);
     <div id = "board"></div>
     <div id = "blackMochigoma"></div>
     </div>
-    <div id="backArrow"></div>
+    <a href = "user_page.php"id = "backButton">≪</a>
+
     <button id="undo" onClick = "window.location.reload()">⎌</button>
  <h3 id = "playerPrompt"></h3> 
 
@@ -50,11 +51,20 @@ $opInfo = mysqli_fetch_array($getUserInfo);
  <button class = "skipButton" id = "skipForward" onClick = "skipForward()">≫</button>
  
 </div>
-<div id = "opInfo"></div>
+<div  id = "opInfo">
+<a href = "view_friend.php?friendName=<?=$opInfo['username']?>">
+    <div id="opIconBox">
+<img src="images/icons/<?=$opInfo['icon']?>_icon.png" id = "opIcon">
+</div>
+<div id="opNameBox">
+<h4 id="opName"><?=$opponentName." ".$opInfo['rating']?></h4>
+</div>
+</a>
+</div>
 
 
 <a href="user_page.php"> <img src = "images/return.png"  id = "toUserPage"> </a>
-<a href="move_reservation.php?id=<?=$gameID?>" id = "toReservation">予約</a>
+<a href="move_reservation.php?friendName=<?=$gameID?>" id = "toReservation">予約</a>
 <img src = "images/resign.png" id = "resignButton" onClick = "resign()">
 </body>
  
@@ -62,8 +72,6 @@ $opInfo = mysqli_fetch_array($getUserInfo);
  var currentGameID = <?php echo $gameID;?>;
    var gameHistory = <?php echo json_encode($temparray);?>;
    var phpColor = "<?php echo $_COOKIE['current_user_cookie']; ?>";
-    var opIconName = "<?php echo $opInfo['icon'];?>";
-    var OpNameRating = "<?php echo $opponentName. " ".$opInfo['rating'];?>";    
     </script>
 
 <script src= "scripts/slo_shogi_script.js"></script>
