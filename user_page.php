@@ -2,8 +2,14 @@
 session_start();
 
 require 'connect.php';
-$getCurrentGameId = mysqli_query($link, "SELECT id FROM gamerecord WHERE status = 2 AND 
-( blackplayer = '".$_COOKIE['current_user_cookie'] ."' OR whiteplayer = '".$_COOKIE['current_user_cookie'] ."')" );
+$currentGameQuery = "SELECT id FROM gamerecord WHERE ( blackplayer = '".$_COOKIE['current_user_cookie'] ."' OR whiteplayer = '".$_COOKIE['current_user_cookie'] ."')
+AND (status = 2 
+OR (status = 4 AND winner != '".$_COOKIE['current_user_cookie']."' ) 
+OR (status = 5 AND winner = '".$_COOKIE['current_user_cookie']."'))   
+";
+
+$getCurrentGameId = mysqli_query($link, $currentGameQuery );
+print_r($currentGameQuery);
 $currentGameIdArray =  [];
 while($row = mysqli_fetch_array($getCurrentGameId)){
     array_push($currentGameIdArray, $row['id']);//add each gameid related to the user to an array
@@ -53,7 +59,10 @@ for($i = 0; $i < sizeof($challengesIdArray); $i++){
 }
 
 
-$getPastGameId = mysqli_query($link, "SELECT id FROM gamerecord WHERE status = 3 AND 
+$getPastGameId = mysqli_query($link, "SELECT id FROM gamerecord WHERE (status = 3 
+OR (status = 4 AND winner = '".$_COOKIE['current_user_cookie']."' ) 
+OR (status = 5 AND winner != '".$_COOKIE['current_user_cookie']."') ) 
+AND 
 ( blackplayer = '".$_COOKIE['current_user_cookie'] ."' OR whiteplayer = '".$_COOKIE['current_user_cookie'] ."')" );
 $pastGameIdArray =  [];
 while($row = mysqli_fetch_array($getPastGameId)){

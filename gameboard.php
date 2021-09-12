@@ -6,7 +6,7 @@ $gameID = $_GET['id'];
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
 $temparray = array();
 $row = mysqli_fetch_array($result);
-array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"], $row["reservation"], $row["status"], $row["winner"]); 
+array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"], $row["reservation"], $row["status"], $row["winner"], $_COOKIE['current_user_cookie']); 
 
 if($row['blackplayer'] == $_COOKIE['current_user_cookie']){
     //get the opponent's username

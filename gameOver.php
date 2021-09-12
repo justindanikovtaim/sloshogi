@@ -1,6 +1,5 @@
 <?php
 
-
 $json = file_get_contents('php://input');
 $decoded = json_decode($json, true);
 $gametofind = $decoded['id'];
@@ -22,16 +21,16 @@ require 'connect.php';
     $loserRecord = $loserRecordExploded[0].",". " L: ".(string)$addToRecord; 
     //add one to the losses
 //echo $loserRecord;
-    $resignCommand = 'UPDATE gamerecord SET status = 5 WHERE id ='; 
+    $gameOverCommand = 'UPDATE gamerecord SET status = 4 WHERE id ='; 
     $addWinnerCommand = "UPDATE gamerecord SET winner = '".$decoded['winner']."' WHERE id = '".$gametofind."'";
     $plusWinCommand = "UPDATE users SET record = '" .$winnerRecord. "' WHERE username = '" .$decoded['winner']."'";
     $plusLossCommand =  "UPDATE users SET record = '" .$loserRecord. "' WHERE username = '" .$decoded['loser']."'";
 
-echo $resignCommand;
+echo $gameOverCommand;
 echo $plusWinCommand;
 echo $plusLossCommand;
 
-    mysqli_query($link, $resignCommand.$gametofind);
+    mysqli_query($link, $gameOverCommand.$gametofind);
     mysqli_query($link, $addWinnerCommand);
     mysqli_query($link, $plusWinCommand);
     mysqli_query($link, $plusLossCommand);

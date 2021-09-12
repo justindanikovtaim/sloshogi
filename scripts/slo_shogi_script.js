@@ -192,11 +192,17 @@ realTurn = turn; //needed to make sure that the user can't play when looking at 
 drawBoard();
 drawMochigoma();
 document.getElementById("toReservation").style.visibility = "hidden";
-if(!usersTurn || gameHistory[4] == "3"){//if not the user's turn or the game has ended
+if(!usersTurn || gameHistory[4] == "3" || gameHistory[4] == "4"){//if not the user's turn or the game has ended
     disableAll();
     document.getElementById("toReservation").style.visibility = "visible";
 
 }
+if((gameHistory[4] == "4" && gameHistory[5] != gameHistory[6]) || (gameHistory[4] == "5" && gameHistory[5] == gameHistory[6])){
+        //if the game is status 4 (someone was checkmated) and the person who lost is viewing it 
+        //or if the game status is 5 (someone resigned) and the winner is viewing it
+    showGameOver();
+}
+
 
 function loadGameState(placeCalled){//loads the current game state from the database (slo Shogi v.1)
     if(movesHistory != undefined){
@@ -2325,7 +2331,7 @@ function skipBack(){
 
 function endGame(){
     alert("勝ちました。おめでとう！");
-    var ajax = new XMLHttpRequest();
+    let ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function()
   {
     // If ajax.readyState is 4, then the connection was successful
@@ -2355,7 +2361,36 @@ function endGame(){
   });
 
 console.log(json);
-    ajax.open("POST", 'resign.php', true); //asyncronous
+    ajax.open("POST", 'gameOver.php', true); //asyncronous
+    ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+    ajax.send(json);//(sendToDatabase);
+}
+function showGameOver(){
+    if(gameHistory[5] == gameHistory[6]){
+        //if the person who won is looking at the page
+        alert("相手が校了しました　| Your opponent has resigned");
+    }else{
+        alert("対局が終了しました。　"+gameHistory[5]+" が勝ちました | Game over. "+gameHistory[5]+" has won.");
+    }
+    let ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function()
+  {
+    // If ajax.readyState is 4, then the connection was successful
+    // If ajax.status (the HTTP return code) is 200, the request was successful
+    if(ajax.readyState == 4 && ajax.status == 200)
+    {
+      // Use ajax.responseText to get the raw response from the server
+      console.log(ajax.responseText);
+    }else {
+        console.log('Error: ' + ajax.status); // An error occurred during the request.
+    }
+  }
+  let json = JSON.stringify({
+    id: currentGameID
+  });
+
+console.log(json);
+    ajax.open("POST", 'status_to_3.php', true); //asyncronous
     ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     ajax.send(json);//(sendToDatabase);
 }
