@@ -1386,7 +1386,7 @@ function deselectAll() {
     }
     move = [];
     isCheck = null;
-    checkingPieces = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    checkingPieces = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 }
 
 function placePiece(piece) {
@@ -1529,6 +1529,7 @@ function removeMG(gamePiece){
 // 14 6 玉 2 10    check each potential checking square / angle in this order and return an array of all checking pieces' squares
 //    5 4  3
 // 13   12   11
+//   16   17     knights
 function checkForCheck(gyokuColor) {
     let gyokuPosition = gameState.indexOf(gyokuColor + "GYOKU");//get the location of the gyoku being checked
     let gyokuForward;
@@ -1558,12 +1559,14 @@ function checkForCheck(gyokuColor) {
             checkingPieces[1] = 2;
             checkingPieces[2] = 2;
             checkingPieces[3] = 2;
+            checkingPieces[17] = 2;
             gyokuOnRightColumn = true;
         }
         if (board9Row.includes(gyokuPosition)) {//none to the left
             checkingPieces[5] = 2;
             checkingPieces[6] = 2;
             checkingPieces[7] = 2;
+            checkingPieces[16] = 2;
             gyokuOnLeftColumn = true;
         }
     } else {
@@ -1585,12 +1588,14 @@ function checkForCheck(gyokuColor) {
             checkingPieces[5] = 2;
             checkingPieces[6] = 2;
             checkingPieces[7] = 2;
+            checkingPieces[16] = 2;
             gyokuOnLeftColumn = true;
         }
         if (board9Row.includes(gyokuPosition)) {//none to the right
             checkingPieces[1] = 2;
             checkingPieces[2] = 2;
             checkingPieces[3] = 2;
+            checkingPieces[17] = 2;
             gyokuOnRightColumn = true;
         }
     }
@@ -2145,6 +2150,33 @@ function checkForCheck(gyokuColor) {
             checkingPosition += (8 * gyokuForward); //increment the counter
         }
     }
+   //check the left side keima spot
+if((gyokuColor == "B" && gyokuPosition < 27) || (gyokuColor == "W" && gyokuPosition > 54)){
+    checkingPieces[16] = 0; //no keima can check if gyoku is in the top 3 rows
+}else if (checkingPieces[16] !== 2 && 
+    (gameState[gyokuPosition + (gyokuForward * 17)].charAt(0) != gyokuColor && gameState[gyokuPosition + (gyokuForward * 17)].substr(1,3) == "KEI")){
+
+       checkingPieces[16] = gyokuPosition + (gyokuForward * 17);
+       //added to the array of checking pieces
+       isCheck = gyokuColor;
+} else {
+checkingPieces[16] = 0;// own piece is in the square, so no check
+}
+
+   //check the right side keima spot
+if((gyokuColor == "B" && gyokuPosition < 27) || (gyokuColor == "W" && gyokuPosition > 54)){
+    checkingPieces[17] = 0; //no keima can check if gyoku is in the top 3 rows
+}else if (checkingPieces[17] !== 2 && 
+    (gameState[gyokuPosition + (gyokuForward * 19)].charAt(0) != gyokuColor && gameState[gyokuPosition + (gyokuForward * 19)].substr(1,3) == "KEI")){
+
+       checkingPieces[17] = gyokuPosition + (gyokuForward * 19);
+       //added to the array of checking pieces
+       isCheck = gyokuColor;
+} else {
+checkingPieces[17] = 0;// own piece is in the square, so no check
+}
+
+
     for (i = 0; i < checkingPieces.length; i++) {
         if (checkingPieces[i] > 0) {
             isCheck = gyokuColor;
@@ -2174,7 +2206,7 @@ function eliminateIllegalMoves(color) {
         }
 
         gameState[selectedPiece] = moveFromHolder; //reset selectedpiece square to how it was before
-        checkingPieces = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        checkingPieces = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         isCheck = null; //needs to be reset, otherwise if previous spots check returned true, it will still return true
     }
 
