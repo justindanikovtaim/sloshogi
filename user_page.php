@@ -9,7 +9,6 @@ OR (status = 5 AND winner = '".$_COOKIE['current_user_cookie']."'))
 ";
 
 $getCurrentGameId = mysqli_query($link, $currentGameQuery );
-print_r($currentGameQuery);
 $currentGameIdArray =  [];
 while($row = mysqli_fetch_array($getCurrentGameId)){
     array_push($currentGameIdArray, $row['id']);//add each gameid related to the user to an array
