@@ -12,7 +12,7 @@ for(i = 0; i < currentGameIdArray.length; i ++){
         currentGameLink[i].style.color = "grey";
         currentGameLink[i].innerHTML = "SLO" + currentGameIdArray[i] + " | " + currentGameOpponentArray[a] + " to play"; 
     }else{
-        currentGameLink[i].innerHTML = "SLO" + currentGameIdArray[i] +" vs. " + currentGameOpponentArray[a] + "| Your turn"; 
+        currentGameLink[i].innerHTML = "SLO" + currentGameIdArray[i] +" vs. " + currentGameOpponentArray[a] + " | Your turn"; 
     }
     currentGameLink[i].setAttribute("class", "gameURL");
     currentGameLink[i].href = "gameboard.php?id=" + currentGameIdArray[i];

@@ -17,6 +17,7 @@ $opponentNameArray = [];
 for($i = 0; $i < sizeof($currentGameIdArray); $i++){
     $getOpponent = mysqli_query($link, "SELECT blackplayer, whiteplayer, turn FROM gamerecord WHERE id = '".$currentGameIdArray[$i]."'");
     $getOpponentArray = mysqli_fetch_array($getOpponent);
+  
     if($getOpponentArray['blackplayer'] == $_COOKIE['current_user_cookie']){
 
         array_push($opponentNameArray, $getOpponentArray['whiteplayer']);
@@ -29,13 +30,14 @@ for($i = 0; $i < sizeof($currentGameIdArray); $i++){
 
     }else{
         array_push($opponentNameArray, $getOpponentArray['blackplayer']);
-
-        if($getOpponentArray['turn'] %2 == 0){//see if it is even turn (white)
-            array_push($opponentNameArray, 1);//add on a 1 for true becase it is the player's turn
-        }else{
+        //for some reason, the next line isn't working when it's the first turn
+        if($getOpponentArray['turn'] %2 != 0){//if it's the first turn or black's turn
             array_push($opponentNameArray, 0);//add on a 0 for false, beause it is not the player's turn
         }
+        else{
+            array_push($opponentNameArray, 1);//add on a 1 for true becase it is the player's turn
     }
+}
 }
 
 $getNewChallenges = mysqli_query($link, "SELECT id FROM gamerecord WHERE status = 1 AND creator != '".$_COOKIE['current_user_cookie']."' AND
