@@ -17,13 +17,15 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
         </script>
  </head>
  <body>
- <a id = "backButton" href = "user_page.php">≪</a>
 
 <div id = "all">
+<a id = "backButton" href = "user_page.php">≪</a>
+<br><br>
      <div id = "nameIconRating">
-<h1 class = "floatLeft"><?=$_COOKIE['current_user_cookie']?> </h1>
-<h2 class = "floatLeft">段級: <?=$userInfoArray['rating']?></h2>
-<h2 class = "floatLeft">勝敗レコード: <?=$userInfoArray['record']?>&nbsp&nbsp <a href = "update_icon.php" id = "settings">更新　Change</a></h2>
+<h1 id = "userName"><?=$_COOKIE['current_user_cookie']?> </h1>
+<h2 id = "rating">段級: <?=$userInfoArray['rating']?></h2>
+<h2 id = "record">勝敗レコード: <?=$userInfoArray['record']?></h2>
+<a href = "update_icon.php" id = "settings">更新　Change</a>
 <div id = "iconBox">
 <a href ="update_icon.php"><img src= "images/icons/<?=$_COOKIE['icon']?>_icon.png" id = "userIcon"></a>
     </div>
