@@ -58,9 +58,13 @@ height: 98vh;
 }
 
 #passForm{
-    visibility: hidden;
+    visibility:collapse;
 }
 
+#resetPassLink{
+    padding: auto;
+    margin-top: 5vw;
+}
 .formLabel{
     font-size: 4vw;
 }

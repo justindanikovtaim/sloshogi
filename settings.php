@@ -18,21 +18,22 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
  </head>
  <body>
  <a id = "backButton" href = "user_page.php">≪</a>
- <br>
- <br>
 
+<div id = "all">
      <div id = "nameIconRating">
 <h1 class = "floatLeft"><?=$_COOKIE['current_user_cookie']?> </h1>
 <h2 class = "floatLeft">段級: <?=$userInfoArray['rating']?></h2>
 <h2 class = "floatLeft">勝敗レコード: <?=$userInfoArray['record']?>&nbsp&nbsp <a href = "update_icon.php" id = "settings">更新　Change</a></h2>
-
-</div>
-
+<div id = "iconBox">
 <a href ="update_icon.php"><img src= "images/icons/<?=$_COOKIE['icon']?>_icon.png" id = "userIcon"></a>
+    </div>
+</div>
+    
 
-<!--need to add password reset field here -->
 <br><br>
+<div id = "resetPassLink">
 <a href= "#" onclick = "showPassReset()" class = "gameURL">パスワード変更 Change Password</a>
+    </div>
 <br>
 <br>
 <form id = "passForm" action = 'reset_password.php' method ='post'>
@@ -50,3 +51,4 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
     </form>
 
 <h1><a href = "logout.php" id = logoutButton>ログアウトLog Out</a></h1>
+</div>
