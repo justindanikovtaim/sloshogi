@@ -16,7 +16,6 @@ require 'connect.php';
        $activeGameCount ++; 
    }
 
-    echo $activeGameCount;
 
 ?> 
 <!DOCTYPE html>
@@ -27,7 +26,7 @@ require 'connect.php';
 <a id = "backButton" href = "newGame.php">≪</a>
 
 <?php
-    if($activeGameCount < 6){
+    if($activeGameCount < 5){
 
     if(mysqli_query($link, $newChallenge)){
         echo "Open game created";
