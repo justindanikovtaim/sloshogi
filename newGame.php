@@ -12,7 +12,10 @@ $sentChallengingOpponentArray = [];
 for($i = 0; $i < sizeof($sentChallengesIdArray); $i++){
     $getOpponent = mysqli_query($link, "SELECT blackplayer, whiteplayer FROM gamerecord WHERE id = '".$sentChallengesIdArray[$i]."'");
     $getOpponentArray = mysqli_fetch_array($getOpponent);
-    if($getOpponentArray['blackplayer'] == $_COOKIE['current_user_cookie']){
+    if($getOpponentArray['blackplayer'] == null || $getOpponentArray['whiteplayer'] == null){
+        //if one of the players is null, it's an open challenge
+        array_push($sentChallengingOpponentArray, "? Open Game");
+    }else if($getOpponentArray['blackplayer'] == $_COOKIE['current_user_cookie']){
 
         array_push($sentChallengingOpponentArray, $getOpponentArray['whiteplayer']);
     }else{

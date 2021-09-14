@@ -21,10 +21,12 @@ require 'connect.php';
 <!DOCTYPE html>
 <head>
     <title>Slo Shogi New Game</title>
+    <link href="CSS/all_pages.css" rel="stylesheet">
+
 </head>
 <h2>
 <a id = "backButton" href = "newGame.php">≪</a>
-
+<br><br>
 <?php
     if($activeGameCount < 5){
 
