@@ -10,7 +10,7 @@ $verifyPWQuery = mysqli_query($link, "SELECT pass FROM users WHERE BINARY userna
 $verifyPW = mysqli_fetch_array($verifyPWQuery, MYSQLI_NUM); //make numeric array
 
 if(!password_verify($enteredPW, $verifyPW[0]) && $enteredPW != $verifyPW[0]){
-    header('Location: /sloshogi/login_error.html');
+    header('Location: /login_error.html');
     die("couldn't be found");
 }else{
     $getUserIcon = mysqli_query($link, "SELECT icon FROM users WHERE username = '".$currentUser ."'");//get the set icon

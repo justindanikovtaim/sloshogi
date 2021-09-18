@@ -45,12 +45,13 @@ $opInfo = mysqli_fetch_array($getUserInfo);
  <h3 id = "playerPrompt"></h3> 
 
  <div id = "skipButtons">
- <button class = "skipButton" id = "skipBack" onClick = "skipBack()">≪</button>
- <button class = "skipButton" id = "back" onClick = "stepBack()"> < </button>
- <button class = "skipButton" id = "forward" onClick = "stepForward()"> > </button>
- <button class = "skipButton" id = "skipForward" onClick = "skipForward()">≫</button>
+ <button class = "skipButton" id = "fullBack" onClick = "skipBack()">≪</button>
+ <button class = "skipButton" id = "oneBack" onClick = "stepBack()"> < </button>
+ <button class = "skipButton" id = "oneForward" onClick = "stepForward()"> > </button>
+ <button class = "skipButton" id = "fullForward" onClick = "skipForward()">≫</button>
  
 </div>
+
 <div  id = "opInfo">
 <a href = "view_friend.php?friendName=<?=$opInfo['username']?>">
     <div id="opIconBox">
@@ -63,8 +64,20 @@ $opInfo = mysqli_fetch_array($getUserInfo);
 </div>
 
 
-<a href="user_page.php"> <img src = "images/return.png"  id = "toUserPage"> </a>
-<a href="move_reservation.php?friendName=<?=$gameID?>" id = "toReservation">予約</a>
+<div id = "resButtons">
+    <div id="resTextBox">
+        <h3 id ="resText">自動指し予約　Move Reservation</h3>
+</div>
+    <div id = "resBox1">
+<a href="move_reservation.php?id=<?=$gameID?>&resBox=1" ><img src = images/reservation/res_1_grey.png id = "resButton1"></a>
+</div>
+<div id="resBox2">
+<a href="move_reservation.php?id=<?=$gameID?>&resBox=2" ><img src = images/reservation/res_2_grey.png id = "resButton2"></a>
+</div>
+<div id="resBox3">
+<a href="move_reservation.php?id=<?=$gameID?>&resBox=3" ><img src = images/reservation/res_3_grey.png id = "resButton3"></a>
+</div>
+</div>
 <img src = "images/resign.png" id = "resignButton" onClick = "resign()">
 </body>
  

@@ -191,10 +191,10 @@ loadGameState(1);
 realTurn = turn; //needed to make sure that the user can't play when looking at a previous game state
 drawBoard();
 drawMochigoma();
-document.getElementById("toReservation").style.visibility = "hidden";
+document.getElementById("resButtons").style.visibility = "hidden";
 if(!usersTurn || gameHistory[4] == "3" || gameHistory[4] == "4"){//if not the user's turn or the game has ended
     disableAll();
-    document.getElementById("toReservation").style.visibility = "visible";
+    document.getElementById("resButtons").style.visibility = "visible";
 
 }
 if((gameHistory[4] == "4" && gameHistory[5] != gameHistory[6]) || (gameHistory[4] == "5" && gameHistory[5] == gameHistory[6])){
@@ -1310,7 +1310,7 @@ function confirmMove(moveFromSend, moveToSend, tempMoveForGameHistory, currentPl
                 disableAll();
                 //send move to database
                  sendMoveData();
-                document.getElementById("toReservation").style.visibility = "visible";
+                document.getElementById("resButtons").style.visibility = "visible";
                 
             }
         }

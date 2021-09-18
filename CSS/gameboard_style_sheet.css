@@ -107,28 +107,97 @@
         font-size: 4vw;
     }
 
-    #toReservation{
+    #resButtons{
         position: absolute;
-        top: 130vw;
-        right: 40vw;
+        top: 125vw;
+        width: 45vw;
+        height:10vw;
+        left: 1vw;
+        border-style: double;
         
+    }
+    #resTextBox{
+        position: absolute;
+        width: 100%;
+        height: 30%;
+    }
+    #resText{
+        position: absolute;
+        font-size: 2.5vw;
+        top:-70%;
+    }
+    #resBox1{
+        position: absolute;
+        height: 70%;
+        width:33%;
+        top: 30%;
+    }
+    #resButton1{
+        position:absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+    }
+    #resBox2{
+        position: absolute;
+        height: 70%;
+        width:33%;
+        left: 33%;
+        top: 30%;
+    }
+    #resButton2{
+        position:absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+    }
+    #resBox3{
+        position: absolute;
+        height: 70%;
+        width:33%;
+        right: 0%;
+        top: 30%;
+    }
+    #resButton3{
+        position:absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
     }
 
     #resignButton{
         position: absolute;
-        top: 130vw;
+        top: 140vw;
         right: 5vw;
         width: 20vw;
     }
 
     #skipButtons{
         position:absolute;
-        top: 120vw;
+        top: 125vw;
         right: 1VW;
+        width: 45vw;
+        height: 11vw;
+        max-height: 11vw;
     }
     
     .skipButton{
+        position: absolute;
         font-size: 6vw;
         background-color: rgb(238, 166, 32);
+        width:25%;
+        height:100%;
+    }
+    #fullback{
+        left:0%;
+    }
+    #oneBack{
+       left:25%; 
+    }
+    #oneForward{
+        left:50%;
+    }
+    #fullForward{
+        right:0%;
     }
    
