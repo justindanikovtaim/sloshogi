@@ -6,7 +6,8 @@ $gameID = $_GET['id'];
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
 $temparray = array();
 $row = mysqli_fetch_array($result);
-array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"], $row["reservation"], $row["status"], $row["winner"], $_COOKIE['current_user_cookie']); 
+array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"], 
+$row["reservation1"], $row["reservation2"], $row["reservation3"], $row["status"], $row["winner"], $_COOKIE['current_user_cookie']); 
 
 if($row['blackplayer'] == $_COOKIE['current_user_cookie']){
     //get the opponent's username
@@ -58,7 +59,7 @@ $opInfo = mysqli_fetch_array($getUserInfo);
 <img src="images/icons/<?=$opInfo['icon']?>_icon.png" id = "opIcon">
 </div>
 <div id="opNameBox">
-<h4 id="opName"><?=$opponentName." ".$opInfo['rating']?></h4>
+<h4 id="opName"><?=$opponentName?></h4>
 </div>
 </a>
 </div>

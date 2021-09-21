@@ -3,6 +3,8 @@ require 'connect.php';
 
 session_start();
 $gameID = $_GET['id'];
+$reservationSlot = "reservation".$_GET['resBox'];
+
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
 
 ?>
@@ -38,6 +40,7 @@ array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"]);
  
  <script>
  var currentGameID = <?php echo $gameID;?>;
+ var reservationSlot = "<?= $reservationSlot?>";
    var gameHistory = <?php echo json_encode($temparray) ; ?>;
    var phpColor = "<?php echo $_COOKIE['current_user_cookie']; ?>";
     </script>

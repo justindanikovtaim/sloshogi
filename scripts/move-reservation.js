@@ -236,7 +236,7 @@ if(playerColor == "W"){
 
 function sendMoveData(){
 
-    sendToDatabase = JSON.stringify({"reservationmoves": reservationString, "gameId": currentGameID });//make the reservation into JSON object
+    sendToDatabase = JSON.stringify({"reservationmoves": reservationString, "gameId": currentGameID, "reservationSlot": reservationSlot});//make the reservation into JSON object
 
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function()

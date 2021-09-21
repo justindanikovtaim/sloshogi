@@ -30,8 +30,7 @@ let rowCounter = 13.5;
 let columnCounter = 5;
 let sC = 0; //square counter
 let sendToDatabase; //an object used to pass JSON data of the move made to PHP
-let reservationArray = gameHistory[3].split(";"); //get the reserved moves and put each sequence into its own space in an array
-console.log(reservationArray); //REMOVE
+
 //initialize gameboard
 let playerColor;
 let opponentColor;
@@ -192,12 +191,27 @@ realTurn = turn; //needed to make sure that the user can't play when looking at 
 drawBoard();
 drawMochigoma();
 document.getElementById("resButtons").style.visibility = "hidden";
-if(!usersTurn || gameHistory[4] == "3" || gameHistory[4] == "4"){//if not the user's turn or the game has ended
+if(!usersTurn || gameHistory[6] == "3" || gameHistory[6] == "4"){//if not the user's turn or the game has ended
     disableAll();
     document.getElementById("resButtons").style.visibility = "visible";
+    if(gameHistory[3].length>1){
+        //if there is a reservation in the first reservation slot
+        document.getElementById("resButton1").src = "images/reservation/res_1_green.png";
+        //make the button green instead of grey
+    }
+    if(gameHistory[4].length>1){
+        //if there is a reservation in the second reservation slot
+        document.getElementById("resButton2").src = "images/reservation/res_2_green.png";
+        //make the button green instead of grey
+    }
+    if(gameHistory[5].length>1){
+        //if there is a reservation in the third reservation slot
+        document.getElementById("resButton3").src = "images/reservation/res_3_green.png";
+        //make the button green instead of grey
+    }
 
 }
-if((gameHistory[4] == "4" && gameHistory[5] != gameHistory[6]) || (gameHistory[4] == "5" && gameHistory[5] == gameHistory[6])){
+if((gameHistory[6] == "4" && gameHistory[7] != gameHistory[8]) || (gameHistory[6] == "5" && gameHistory[7] == gameHistory[8])){
         //if the game is status 4 (someone was checkmated) and the person who lost is viewing it 
         //or if the game status is 5 (someone resigned) and the winner is viewing it
     showGameOver();
@@ -256,8 +270,8 @@ if(playerColor == "W" && placeCalled == 1){
     gameState = flipGamestate; //put the flipped gamestate into gameState
 }
 
-if(gameHistory[5] != null){//if a winner has been set
-    document.getElementById("playerPrompt").innerHTML = gameHistory[5] + " が勝ちました";
+if(gameHistory[7] != null){//if a winner has been set
+    document.getElementById("playerPrompt").innerHTML = gameHistory[7] + " が勝ちました";
 
 }else if(turn % 2 == 0){    //update the prompt showing which player's turn it is
 //White's turn
@@ -272,7 +286,11 @@ viewTurn = turn - 1; // viewing the current game state
 document.getElementById("undo").style.visibility = "hidden";
 }
 
-function sendMoveData(){
+function sendMoveData(thingsToDelete){
+    let tempObject = JSON.parse(sendToDatabase);
+    tempObject['delete'] = thingsToDelete;// add the rules about what to delete to the JSON object
+    sendToDatabase = JSON.stringify(tempObject); // and convert it back to a string
+
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function()
   {
@@ -281,10 +299,16 @@ function sendMoveData(){
     if(ajax.readyState == 4 && ajax.status == 200)
     {
       // Use ajax.responseText to get the raw response from the server
+      
       console.log(ajax.responseText);
+      window.location.reload(); //once the data is sent, reload the page and check for checkmate
+      if(checkForMate(opponentColor)){
+          endGame();
+      }
     }else {
         console.log('Error: ' + ajax.status); // An error occurred during the request.
     }
+
   }
     ajax.open("POST", 'send.php', true); //asyncronous
     ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
@@ -1305,55 +1329,57 @@ function confirmMove(moveFromSend, moveToSend, tempMoveForGameHistory, currentPl
         movesHistory = gameHistory[0].split(","); //break the moves into an array 
 
             if(turn > 1){
-
-            if(handleReservations(moveFromSend, moveToSend, gameState[currentPlace]) == false){ //if handleReservations returns false
-                disableAll();
-                //send move to database
-                 sendMoveData();
-                document.getElementById("resButtons").style.visibility = "visible";
-                
+            
+            handleReservations(moveFromSend, moveToSend, gameState[currentPlace]);
+            }else{
+                sendMoveData("skip");
             }
-        }
-
-                deselectAll();
-                resetGameState();
-                loadGameState(1);
-                if(checkForMate(opponentColor)){
-                    endGame();
-                }
-                drawBoard();
-                drawMochigoma();
-        selectedPiece = null;
-       
-    
 }
 
+
 function handleReservations(movedFrom, movedTo, movedPiece){
-    if(reservationArray.length <2){//if there are no moves reserved
-        return false;
-    }else{
-        let reservedMoves = [];
-        for(r = 1; r < reservationArray.length; r++){ //starts at 1 since the first space in the array is always empty
-            reservedMoves[r - 1] = reservationArray[r].split(",");//nested array of each move sequence
-        }
+    let reservationArrays = [];
+    
+    reservationArrays[0] = gameHistory[3].split(";"); //get the reserved moves and put each sequence into its own space in an array
+    reservationArrays[1] = gameHistory[4].split(";");
+    reservationArrays[2] = gameHistory[5].split(";");
+    console.log(reservationArrays[0]); //REMOVE
+    console.log(reservationArrays[1]); //REMOVE
+    console.log(reservationArrays[2]); //REMOVE
 
-        if(reservedMoves[0][0] == movedFrom && reservedMoves[0][1] == movedTo && reservedMoves[0][2] == movedPiece){
+    let triggered = false;//keeps track of whether or not a reserved move has been found yet or not
+    let resToDelete = "";
+    for(i = 0; i<3; i++){//go through each of the reservation arrays
+        if(reservationArrays[i].length >1){//if the reserved spot isn't empty
+
+            if(!triggered){//if another reservation hasn't been triggered yet
+            
+            let reservedSequence = reservationArrays[i][1].split(",");
+            if(reservedSequence[0] == movedFrom && reservedSequence[1] == movedTo && reservedSequence[2] == movedPiece){
             //if the reservation perfectly macthes the move made
-            alert("Reserved move triggered");
-            movesHistory.push(movedFrom.toString(), movedTo.toString(), movedPiece, reservedMoves[1][0], reservedMoves[1][1], reservedMoves[1][2]);
-
+            alert("予約手があります");
+            //add the user's move and the reserved move to the sendToDatabase string
             sendToDatabase = JSON.stringify({"newmoves": "," + movedFrom +"," + movedTo + "," + movedPiece + "," +
-            reservedMoves[1][0] + "," + reservedMoves[1][1] + "," + reservedMoves[1][2], "gameId": currentGameID });
-             //send the user's move and the triggerd move together
-            sendMoveData();
-
-            reservationArray.splice(1,2);
-            return true;
+            reservationArrays[i][2], "gameId": currentGameID, "turn": turn });
+            triggered = true;
+            moveTriggered = reservationArrays[i][2];
+            resToDelete += String((i+1)); //add the reservation array the the list of reservation arrays to chop
+            }
         }else{
-            return false;
+            if(reservationArrays[i][2] == moveTriggered){//if the first part of another reserved sequence is the same as one that was already trigged
+                resToDelete += String((i+1)); //add the reservation array the the list of reservation arrays to chop
+
+            }
+        }
+        }
+    }
+
+        if(triggered){//if a reservation was triggered, sendMoveData Will only chop off the first move of the array from any that matched
+            sendMoveData(resToDelete);
+        }else{//otherwise, all will be cleared
+            sendMoveData("skip");
         }
 
-    }
 }
 
 function disableAll(){
@@ -1363,7 +1389,7 @@ function disableAll(){
     for(x = 0; x<14; x ++){
         mochiGoma[x].setAttribute("onClick", null);
     }
-    if(gameHistory[4] == "3"){//if the game is finished
+    if(gameHistory[6] == "3"){//if the game is finished
         document.getElementById("resignButton").style.visibility = "hidden";
     }
 }
@@ -2366,11 +2392,11 @@ console.log(json);
     ajax.send(json);//(sendToDatabase);
 }
 function showGameOver(){
-    if(gameHistory[5] == gameHistory[6]){
+    if(gameHistory[7] == gameHistory[8]){
         //if the person who won is looking at the page
         alert("相手が校了しました　| Your opponent has resigned");
     }else{
-        alert("対局が終了しました。　"+gameHistory[5]+" が勝ちました | Game over. "+gameHistory[5]+" has won.");
+        alert("対局が終了しました。　"+gameHistory[7]+" が勝ちました | Game over. "+gameHistory[7]+" has won.");
     }
     let ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function()
