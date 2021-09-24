@@ -284,6 +284,30 @@ else{
 }
 viewTurn = turn - 1; // viewing the current game state
 document.getElementById("undo").style.visibility = "hidden";
+
+if(playerColor == "W"){
+    //switch the order of the numbers on the board
+    document.getElementById("topNumber1").innerHTML = "1";
+    document.getElementById("topNumber2").innerHTML = "2";
+    document.getElementById("topNumber3").innerHTML = "3";
+    document.getElementById("topNumber4").innerHTML = "4";
+    document.getElementById("topNumber5").innerHTML = "5";
+    document.getElementById("topNumber6").innerHTML = "6";
+    document.getElementById("topNumber7").innerHTML = "7";
+    document.getElementById("topNumber8").innerHTML = "8";
+    document.getElementById("topNumber9").innerHTML = "9";
+
+    document.getElementById("kanji9").innerHTML = "九";
+    document.getElementById("kanji8").innerHTML = "八";
+    document.getElementById("kanji7").innerHTML = "七";
+    document.getElementById("kanji6").innerHTML = "六";
+    document.getElementById("kanji5").innerHTML = "五";
+    document.getElementById("kanji4").innerHTML = "四";
+    document.getElementById("kanji3").innerHTML = "三";
+    document.getElementById("kanji2").innerHTML = "二";
+    document.getElementById("kanji1").innerHTML = "一";
+}
+
 }
 
 function sendMoveData(thingsToDelete){

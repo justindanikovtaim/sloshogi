@@ -18,7 +18,7 @@
         width: 16vw;
         height: 9vw;
         top: 106vw;
-        left: 4vw;
+        left: 5.5vw;
         z-index: 1;
     }
 
@@ -73,8 +73,8 @@
         position: relative;
         height: 90.2vw;
         width: 90.2vw;
-       /* border-style: outset;
-        border-color: rgba(255, 228, 181, 0.589);*/
+        border-style: outset;
+        border-color: rgba(255, 228, 181, 0.589);
         left: 4.4vw;
         margin-top:3vw;
         background-color: rgb(238, 166, 32);

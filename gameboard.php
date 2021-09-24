@@ -65,15 +65,15 @@ $userInfo = mysqli_fetch_array($getUserInfo);
     <div class="boardNum" id="topNumber8">2</div>
     <div class="boardNum" id="topNumber9">1</div>
 
-    <div class="boardKanji" id="kanji9">九</div>
-    <div class="boardKanji" id="kanji8">八</div>
-    <div class="boardKanji" id="kanji7">七</div>
-    <div class="boardKanji" id="kanji6">六</div>
+    <div class="boardKanji" id="kanji9">一</div>
+    <div class="boardKanji" id="kanji8">二</div>
+    <div class="boardKanji" id="kanji7">三</div>
+    <div class="boardKanji" id="kanji6">四</div>
     <div class="boardKanji" id="kanji5">五</div>
-    <div class="boardKanji" id="kanji4">四</div>
-    <div class="boardKanji" id="kanji3">三</div>
-    <div class="boardKanji" id="kanji2">二</div>
-    <div class="boardKanji" id="kanji1">一</div>
+    <div class="boardKanji" id="kanji4">六</div>
+    <div class="boardKanji" id="kanji3">七</div>
+    <div class="boardKanji" id="kanji2">八</div>
+    <div class="boardKanji" id="kanji1">九</div>
 
 
     <div id = "board"></div>
