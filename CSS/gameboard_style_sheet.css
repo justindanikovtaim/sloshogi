@@ -1,36 +1,36 @@
 
-
 #wholeBoard{
     display: block;
     width: 98vw;
-    height: 100 vh;/* 135vw; */
-    max-height: 100vh;
     right: 1vw;
-    position: absolute;
-    background-color: rgb(238, 166, 32); /* rgba(206, 141, 29, 0.979);
-    /*background-image: url("../images/wood1.jpg"); */
-    background-size:inherit;
-    overflow: auto;
     }
 
     #opInfo{
         position: absolute;
-        width: 10vw;
-        height: 12vw;
+        width: 16vw;
+        height: 9vw;
         margin-top: 0px;
-        margin-right: 2vw;
-        right: 1vw;
+        left: 83vw;
         z-index: 1;
     }
-    #opIconBox{
+    #userInfo{
         position: absolute;
-        width: 100%;
-        height: 70%;
+        width: 16vw;
+        height: 9vw;
+        top: 106vw;
+        left: 4vw;
+        z-index: 1;
+    }
+
+    #opIconBox, #userIconBox{
+        position: absolute;
+        width: 55%;
+        height: 80%;
         z-index: inherit;
         border: 2px solid black;
         margin: 0px;
     }
-#opIcon{
+#opIcon, #userIcon{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -38,7 +38,7 @@
     z-index: inherit;
 
 }
-#opNameBox{
+#opNameBox, #userNameBox{
     position: absolute;
     width: 100%;
     height: 20%;
@@ -46,52 +46,71 @@
     top:80%;
     margin: 0px;
 }
-#opName{
+#opName, #userName{
     font-size: 2.5vw;
     line-height: 0vw;
     padding-top: 10%;
-    position: absolute;
-    text-align: center;
+    position: relative;
     z-index: inherit;
     margin: auto;
 }
     
-    #board, #whiteMochigoma, #blackMochigoma{
+    #board, #whiteMochigoma, #blackMochigoma, #promptBox{
         display: inherit;
     }
     
     #whiteMochigoma{
-        margin-left: 13vw;
+        position: relative;
+        left: 10vw;
+        margin-top: 1vw;
+        height: 9vw;
+        width: 70vw;
+        border-style: double;
+        background-color: rgb(238, 166, 32);
+
+    }
+    #board{
+        position: relative;
+        height: 90.2vw;
+        width: 90.2vw;
+       /* border-style: outset;
+        border-color: rgba(255, 228, 181, 0.589);*/
+        left: 4.4vw;
+        margin-top:3vw;
+        background-color: rgb(238, 166, 32);
+
+    }
+    
+    #blackMochigoma{
+        position: relative;
+        margin-left: 18vw;
         margin-top: 2vw;
         margin-bottom: 1vw;
         height: 9vw;
         width: 70vw;
         border-style: double;
+        background-color: rgb(238, 166, 32);
+
     }
     
-    #blackMochigoma{
-        margin-left: 13vw;
+    #promptBox{
+        position: relative;
+        margin-left: 25%;
         margin-top: 1vw;
-        margin-bottom: 1vw;
-        height: 9vw;
-        width: 70vw;
-        border-style: double;
+        height: 4vw;
+        width: 50%;
+        border-style: solid;
+    }
+    #playerPrompt{
+        position: relative;
+        height: 100%;
+        width: 100%;
+        top: -100%;
+        left:1vw;
+        font-size: 4vw;
+        text-align: center;
     }
     
-    #board{
-        height: 90.2vw;
-        width: 90.2vw;
-        border-style: outset;
-        border-color: rgba(255, 228, 181, 0.589);
-        margin-left: 2.4vw;
-    }
-    
-    #toUserPage{
-        position: absolute;
-        top: 124vw;
-        left: 5vw;
-        width: 20vw;
-    }
 
     #undo{
         position: absolute;
@@ -101,30 +120,26 @@
         background-color:red;
     }
     
-    #playerPrompt{
-        position: absolute;
-        top: 112vw;
-        font-size: 4vw;
-    }
 
     #resButtons{
-        position: absolute;
-        top: 125vw;
+        position: relative;
+        top: 0vw;
         width: 45vw;
         height:10vw;
         left: 1vw;
         border-style: double;
-        
+        margin-top: .5vh;
     }
     #resTextBox{
         position: absolute;
         width: 100%;
         height: 30%;
+        background-color: rgb(238, 166, 32);
     }
     #resText{
         position: absolute;
         font-size: 2.5vw;
-        top:-70%;
+        top:-90%;
     }
     #resBox1{
         position: absolute;
@@ -166,19 +181,21 @@
     }
 
     #resignButton{
-        position: absolute;
-        top: 140vw;
-        right: 5vw;
+        position: relative;
+        float: right;
+        right: 3vw;
         width: 20vw;
+        margin-top: 2vh;
     }
 
     #skipButtons{
-        position:absolute;
-        top: 125vw;
+        position:relative;
+        float: right;
         right: 1VW;
         width: 45vw;
         height: 11vw;
         max-height: 11vw;
+        margin-top: .5vh;
     }
     
     .skipButton{
@@ -200,4 +217,67 @@
     #fullForward{
         right:0%;
     }
-   
+   .boardNum{
+       position:absolute;
+       top: 10.5vw;
+       font-size: 3vw;
+   }
+   #topNumber1{
+       margin-left: 9vw;
+   }
+    #topNumber2{
+        margin-left: 19vw;
+    }
+    #topNumber3{
+        margin-left: 29vw;
+    }
+    #topNumber4{
+        margin-left: 39vw;
+    }
+    #topNumber5{
+        margin-left: 49vw;
+    }
+    #topNumber6{
+        margin-left: 59vw;
+    }
+    #topNumber7{
+        margin-left: 69vw;
+    }
+    #topNumber8{
+        margin-left: 79vw;
+    }
+    #topNumber9{
+        margin-left: 89vw;
+    }
+    .boardKanji{
+        position:absolute;
+        left: 95.5vw;
+        font-size: 2.5vw;
+    }
+    #kanji9{
+        top: 18vw;
+    }
+    #kanji8{
+        top: 28vw;
+    }
+    #kanji7{
+        top: 38vw;
+    }
+    #kanji6{
+        top: 48vw;
+    }
+    #kanji5{
+        top: 58vw;
+    }
+    #kanji4{
+        top: 68vw;
+    }
+    #kanji3{
+        top: 78vw;
+    }
+    #kanji2{
+        top: 88vw;
+    }
+    #kanji1{
+        top: 98vw;
+    }

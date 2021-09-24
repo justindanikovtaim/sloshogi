@@ -26,8 +26,7 @@ let isCheck = null; //keep track of if it is check or not
 let checkingPieces = [];
 let move = [];
 let boardSquare = [];
-let rowCounter = 13.5;
-let columnCounter = 5;
+
 let sC = 0; //square counter
 let sendToDatabase; //an object used to pass JSON data of the move made to PHP
 
@@ -53,7 +52,8 @@ if(gameHistory[0] != ""){
      movesHistory = gameHistory[0].split(","); //break the moves into an array 
 }
 
-
+let rowCounter = 0;
+let columnCounter = 0;
 for (i = 0; i < 9; i++) {
     for (x = 0; x < 9; x++) {
         boardSquare[sC] = document.createElement("img"); //create each of the 81 squares as an image in the document
@@ -70,12 +70,12 @@ for (i = 0; i < 9; i++) {
         sC++; //move to the next square
     }
     rowCounter += 10; //add space between the top for the next row
-    columnCounter = 5; // start back at the right side of the board
+    columnCounter = 0; // start back at the right side of the board
     spacer = 0; //reset the spacer for the first piece in the row
 }
 mochiGoma = [];
 mochiGomaAmmount = [];
-spacer = 75;
+spacer = 60;
 
 mochiGomaOrder = ["MWF", "MWKO", "MWKEI", "MWGIN", "MWKIN", "MWKAKU", "MWHI",
     "MBF", "MBKO", "MBKEI", "MBGIN", "MBKIN", "MBKAKU", "MBHI"];
@@ -91,15 +91,15 @@ if(playerColor == "B"){
                 mochiGoma[x].style.width = "9vw";
                 mochiGoma[x].style.position = "absolute";
                 mochiGoma[x].style.right = spacer + "vw";
-                mochiGoma[x].style.top = "3vw";
-                document.getElementById("blackMochigoma").appendChild(mochiGoma[x]);
+                mochiGoma[x].style.top = "0vw";
+                document.getElementById("whiteMochigoma").appendChild(mochiGoma[x]);
                 mochiGomaAmmount[x] = document.createElement("img");
                 mochiGomaAmmount[x].src = "images/mochiGomaNum2.png";
                 mochiGomaAmmount[x].style.width = "3vw";
                 mochiGomaAmmount[x].style.position = "absolute";
                 mochiGomaAmmount[x].style.right = spacer + "vw"; //offset it from the piece
-                mochiGomaAmmount[x].style.top = "3vw";
-                document.getElementById("blackMochigoma").appendChild(mochiGomaAmmount[x]);
+                mochiGomaAmmount[x].style.top = "0vw";
+                document.getElementById("whiteMochigoma").appendChild(mochiGomaAmmount[x]);
             } else {//otherwise it's the second time through, so we are drawing the black mochigoma
                 mochiGoma[x + 7] = document.createElement("img");//create a new img element for each mochigoma type
                 mochiGoma[x + 7].src = "images/" + mochiGomaOrder[x + 7] + ".png";
@@ -108,19 +108,19 @@ if(playerColor == "B"){
                 mochiGoma[x + 7].style.width = "9vw";
                 mochiGoma[x + 7].style.position = "absolute";
                 mochiGoma[x + 7].style.right = spacer + "vw";
-                mochiGoma[x + 7].style.top = "105vw";
-                document.getElementById("whiteMochigoma").appendChild(mochiGoma[x + 7]);
+                mochiGoma[x + 7].style.top = "0vw";
+                document.getElementById("blackMochigoma").appendChild(mochiGoma[x + 7]);
                 mochiGomaAmmount[x + 7] = document.createElement("img");
                 mochiGomaAmmount[x + 7].src = "images/mochiGomaNum2.png";
                 mochiGomaAmmount[x + 7].style.width = "3vw";
                 mochiGomaAmmount[x + 7].style.position = "absolute";
                 mochiGomaAmmount[x + 7].style.right = spacer + "vw"; //offset it from the piece
-                mochiGomaAmmount[x + 7].style.top = "105vw";
+                mochiGomaAmmount[x + 7].style.top = "0vw";
                 document.getElementById("blackMochigoma").appendChild(mochiGomaAmmount[x + 7]);
             }
             spacer -= 10;
         }
-        spacer = 75;
+        spacer = 60;
     }
 }else{
 
@@ -134,14 +134,14 @@ if(playerColor == "B"){
                 mochiGoma[x].style.width = "9vw";
                 mochiGoma[x].style.position = "absolute";
                 mochiGoma[x].style.right = spacer + "vw";
-                mochiGoma[x].style.top = "105vw"; //draw them at the bottom since the white player is playing
+                mochiGoma[x].style.top = "0vw"; //draw them at the bottom since the white player is playing
                 document.getElementById("blackMochigoma").appendChild(mochiGoma[x]);
                 mochiGomaAmmount[x] = document.createElement("img");
                 mochiGomaAmmount[x].src = "images/mochiGomaNum2.png";
                 mochiGomaAmmount[x].style.width = "3vw";
                 mochiGomaAmmount[x].style.position = "absolute";
                 mochiGomaAmmount[x].style.right = spacer + "vw"; //offset it from the piece
-                mochiGomaAmmount[x].style.top = "105vw";
+                mochiGomaAmmount[x].style.top = "0vw";
                 document.getElementById("blackMochigoma").appendChild(mochiGomaAmmount[x]);
             } else {//otherwise it's the second time through, so we are drawing the black mochigoma
                 mochiGoma[x + 7] = document.createElement("img");//create a new img element for each mochigoma type
@@ -151,19 +151,19 @@ if(playerColor == "B"){
                 mochiGoma[x + 7].style.width = "9vw";
                 mochiGoma[x + 7].style.position = "absolute";
                 mochiGoma[x + 7].style.right = spacer + "vw";
-                mochiGoma[x + 7].style.top = "3vw";//draw them at the top since the white player is playing
+                mochiGoma[x + 7].style.top = "0vw";//draw them at the top since the white player is playing
                 document.getElementById("whiteMochigoma").appendChild(mochiGoma[x + 7]);
                 mochiGomaAmmount[x + 7] = document.createElement("img");
                 mochiGomaAmmount[x + 7].src = "images/mochiGomaNum2.png";
                 mochiGomaAmmount[x + 7].style.width = "3vw";
                 mochiGomaAmmount[x + 7].style.position = "absolute";
                 mochiGomaAmmount[x + 7].style.right = spacer + "vw"; //offset it from the piece
-                mochiGomaAmmount[x + 7].style.top = "3vw";
-                document.getElementById("blackMochigoma").appendChild(mochiGomaAmmount[x + 7]);
+                mochiGomaAmmount[x + 7].style.top = "0vw";
+                document.getElementById("whiteMochigoma").appendChild(mochiGomaAmmount[x + 7]);
             }
             spacer -= 10;
         }
-        spacer = 75;
+        spacer = 60;
     }
 }
 let gameState = [];

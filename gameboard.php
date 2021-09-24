@@ -19,6 +19,8 @@ if($row['blackplayer'] == $_COOKIE['current_user_cookie']){
 $getUserInfo = mysqli_query($link, 'SELECT rating, icon, username FROM users WHERE username = "'.$opponentName.'"');
 $opInfo = mysqli_fetch_array($getUserInfo);
 
+$getUserInfo = mysqli_query($link, 'SELECT rating, icon, username FROM users WHERE username = "'.$_COOKIE['current_user_cookie'].'"');
+$userInfo = mysqli_fetch_array($getUserInfo);
 
 ?>
 
@@ -33,25 +35,10 @@ $opInfo = mysqli_fetch_array($getUserInfo);
 
 </head>
 
-<body bgcolor="#f0e68c">
-    <div id = wholeBoard>
-
-    <div id = "whiteMochigoma"></div>
-    <div id = "board"></div>
-    <div id = "blackMochigoma"></div>
-    </div>
-    <a href = "user_page.php"id = "backButton">≪</a>
-
-    <button id="undo" onClick = "window.location.reload()">⎌</button>
- <h3 id = "playerPrompt"></h3> 
-
- <div id = "skipButtons">
- <button class = "skipButton" id = "fullBack" onClick = "skipBack()">≪</button>
- <button class = "skipButton" id = "oneBack" onClick = "stepBack()"> < </button>
- <button class = "skipButton" id = "oneForward" onClick = "stepForward()"> > </button>
- <button class = "skipButton" id = "fullForward" onClick = "skipForward()">≫</button>
- 
-</div>
+<body>
+<div id = "wholeBoard">
+<div id ="boardColor">
+<a href = "user_page.php"id = "backButton">≪</a>
 
 <div  id = "opInfo">
 <a href = "view_friend.php?friendName=<?=$opInfo['username']?>">
@@ -63,6 +50,61 @@ $opInfo = mysqli_fetch_array($getUserInfo);
 </div>
 </a>
 </div>
+
+
+
+
+    <div id = "whiteMochigoma"></div>
+    <div class="boardNum" id = "topNumber1">9</div>
+    <div class="boardNum" id="topNumber2">8</div>
+    <div class="boardNum" id="topNumber3">7</div>
+    <div class="boardNum" id="topNumber4">6</div>
+    <div class="boardNum" id="topNumber5">5</div>
+    <div class="boardNum" id="topNumber6">4</div>
+    <div class="boardNum" id="topNumber7">3</div>
+    <div class="boardNum" id="topNumber8">2</div>
+    <div class="boardNum" id="topNumber9">1</div>
+
+    <div class="boardKanji" id="kanji9">九</div>
+    <div class="boardKanji" id="kanji8">八</div>
+    <div class="boardKanji" id="kanji7">七</div>
+    <div class="boardKanji" id="kanji6">六</div>
+    <div class="boardKanji" id="kanji5">五</div>
+    <div class="boardKanji" id="kanji4">四</div>
+    <div class="boardKanji" id="kanji3">三</div>
+    <div class="boardKanji" id="kanji2">二</div>
+    <div class="boardKanji" id="kanji1">一</div>
+
+
+    <div id = "board"></div>
+    <div id = "blackMochigoma"></div>
+ 
+
+    <button id="undo" onClick = "window.location.reload()">⎌</button>
+</div>
+
+<div  id = "userInfo">
+    <div id="userIconBox">
+<img src="images/icons/<?=$userInfo['icon']?>_icon.png" id = "userIcon">
+</div>
+<div id="userNameBox">
+<h4 id="userName"><?=$_COOKIE['current_user_cookie']?></h4>
+</div>
+</div>
+
+
+    <div id = "promptBox">
+ <h3 id = "playerPrompt"></h3> 
+</div>
+
+ <div id = "skipButtons">
+ <button class = "skipButton" id = "fullBack" onClick = "skipBack()">≪</button>
+ <button class = "skipButton" id = "oneBack" onClick = "stepBack()"> < </button>
+ <button class = "skipButton" id = "oneForward" onClick = "stepForward()"> > </button>
+ <button class = "skipButton" id = "fullForward" onClick = "skipForward()">≫</button>
+ 
+</div>
+
 
 
 <div id = "resButtons">
@@ -79,7 +121,9 @@ $opInfo = mysqli_fetch_array($getUserInfo);
 <a href="move_reservation.php?id=<?=$gameID?>&resBox=3" ><img src = images/reservation/res_3_grey.png id = "resButton3"></a>
 </div>
 </div>
+
 <img src = "images/resign.png" id = "resignButton" onClick = "resign()">
+</div>
 </body>
  
  <script>
