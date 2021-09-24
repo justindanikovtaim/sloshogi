@@ -18,7 +18,7 @@
         width: 16vw;
         height: 9vw;
         top: 106vw;
-        left: 5.5vw;
+        left: 3vw;
         z-index: 1;
     }
 
@@ -29,6 +29,7 @@
         z-index: inherit;
         border: 2px solid black;
         margin: 0px;
+        left: 22.5%;
     }
 #opIcon, #userIcon{
     position: absolute;
@@ -53,6 +54,7 @@
     position: relative;
     z-index: inherit;
     margin: auto;
+    text-align: center;
 }
     
     #board, #whiteMochigoma, #blackMochigoma, #promptBox{
