@@ -97,11 +97,12 @@
     
     #promptBox{
         position: relative;
-        margin-left: 25%;
+        margin-left: 5%;
         margin-top: 1vw;
         height: 4vw;
-        width: 50%;
+        width: 90%;
         border-style: solid;
+        z-index: 1;
     }
     #playerPrompt{
         position: relative;
@@ -116,12 +117,59 @@
 
     #undo{
         position: absolute;
-        top: 107vw;
-        font-size: 8vw;
-        height: 9vw;
+        top: 105vw;
+        left: 6vw;
+        height: 12vw;
+        width: 12vw;
         background-color:red;
+        z-index: 2;
+    }
+    #undoImg{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        object-fit:fill;
     }
     
+    #menuBox{
+        position:absolute;
+        top: 106vw;
+        height: 7vw;
+        width: 7vw;
+        left: 91vw;
+    }
+    .turnRed{
+        background-color: yellow;
+        border: 1vw solid black;
+    }
+    #menuButton{
+        position:absolute;
+        height: 100%;
+        width: 100%;
+        object-fit: fill;
+    }
+    .popupMenu{
+        display: none;
+        position:absolute;
+        top: 10vw;
+        left: 15%;
+        background-color:rgb(238, 166, 32);
+        width:70%;
+        height: 80%;
+        border: 2vw solid rgb(70, 70, 70);
+        z-index: 2;
+    }
+    .popupMenu a{
+        display: block;
+        font-size: 5vw;
+        padding: 1vw 1vw;
+        margin: .5vw;
+        border: 1vw solid black;
+        background-color:#CCCC99;
+    }
+    .menuShow{
+        display:block;
+    }
 
     #resButtons{
         position: relative;

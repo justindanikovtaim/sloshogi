@@ -79,8 +79,7 @@ $userInfo = mysqli_fetch_array($getUserInfo);
     <div id = "board"></div>
     <div id = "blackMochigoma"></div>
  
-
-    <button id="undo" onClick = "window.location.reload()">⎌</button>
+    <div id ="undo" onClick = "window.location.reload()"><img src ="images/undo_button.png" id="undoImg"></div>
 </div>
 
 <div  id = "userInfo">
@@ -92,6 +91,13 @@ $userInfo = mysqli_fetch_array($getUserInfo);
 </div>
 </div>
 
+<div id="menuBox" onclick = "showMenu()"><img src="images/menu_button.png"  id = "menuButton"></div>
+
+    <div class = "popupMenu" id="popupMenuId">
+    <a href="#">チャット表示・View Chat</a>
+    <a href="#" onClick = "resign()">校了・Resign</a>
+    <a href="#">バッグ報告・Report a bug</a>
+</div>
 
     <div id = "promptBox">
  <h3 id = "playerPrompt"></h3> 
@@ -122,7 +128,6 @@ $userInfo = mysqli_fetch_array($getUserInfo);
 </div>
 </div>
 
-<img src = "images/resign.png" id = "resignButton" onClick = "resign()">
 </div>
 </body>
  
@@ -130,6 +135,11 @@ $userInfo = mysqli_fetch_array($getUserInfo);
  var currentGameID = <?php echo $gameID;?>;
    var gameHistory = <?php echo json_encode($temparray);?>;
    var phpColor = "<?php echo $_COOKIE['current_user_cookie']; ?>";
+
+   function showMenu(){
+    document.getElementById("popupMenuId").classList.toggle("menuShow");
+    document.getElementById("menuBox").classList.toggle("turnRed");
+   }
     </script>
 
 <script src= "scripts/slo_shogi_script.js"></script>
