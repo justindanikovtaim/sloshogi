@@ -25,7 +25,7 @@
         <a href = "https://twitter.com/ShogiSlo" id="twitterContact">＠ShogiSlo</a></p>
 <br>
 <br>
-<h1><a href="feedback_form.php?src=user_page&id=na" id = "feedback">バッグ報告・Report a bug</a></h1>
+<h1><a href="feedback_form.php?src=index&id=na" id = "feedback">バッグ報告・Report a bug</a></h1>
 
     <!--<h3>SLO将棋とは？</h3>
     <h3>What is SLO SHOGI?</h3>
