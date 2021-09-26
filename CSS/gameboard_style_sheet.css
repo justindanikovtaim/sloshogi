@@ -270,7 +270,8 @@
    .boardNum{
        position:absolute;
        top: 10.5vw;
-       font-size: 3vw;
+       font-size: 3vw !important;
+       z-index: 1;
    }
    #topNumber1{
        margin-left: 9vw;

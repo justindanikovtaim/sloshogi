@@ -28,10 +28,10 @@ $userInfo = mysqli_fetch_array($getUserInfo);
 <html onload ="drawBoard()">
 <head>
     <meta charset="utf-8">
+    <meta name="format-detection" content ="telephone=no"/>
     <title>Slo Shogi</title>
-    
-    <link href="CSS/Gameboard_style_sheet.css" rel="stylesheet">
     <link href="CSS/all_pages.css" rel="stylesheet">
+    <link href="CSS/Gameboard_style_sheet.css" rel="stylesheet">
 
 </head>
 
@@ -55,15 +55,15 @@ $userInfo = mysqli_fetch_array($getUserInfo);
 
 
     <div id = "whiteMochigoma"></div>
-    <div class="boardNum" id = "topNumber1">9</div>
-    <div class="boardNum" id="topNumber2">8</div>
-    <div class="boardNum" id="topNumber3">7</div>
-    <div class="boardNum" id="topNumber4">6</div>
-    <div class="boardNum" id="topNumber5">5</div>
-    <div class="boardNum" id="topNumber6">4</div>
-    <div class="boardNum" id="topNumber7">3</div>
-    <div class="boardNum" id="topNumber8">2</div>
-    <div class="boardNum" id="topNumber9">1</div>
+    <div class="boardNum" id = "topNumber1">９</div>
+    <div class="boardNum" id="topNumber2">８</div>
+    <div class="boardNum" id="topNumber3">７</div>
+    <div class="boardNum" id="topNumber4">６</div>
+    <div class="boardNum" id="topNumber5">５</div>
+    <div class="boardNum" id="topNumber6">４</div>
+    <div class="boardNum" id="topNumber7">３</div>
+    <div class="boardNum" id="topNumber8">２</div>
+    <div class="boardNum" id="topNumber9">１</div>
 
     <div class="boardKanji" id="kanji9">一</div>
     <div class="boardKanji" id="kanji8">二</div>
@@ -96,7 +96,7 @@ $userInfo = mysqli_fetch_array($getUserInfo);
     <div class = "popupMenu" id="popupMenuId">
     <a href="#">チャット表示・View Chat</a>
     <a href="#" onClick = "resign()">校了・Resign</a>
-    <a href="#">バッグ報告・Report a bug</a>
+    <a href="feedback_form.php?src=gameboard&id=<?=$gameID?>">バッグ報告・Report a bug</a>
 </div>
 
     <div id = "promptBox">

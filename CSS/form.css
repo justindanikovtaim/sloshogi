@@ -1,0 +1,18 @@
+form{
+    margin-top: 12vw;
+    border: 1vw solid black;
+}
+h5{
+font-size: 5vw;
+}
+.radioText{
+    position: relative;
+    top: -2vw;
+    font-size: 5vw;
+    margin-top: 0px;
+}
+
+#comment{
+    width: 80vw;
+    height: 40vw;
+}
