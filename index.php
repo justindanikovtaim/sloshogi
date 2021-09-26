@@ -10,18 +10,23 @@
     <title>Slo Shogi</title>
     
     <link href="CSS/all_pages.css" rel="stylesheet">
+    <link href="CSS/index.css" rel="stylesheet">
+
 
 </head>
 
 <body>
+<div id = "userLogin"><a href = "user_login.html" id = "userLoginText">ログイン Login</a></div>
 
     <h1>SLO SHOGI</h1>
     <img id="screenshot" src= "images/screenshot.jpg">
-    <h3>SLO将棋はまだβ版です。でも、一緒に対局してテストしてくれる仲間を募集しています。興味がある方、気軽に公式Twitterにて連絡ください！</h3>
-        <a href = "https://twitter.com/ShogiSlo">＠ShogiSlo</a></p>
+    <h3>SLO将棋はまだβ版です。</h3>
+    <p>でも、一緒に対局しテストしてくれる仲間を募集しています。興味がある方、気軽に公式Twitterにて連絡ください！</p>
+        <a href = "https://twitter.com/ShogiSlo" id="twitterContact">＠ShogiSlo</a></p>
 <br>
 <br>
-<a href = "user_login.html">ユーザーログイン</a>
+<h1><a href="feedback_form.php?src=user_page&id=na" id = "feedback">バッグ報告・Report a bug</a></h1>
+
     <!--<h3>SLO将棋とは？</h3>
     <h3>What is SLO SHOGI?</h3>
 
