@@ -148,6 +148,12 @@
         width: 100%;
         object-fit: fill;
     }
+    #newMessage{
+        position:absolute;
+        height: 30%;
+        width: 30%;
+        z-index: 1;
+    }
     .popupMenu{
         display: none;
         position:absolute;
@@ -169,6 +175,56 @@
     }
     .menuShow{
         display:block;
+    }
+    .popupChat{
+        display: none;
+        position:absolute;
+        top: 10vw;
+        left: 10%;
+        background-color:rgb(238, 166, 32);
+        width:80%;
+        height: 80%;
+        border: 2vw solid rgb(70, 70, 70);
+        z-index: 2;
+    }
+    .chatShow{
+        display:block;
+    }
+
+    #popupChatText{
+        position: absolute;
+        overflow: auto;
+        height: 70%;
+        width: 100%;
+    }
+    .chatNameHeader{
+        font-size: 6vw;
+        margin-bottom: 0vw;
+        
+    }
+    .chatEntryRight{
+        position:relative;
+        font-size: 4vw;
+        background-color: cornsilk;
+        margin: 0vw;
+        width: 90%;
+        right: -10%;
+    }
+    .chatEntryLeft{
+        
+        position:relative;
+        font-size: 4vw;
+        background-color: cornsilk;
+        margin: 0vw;
+        width: 90%;
+    }
+    #popupChatInput{
+        position:absolute;
+        width: 80%;
+        height: 10%;
+        bottom: 0%;
+        right: 0%;
+        font-size: 4vw;
     }
 
     #resButtons{
