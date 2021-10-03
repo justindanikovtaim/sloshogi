@@ -327,6 +327,7 @@
        position:absolute;
        top: 10.5vw;
        font-size: 3vw !important;
+       display: inline-block;
        z-index: 1;
    }
    #topNumber1{

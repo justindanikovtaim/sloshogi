@@ -48,7 +48,7 @@ $chatHistory = explode("%%", $chatArray['chat']);
 <html onload ="drawBoard()">
 <head>
     <meta charset="utf-8">
-    <meta name="format-detection" content ="telephone=no"/>
+    <meta name="format-detection" content ="telephone=no">
     <title>Slo Shogi</title>
     <link href="CSS/all_pages.css" rel="stylesheet">
     <link href="CSS/Gameboard_style_sheet.css" rel="stylesheet">
@@ -75,14 +75,22 @@ $chatHistory = explode("%%", $chatArray['chat']);
 
 
     <div id = "whiteMochigoma"></div>
-    <div class="boardNum" id ="topNumber1">9</div>
+    <div class="boardNum" id="topNumber1">9</div>
+    <div></div>
     <div class="boardNum" id="topNumber2">8</div>
+    <div></div>
     <div class="boardNum" id="topNumber3">7</div>
+    <div></div>
     <div class="boardNum" id="topNumber4">6</div>
+    <div></div>
     <div class="boardNum" id="topNumber5">5</div>
+    <div></div>
     <div class="boardNum" id="topNumber6">4</div>
+    <div></div>
     <div class="boardNum" id="topNumber7">3</div>
+    <div></div>
     <div class="boardNum" id="topNumber8">2</div>
+    <div></div>
     <div class="boardNum" id="topNumber9">1</div>
 
     <div class="boardKanji" id="kanji9">一</div>
