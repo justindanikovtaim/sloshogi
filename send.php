@@ -5,6 +5,7 @@ $decoded = json_decode($in, true);
 $gametofind = $decoded['gameId'];
 $turn = $decoded['turn'];
 $deleteRule = $decoded['delete'];
+$chatSeen = $decoded['chatSeen'];
 
 $delete1 = 'reservation1 = "",';
 $chop1 = 'reservation1 = SUBSTR(reservation1,(1+CHAR_LENGTH(SUBSTRING_INDEX(reservation1,";", 3)))),';
@@ -43,12 +44,7 @@ require 'connect.php';
         echo "There was an error with the switch command";
         break;
     }
-    echo $deleteCommand;
-    $updatecommand = 'UPDATE gamerecord SET moves = CONCAT(moves, "' . $decoded['newmoves'] . '"),'.$deleteCommand.' turn = "'.$turn.'" WHERE id ='; 
-
-echo $updatecommand;
+    $updatecommand = 'UPDATE gamerecord SET moves = CONCAT(moves, "' . $decoded['newmoves'] . '"),'.$deleteCommand.' turn = "'.$turn.'", chatseen = '.$chatSeen.' WHERE id ='; 
 
     mysqli_query($link, $updatecommand.$gametofind);
-    mysqli_query($link, 'UPDATE gamerecord SET reservation = "" WHERE id = '.$gametofind);//empty the reservation
-
  ?>

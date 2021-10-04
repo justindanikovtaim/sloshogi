@@ -72,8 +72,6 @@ $chatHistory = explode("%%", $chatArray['chat']);
 </div>
 
 
-
-
     <div id = "whiteMochigoma"></div>
     <div class="boardNum" id="topNumber1">9</div>
     <div></div>
@@ -121,11 +119,12 @@ $chatHistory = explode("%%", $chatArray['chat']);
 
 <div id="menuBox" onclick = "showMenu()">
 <img src="images/menu_button.png"  id = "menuButton">
-<img src="images/new_message_icon.png" id ="newMessage">
+<img class ="msgIcon" src="images/new_message_icon.png" id ="newMessage">
 </div>
 
     <div class = "popupMenu" id="popupMenuId">
     <a href="#" onClick = "toggleChat()">チャット表示・View Chat</a>
+    <img class ="msgIcon" src="images/new_message_icon.png" id ="newMessageInMenu">
     <a href="#" onClick = "resign()">校了・Resign</a>
     <a href="feedback_form.php?src=gameboard&id=<?=$gameID?>">バッグ報告・Report a bug</a>
 </div>
@@ -174,10 +173,11 @@ $chatHistory = explode("%%", $chatArray['chat']);
  var currentGameID = <?php echo $gameID;?>;
    var gameHistory = <?php echo json_encode($temparray);?>;
    var phpColor = "<?php echo $_COOKIE['current_user_cookie']; ?>";
-   let newMsgIcon = <?=$newChatIcon?>;
+   var newMsgIcon = <?=$newChatIcon?>;
 
     if(newMsgIcon == 0){//if there are no new messages (0 = false)
         document.getElementById("newMessage").style.visibility = "hidden"; 
+        document.getElementById("newMessageInMenu").style.visibility = "hidden"; 
     }
 
    //write the chat contents to the hidden chat screen
@@ -259,7 +259,7 @@ $chatHistory = explode("%%", $chatArray['chat']);
    }
 
    function toggleChat() {
-       newMsg = "false";
+       newMsgIcon = 3;
        //make the menu disapear
     showMenu();
     //make the chat appear
@@ -267,6 +267,7 @@ $chatHistory = explode("%%", $chatArray['chat']);
        //make it scroll to the bottom of the chat
    document.getElementById("popupChatText").scrollTop = document.getElementById("popupChatText").scrollHeight;
    document.getElementById("newMessage").style.visibility = "hidden"; 
+   document.getElementById("newMessageInMenu").style.visibility = "hidden"; 
    }
 
    function closeChat(){

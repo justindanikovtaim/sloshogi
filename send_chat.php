@@ -12,6 +12,6 @@ $textToAdd = "%%".$_COOKIE['current_user_cookie']."%%".$decoded['textToSend'];
     $updatecommand = 'UPDATE gamerecord SET chat = CONCAT(chat, "' . $textToAdd. '"), chatseen = '.$chatSeen.' WHERE id ='; 
 
     mysqli_query($link, $updatecommand.$gametofind);
-    echo msqli_error($link);
+    echo mysqli_error($link);
 
  ?>
