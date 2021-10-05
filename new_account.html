@@ -11,14 +11,19 @@
 <body>
 
     <h1>SLO 将棋　アカウント作成</h1>
+    <h1>Make an Account on SLO Shogi</h1>
     <br>
     <form action = "verify_creation.php" method ="post">
-        <label for="userData"><b>ユーザー名/Username</b></label>
+        <label for="userData"><b>希望ユーザー名 / Desired Username</b></label>
         <input title="3~20文字；数字、A-Z、_, - のみ；スペース禁止｜4-20 characters; numbers, letters, _, - only; no spaces" 
        pattern = "[A-Za-z0-9\-_\.]{4,20}" type = "text" placeholder="Enter Username" name = "userData" maxlength = "20" required>
-        <br>
+        <br><br>
         <label for = "address"><b>Email Address</b></label>
         <input type = "email" placeholder = "youremail@website.com" name ="address" autocomplete = "on" required>
+        <br>
+        <label for = "confirmAddress"><b>Confirm Email 確認</b></label>
+        <input type = "email" placeholder = "youremail@website.com" name ="confirmAddress" autocomplete = "off" required>
+        <br>
         <br>
         <button type = "submit">アカウント作成/Create Account</button>
     </form>

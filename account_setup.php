@@ -9,7 +9,7 @@ if (mysqli_connect_errno()) {
 $OTP = htmlspecialchars($_GET['OTP']);
 
 //delete old records from the newaccounts table
-mysqli_query($link, "DELETE FROM newaccounts WHERE timeCreated < (NOW() - INTERVAL 60 MINUTE)");
+mysqli_query($link, "DELETE FROM newaccounts WHERE timeCreated < (NOW() - INTERVAL 1440 MINUTE)");
 
 //search for user's OTP and get their account name and email in the process
 $result = mysqli_query($link, "SELECT * FROM newaccounts WHERE OTP =".$OTP);

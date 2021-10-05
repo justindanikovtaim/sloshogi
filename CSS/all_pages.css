@@ -53,6 +53,10 @@ input{
   font-family: "8Bit";
 
 }
+button{
+  font-size: 5vw;
+  font-family: "8Bit"; 
+}
 
 form{
   font-size: 8vw;

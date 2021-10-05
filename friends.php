@@ -23,8 +23,10 @@ $numOfFriends = count($friendIds);
 <br>
 <a href = "#">Add New Friends</a>
 <br>
-<a href = "#">Send Email Invite</a>
+<a href = "invite_email.php">Send Email Invite</a>
 
+<div id ="friendRequests">
+</div>
 </body>
 <script>
 
