@@ -313,6 +313,7 @@ if(playerColor == "W"){
 function sendMoveData(thingsToDelete){
     let tempObject = JSON.parse(sendToDatabase);
     tempObject['delete'] = thingsToDelete;// add the rules about what to delete to the JSON object
+    tempObject['chatSeen'] = newMsgIcon;
     sendToDatabase = JSON.stringify(tempObject); // and convert it back to a string
 
     var ajax = new XMLHttpRequest();

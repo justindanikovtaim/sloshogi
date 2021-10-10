@@ -15,16 +15,25 @@ $numOfFriends = count($friendIds);
 <!DOCTYPE html>
 <head>
 <link href="CSS/all_pages.css" rel="stylesheet">
+<link href="CSS/friends_page.css" rel="stylesheet">
 </head>
 <body>
 <a id = "backButton" href = "user_page.php">≪</a>
 <h1>Friends</h1>
 <div id = "drawFriends"></div>
 <br>
-<a href = "#">Add New Friends</a>
 <br>
-<a href = "invite_email.php">Send Email Invite</a>
-
+<a href = "add_friends.php" class="noUnderline">
+<div class ="buttonBorder">
+Add New Friends
+</div>
+</a>
+<br>
+<a href = "invite_email.php"class="noUnderline">
+<div class ="buttonBorder">
+Send Email Invite
+</div>
+</a>
 <div id ="friendRequests">
 </div>
 </body>
