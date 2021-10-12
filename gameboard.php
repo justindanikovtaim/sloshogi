@@ -173,8 +173,11 @@ $chatHistory = explode("%%", $chatArray['chat']);
  var currentGameID = <?php echo $gameID;?>;
    var gameHistory = <?php echo json_encode($temparray);?>;
    var phpColor = "<?php echo $_COOKIE['current_user_cookie']; ?>";
+   var chatNoChange = <?=$chatSeen?>;
    var newMsgIcon = <?=$newChatIcon?>;
-
+   var chatSeenNum = <?=$chatSeenNum?>;
+    var msgSent = false;
+    var seenNotSent = false;
     if(newMsgIcon == 0){//if there are no new messages (0 = false)
         document.getElementById("newMessage").style.visibility = "hidden"; 
         document.getElementById("newMessageInMenu").style.visibility = "hidden"; 
@@ -210,8 +213,8 @@ $chatHistory = explode("%%", $chatArray['chat']);
    
    function submitOnEnter(event){ //https://stackoverflow.com/questions/8934088/how-to-make-enter-key-in-a-textarea-submit-a-form
     if(event.which === 13  && !event.shiftKey){//if the enter key was pushed
+        msgSent = true;
         var ajax = new XMLHttpRequest();
-        let chatSeenNum = <?=$chatSeenNum?>;
         let msgToSend =  JSON.stringify({"textToSend": document.getElementById("popupChatInput").value,
              "gameId": <?=$gameID?>, "chatSeenNum": chatSeenNum });
         console.log(msgToSend);
@@ -259,7 +262,7 @@ $chatHistory = explode("%%", $chatArray['chat']);
    }
 
    function toggleChat() {
-       newMsgIcon = 3;
+       seenNotSent = true;
        //make the menu disapear
     showMenu();
     //make the chat appear
