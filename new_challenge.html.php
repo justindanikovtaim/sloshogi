@@ -25,11 +25,16 @@ $numOfFriends = count($friendIds);
 <form action="new_challenge.php" name = "challengeData" method = "post">
 <input type="hidden" name = "opponent" id = "opponentField">
 <p>Opponent: <span id = "showOpponent"></span></p>
-<h3>User Color</h3>
+<h3>ユーザー色　User Color</h3>
 <input type = "radio" id = "userColorBlack" name = "userColor" value = "blackplayer">
 <label for="userColorBlack">黒</label><br>
 <input type = "radio" id = "userColorWhite" name = "userColor" value = "whiteplayer">
 <label for="userColorWhite">白</label><br>
+<h3>公開非公開　Visibility</h3>
+<input type ="radio" id = "private" name = "publicPrivate" value = 1>
+<label for="private">非公開 Private</label><br>
+<input type ="radio" id = "notPrivate" name = "publicPrivate" value = 0>
+<label for="notPrivate">公開 Public</label><br>
 <input type="submit" value="Send Challenge">
 </form>
 

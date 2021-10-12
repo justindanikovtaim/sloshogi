@@ -10,9 +10,10 @@ if($_POST["userColor"] == "blackplayer"){
         $whitePlayer = $_COOKIE["current_user_cookie"];
         $blackPlayer = $_POST["opponent"];
     }
+    $publicPrivate = $_POST["publicPrivate"];
 
-    $newChallenge = 'INSERT INTO gamerecord (moves, blackplayer, whiteplayer, status, creator)
-     VALUES ( "", "' .$blackPlayer.'", "'.$whitePlayer.'", "1", "' .$_COOKIE["current_user_cookie"].'");';
+    $newChallenge = 'INSERT INTO gamerecord (private, moves, blackplayer, whiteplayer, status, creator)
+     VALUES ('.$publicPrivate.', "", "' .$blackPlayer.'", "'.$whitePlayer.'", "1", "' .$_COOKIE["current_user_cookie"].'");';
 
     $getActiveGames = mysqli_query($link, "SELECT id FROM gamerecord WHERE 
     (blackplayer = '".$_COOKIE['current_user_cookie']."' OR whiteplayer = '".$_COOKIE['current_user_cookie']."')

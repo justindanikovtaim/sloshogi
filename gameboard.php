@@ -4,8 +4,23 @@ require 'connect.php';
 session_start();
 $gameID = $_GET['id'];
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
+if($result->num_rows == 0 ){
+    //if a game id that doesn't exist is input
+    header('location: user_page.php');
+    die();
+}
+
 $temparray = array();
 $row = mysqli_fetch_array($result);
+
+if($row['private'] != 0){
+    if($_COOKIE['current_user_cookie'] != $row['blackplayer'] && $_COOKIE['current_user_cookie'] != $row['whiteplayer']){
+        header('Location: private_game.html');
+        die();
+    }
+}
+
+
 array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"], 
 $row["reservation1"], $row["reservation2"], $row["reservation3"], $row["status"], $row["winner"], $_COOKIE['current_user_cookie']); 
 $chatSeen = $row['chatseen'];
