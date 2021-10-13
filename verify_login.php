@@ -15,7 +15,6 @@ if(!password_verify($enteredPW, $verifyPW[0]) && $enteredPW != $verifyPW[0]){
 }else{
     $getUserIcon = mysqli_query($link, "SELECT icon FROM users WHERE username = '".$currentUser ."'");//get the set icon
     $icon = mysqli_fetch_array($getUserIcon);
-    
     setcookie('current_user_cookie', $currentUser, time() + (86400 * 365), "/"); // 86400 = 1 day
     setcookie('icon', $icon['icon'], time() + (86400 * 365), "/");
     
