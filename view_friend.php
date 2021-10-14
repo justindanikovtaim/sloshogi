@@ -2,7 +2,7 @@
 require 'connect.php';
 $userVar = $_COOKIE['current_user_cookie'];
 
-$getUserInfo = mysqli_query($link, "SELECT rating, record, icon, id FROM users WHERE username = '".$_GET['friendName']."'");
+$getUserInfo = mysqli_query($link, "SELECT rating, hitokoto, record, icon, id FROM users WHERE username = '".$_GET['friendName']."'");
 $userInfoArray = mysqli_fetch_array($getUserInfo);
 
 //get the user's friend list to see whether the curerntly-viewed player is on it or not
@@ -27,6 +27,7 @@ $friendIds = explode(',', $friendsArray['friends']);//should separate the friend
 <h1 id = "userName"><?=$_GET['friendName']?></h1>
 <h2 id = "rating">段級: <?=$userInfoArray['rating']?></h1>
 <h2 id = "record">勝敗レコード: <?=$userInfoArray['record']?> </h1>
+<p id="hitokotoInput">"<?=$userInfoArray['hitokoto']?>"</p>
 <div id="iconBox">
 <img src= "images/icons/<?=$userInfoArray['icon']?>_icon.png" id = "userIcon">
 </div>

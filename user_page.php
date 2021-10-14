@@ -106,6 +106,7 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
     <h1 id = "userName"><?=$_COOKIE['current_user_cookie']?></h1>
     <h2 id = "rating">段級: ?</h2>
     <h2 id = "record"><?=$userInfoArray['record']?>&nbsp&nbsp </h2>
+    <p id="hitokotoInput">"<?=$userInfoArray['hitokoto']?>"</p>
     <a href = "settings.php"id = "settings" >設定 Settings</a>
     <div id="iconBox">
     <img src= "images/icons/<?=$_COOKIE['icon']?>_icon.png" id = "userIcon">

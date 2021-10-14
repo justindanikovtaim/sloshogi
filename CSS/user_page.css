@@ -48,6 +48,16 @@ height: 98vh;
     position: absolute;
     top: 50%
 }
+
+
+#hitokotoInput{
+    position: absolute;
+    width: 50%;
+    top: 30%;
+    right: 25%;
+    font-size: 4vw;
+    margin-top: 0%;
+}
 #settings{
     position:absolute;
     right: 0%;
