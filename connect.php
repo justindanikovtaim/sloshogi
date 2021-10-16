@@ -1,5 +1,5 @@
 <?php
-if($_SERVER['REQUEST_URI'] != '/sloshogi/verify_login.php'){ //*****UPDATE******** */
+if($_SERVER['REQUEST_URI'] != '/sloshogi/verify_login.php' && $_SERVER['REQUEST_URI'] != '/sloshogi/email_temp_pw.php' ){ //*****UPDATE******** */
     if(!isset($_COOKIE['current_user_cookie'])){
        header('location: index.php');
         die();
