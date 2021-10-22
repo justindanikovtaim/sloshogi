@@ -26,7 +26,7 @@ let isCheck = null; //keep track of if it is check or not
 let checkingPieces = [];
 let move = [];
 let boardSquare = [];
-
+let newlyPromoted = false;
 let sC = 0; //square counter
 let sendToDatabase; //an object used to pass JSON data of the move made to PHP
 
@@ -222,6 +222,10 @@ function loadGameState(placeCalled){//loads the current game state from the data
     if(movesHistory != undefined){
 
     for(g = 0; g < movesHistory.length; g+= 3){
+        if(Number(movesHistory[g]) > 99){//if the game ended in regination or checkmate (100 or 101)
+            break;
+        }else{
+
         if(movesHistory[g] == "81"){
             //if the piece is a mochigoma
                 let mochigomaPlace = mochiGomaOrder.indexOf("M" + movesHistory[g+2]); //find the place where it is
@@ -232,12 +236,19 @@ function loadGameState(placeCalled){//loads the current game state from the data
             //otherwise, if it's a piece on the board
             if (gameState[movesHistory[g+1]].charAt(0) !== "e") { //if capturing a piece
                 addToMochiGoma(gameState[movesHistory[g+1]]);//add it to the proper place in mochigoma array
-            }
+            }   
+                //need to take off the * if there is one (if the piece was newly promoted)
+                if(movesHistory[g+2].charAt(movesHistory[g+2].length - 1) == "*"){
+                    movesHistory[g+2] = movesHistory[g+2].substring(0, movesHistory[g+2].length - 1);//cut off the last * character
+                }
                 gameState[movesHistory[g+1]] = movesHistory[g+2]; //move the piece to the new square
                 gameState[movesHistory[g]] = "empty"; //make the space where the piece moved from empty
         }
         turn++;
     }
+    }
+    if(movesHistory[movesHistory.length - 1] <100){//if the game hasn't ended in resgination (100) or checkmate(101)
+    
     let redSquare1;
     let redSquare2;
     if(playerColor == "W"){ //flip the move indicator position if the white player is viewing
@@ -252,6 +263,7 @@ function loadGameState(placeCalled){//loads the current game state from the data
     if(movesHistory[movesHistory.length -3] != 81){
         boardSquare[redSquare1].style.background = "red";
     }
+}
 
 }
 if((turn %2 != 0 && playerColor == "B") || (turn % 2 == 0 && playerColor == "W")){
@@ -1289,8 +1301,8 @@ function movePiece(id) {
     if (selectedPiece < 81) { //if it's other than the mochigoma
         //see if piece can promote
         if ((gameState[selectedPiece].charAt(1) !== "N") && //if the piece isn't already promoted (the second letter isn't N)
-            id < 27 ||// or if it is an odd turn and the piece will move into the third row or less
-            selectedPiece < 27) { //or the piece is already within the first 3 rows
+            (id < 27 ||// or if it is an odd turn and the piece will move into the third row or less
+            selectedPiece < 27)) { //or the piece is already within the first 3 rows
 
             promotePiece();
         }
@@ -1328,9 +1340,17 @@ function movePiece(id) {
             moveFromSend = selectedPiece
             moveToSend = id;
         }
+        //set the name of the piece to send
+        let gamePieceName; 
+        if(newlyPromoted){
+            gamePieceName = gameState[selectedPiece]+"*";//add an asterisk to the piecename in the gamerecord if it is newly promoted
+        }else{
+            gamePieceName = gameState[selectedPiece];
+        }
+        newlyPromoted = false;//reset to false (probably not important since the page will be reloaded anyway, but just in case that changes later...)
         //also, start by sending a comma to separate the move from the last one stored
         sendToDatabase = JSON.stringify({"newmoves": "," + moveFromSend.toString() + "," 
-        + moveToSend.toString() + "," + gameState[selectedPiece], "gameId": currentGameID, "turn": turn });//make the move into JSON object
+        + moveToSend.toString() + "," + gamePieceName, "gameId": currentGameID, "turn": turn });//make the move into JSON object
 
         //for Forward and Back buttons
         tempMoveForGameHistory = "," + moveFromSend.toString() + "," + moveToSend.toString() + "," + gameState[selectedPiece];
@@ -1433,6 +1453,7 @@ function promotePiece() {
         let yesNo = confirm("Promote?");
         if (yesNo) {
             gameState[selectedPiece] = gameState[selectedPiece].substr(0, 1) + "N" + gameState[selectedPiece].substr(1, 4); // add an N for nari after the first character
+            newlyPromoted = true;
 
         }
     }

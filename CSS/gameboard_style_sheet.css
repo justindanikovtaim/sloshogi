@@ -294,13 +294,6 @@
         object-fit: fill;
     }
 
-    #resignButton{
-        position: relative;
-        float: right;
-        right: 3vw;
-        width: 20vw;
-        margin-top: 2vh;
-    }
 
     #skipButtons{
         position:relative;

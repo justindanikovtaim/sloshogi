@@ -21,7 +21,8 @@ require 'connect.php';
     $loserRecord = $loserRecordExploded[0].",". " L: ".(string)$addToRecord; 
     //add one to the losses
 //echo $loserRecord;
-    $gameOverCommand = 'UPDATE gamerecord SET status = 4 WHERE id ='; 
+    $gameOverCommand = 'UPDATE gamerecord SET status = 4,
+    moves = CONCAT(moves, ",101,101,101") WHERE id ='; //101 = checkmate
     $addWinnerCommand = "UPDATE gamerecord SET winner = '".$decoded['winner']."' WHERE id = '".$gametofind."'";
     $plusWinCommand = "UPDATE users SET record = '" .$winnerRecord. "' WHERE username = '" .$decoded['winner']."'";
     $plusLossCommand =  "UPDATE users SET record = '" .$loserRecord. "' WHERE username = '" .$decoded['loser']."'";

@@ -14,7 +14,7 @@ if($activeGameCount < 5){
 
 
 
-if(mysqli_query($link,"UPDATE gamerecord SET status = 2 WHERE id = '".$_GET['id']."'")){
+if(mysqli_query($link,"UPDATE gamerecord SET status = 2, dateStarted = CURRENT_DATE() WHERE id = '".$_GET['id']."'")){
     header('Location: gameboard.php?id='.$_GET['id']);
 }else{
     echo "There was an error. Please try again";
