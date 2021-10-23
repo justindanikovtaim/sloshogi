@@ -247,7 +247,7 @@ function loadGameState(placeCalled){//loads the current game state from the data
         turn++;
     }
     }
-    if(movesHistory[movesHistory.length - 1] <100){//if the game hasn't ended in resgination (100) or checkmate(101)
+    if(movesHistory[movesHistory.length - 1] != 100 && movesHistory[movesHistory.length - 1] != 101){//if the game hasn't ended in resgination (100) or checkmate(101)
     
     let redSquare1;
     let redSquare2;
