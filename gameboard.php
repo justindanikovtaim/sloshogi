@@ -1,7 +1,6 @@
 <?php 
 require 'connect.php';
 
-session_start();
 $gameID = $_GET['id'];
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
 if($result->num_rows == 0 ){
@@ -22,12 +21,13 @@ if($row['private'] != 0){
 
 
 array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"], 
-$row["reservation1"], $row["reservation2"], $row["reservation3"], $row["status"], $row["winner"], $_COOKIE['current_user_cookie']); 
+$row["reservation1"], $row["reservation2"], $row["reservation3"], $row["status"], $row["winner"], $_COOKIE['current_user_cookie'], $row['lastMoveTime']); 
 $chatSeen = $row['chatseen'];
 
 if($row['blackplayer'] == $_COOKIE['current_user_cookie']){
     //get the opponent's username
     $opponentName = $row['whiteplayer'];
+    $playerColor = "black";
     if($chatSeen == 1 || $chatSeen == 0){
         //if there's a chat that the black player hasn't seen yet
         $newChatIcon = 1;
@@ -38,7 +38,7 @@ if($row['blackplayer'] == $_COOKIE['current_user_cookie']){
     $chatSeenNum = 2;//this sets the number to be sent to DB indicating if there's a new msg or not (2 will indicate new msg for white)
 }else{
     $opponentName = $row['blackplayer'];
-
+    $playerColor = "white";
     if($chatSeen == 2 || $chatSeen == 0){
         $newChatIcon = 1;
     }else{
@@ -57,6 +57,7 @@ $userInfo = mysqli_fetch_array($getUserInfo);
 $getChat = mysqli_query($link, 'SELECT chat FROM gamerecord WHERE id = "'.$gameID.'"');
 $chatArray = mysqli_fetch_array($getChat);
 $chatHistory = explode("%%", $chatArray['chat']);
+
 ?>
 
 <!DOCTYPE HTML>
@@ -69,6 +70,7 @@ $chatHistory = explode("%%", $chatArray['chat']);
     <link href="CSS/Gameboard_style_sheet.css" rel="stylesheet">
 
 </head>
+<script src= "scripts/track_gameboard_time.js"></script>
 
 <body>
 <div id = "wholeBoard">
@@ -186,9 +188,10 @@ $chatHistory = explode("%%", $chatArray['chat']);
 </body>
  
  <script>
- var currentGameID = <?php echo $gameID;?>;
+ var currentGameID = <?=$gameID?>;
    var gameHistory = <?php echo json_encode($temparray);?>;
-   var phpColor = "<?php echo $_COOKIE['current_user_cookie']; ?>";
+   var phpColor = "<?=$_COOKIE['current_user_cookie']?>";
+   let colorForTime  = "<?=$playerColor?>";
    var chatNoChange = <?=$chatSeen?>;
    var newMsgIcon = <?=$newChatIcon?>;
    var chatSeenNum = <?=$chatSeenNum?>;
@@ -198,7 +201,6 @@ $chatHistory = explode("%%", $chatArray['chat']);
         document.getElementById("newMessage").style.visibility = "hidden"; 
         document.getElementById("newMessageInMenu").style.visibility = "hidden"; 
     }
-
    //write the chat contents to the hidden chat screen
    let chatHistory = <?=json_encode($chatHistory)?>;
    let chatContents = [];
@@ -292,6 +294,8 @@ $chatHistory = explode("%%", $chatArray['chat']);
    function closeChat(){
     document.getElementById("popupChat").classList.toggle("chatShow");
    }
-    </script>
 
+    </script>
+<script src= "scripts/track_gameboard_time.js"></script>
 <script src= "scripts/slo_shogi_script.js"></script>
+<script src= "scripts/game_prompt.js"></script>

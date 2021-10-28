@@ -282,18 +282,7 @@ if(playerColor == "W" && placeCalled == 1){
     gameState = flipGamestate; //put the flipped gamestate into gameState
 }
 
-if(gameHistory[7] != null){//if a winner has been set
-    document.getElementById("playerPrompt").innerHTML = gameHistory[7] + " が勝ちました";
 
-}else if(turn % 2 == 0){    //update the prompt showing which player's turn it is
-//White's turn
-    document.getElementById("playerPrompt").innerHTML = gameHistory[2] + " to play";
-
-}
-else{
-    //black's turn
-    document.getElementById("playerPrompt").innerHTML = gameHistory[1] + " to play";
-}
 viewTurn = turn - 1; // viewing the current game state
 document.getElementById("undo").style.visibility = "hidden";
 
@@ -325,6 +314,7 @@ if(playerColor == "W"){
 function sendMoveData(thingsToDelete){
     let tempObject = JSON.parse(sendToDatabase);
     tempObject['delete'] = thingsToDelete;// add the rules about what to delete to the JSON object
+    tempObject['color'] = playerColor;
     if(msgSent){
         tempObject['chatSeen'] = chatSeenNum;
     }else{

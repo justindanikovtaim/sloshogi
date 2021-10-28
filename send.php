@@ -3,6 +3,17 @@
 $in = file_get_contents('php://input');
 $decoded = json_decode($in, true);
 $gametofind = $decoded['gameId'];
+$playerColor = $decoded['color'];
+if($playerColor == 'B'){
+        $opColor = 'W';
+        $playerTime = "blackTimeOn";
+        $opTime = "whiteTimeOn";
+}else{
+    $opColor = 'B';
+    $playerTime = "whiteTimeOn";
+    $opTime = "blackTimeOn";
+}
+
 $turn = $decoded['turn'];
 $deleteRule = $decoded['delete'];
 $chatSeen = $decoded['chatSeen'];
@@ -44,7 +55,9 @@ require 'connect.php';
         echo "There was an error with the switch command";
         break;
     }
-    $updatecommand = 'UPDATE gamerecord SET moves = CONCAT(moves, "' . $decoded['newmoves'] . '"),'.$deleteCommand.' turn = "'.$turn.'", chatseen = '.$chatSeen.' WHERE id ='; 
+    $updatecommand = 'UPDATE gamerecord SET moves = CONCAT(moves, "' . $decoded['newmoves'] . '"),'.$deleteCommand.' turn = "'.$turn.'", chatseen = '.$chatSeen.',
+    lastMoveTime = '.$playerTime.'- moveTimestamp'.$playerColor.',
+    moveTimestamp'.$opColor.' = '.$opTime.', moveTimestamp'.$playerColor.' = '.$playerTime.'  WHERE id ='; 
 
     mysqli_query($link, $updatecommand.$gametofind);
  ?>
