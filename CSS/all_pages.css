@@ -86,3 +86,9 @@ a:visited {
 .centered{
   text-align: center;
 }
+
+.inputBox{
+  border: 2px solid black;
+  font-size: 8vw;
+  font-family: "8Bit";
+}

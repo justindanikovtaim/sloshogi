@@ -21,29 +21,41 @@ $numOfFriends = count($friendIds);
 <a id = "backButton" href = "newGame.php">≪</a>
 <br>
 <h1>Choose a Friend to Challenge</h1>
-<div id = "drawFriends"></div>
+<div class = "inputBox">
+<datalist id = "drawFriends"></datalist>
 <form action="new_challenge.php" name = "challengeData" method = "post">
-<input type="hidden" name = "opponent" id = "opponentField">
-<p>Opponent: <span id = "showOpponent"></span></p>
-<h3>ユーザー色　User Color</h3>
+<label for = "opponentField">対戦相手　Opponent</label><br>
+<input list="drawFriends" name = "opponent" id = "opponentField" require>
+</div>
+
+<br>
+<div class = "inputBox">
+<h3>先手 First to Play</h3>
 <input type = "radio" id = "userColorBlack" name = "userColor" value = "blackplayer">
-<label for="userColorBlack">黒</label><br>
+<label for="userColorBlack">私　Me</label><br>
 <input type = "radio" id = "userColorWhite" name = "userColor" value = "whiteplayer">
-<label for="userColorWhite">白</label><br>
-<h3>公開非公開　Visibility</h3>
+<label for="userColorWhite">相手　Opponent</label><br>
+</div>
+
+<br>
+<div class = "inputBox">
+<h3>公開設定　Visibility</h3>
 <input type ="radio" id = "private" name = "publicPrivate" value = 1>
 <label for="private">非公開 Private</label><br>
 <input type ="radio" id = "notPrivate" name = "publicPrivate" value = 0>
 <label for="notPrivate">公開 Public</label><br>
+</div>
+
 <input type="submit" value="Send Challenge">
+
 </form>
 
 </body>
 <script>
-function fillInName(opponent){
+/*function fillInName(opponent){
     document.getElementById("opponentField").value = opponent;
     document.getElementById("showOpponent").innerHTML = opponent;
-}
+}*/
 
 let friendsArrayLength = Number(<?php echo $numOfFriends; ?>);
 let friendLinks = [];
@@ -51,13 +63,12 @@ let counter = 0;
 
 //make a php foreach loop to create each name in the friendLinks array as a p element in the DOM
 <?php foreach($findFriends as $i){?>
-        
-        friendLinks[counter] = document.createElement("a");
-   friendLinks[counter].innerHTML = "<?=$i?>";
-   friendLinks[counter].setAttribute("onClick", "fillInName('<?=$i?>')");
-   friendLinks[counter].setAttribute("href", "#");
-   document.getElementById("drawFriends").appendChild(friendLinks[counter]);
-   document.getElementById("drawFriends").innerHTML += "<br>";
+   //https://developer.mozilla.org/en-US/docs/Web/HTML/Element/datalist     
+   friendLinks[counter] = "<option value = '<?=$i?>'>";
+   //friendLinks[counter].setAttribute("onClick", "fillInName('<?=$i?>')");
+   //friendLinks[counter].setAttribute("href", "#");
+   document.getElementById("drawFriends").innerHTML += friendLinks[counter];
+   //document.getElementById("drawFriends").innerHTML += "<br>";
    counter++
   <?php  }   ?>
 </script>
