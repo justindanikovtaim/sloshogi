@@ -153,6 +153,8 @@ $chatHistory = explode("%%", $chatArray['chat']);
 </div>
 
 <textarea id = "popupChatInput" name = "textToSend"></textarea>
+<button onclick = "submitOnEnter('click')" id ="chatSend">SEND</button>
+
 </div>
 
     <div id = "promptBox">
@@ -230,7 +232,7 @@ $chatHistory = explode("%%", $chatArray['chat']);
 
    
    function submitOnEnter(event){ //https://stackoverflow.com/questions/8934088/how-to-make-enter-key-in-a-textarea-submit-a-form
-    if(event.which === 13  && !event.shiftKey){//if the enter key was pushed
+    if((event.which === 13  && !event.shiftKey) || event == "click"){//if the enter key was pushed
         msgSent = true;
         var ajax = new XMLHttpRequest();
         let msgToSend =  JSON.stringify({"textToSend": document.getElementById("popupChatInput").value,

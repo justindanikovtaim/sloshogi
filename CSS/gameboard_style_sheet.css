@@ -231,10 +231,17 @@
         width: 80%;
         height: 10%;
         bottom: 0%;
-        right: 0%;
+        right: 15%;
         font-size: 4vw;
     }
-
+    #chatSend{
+        position:absolute;
+        width: 15%;
+        height: 10%;
+        bottom: 0%;
+        right: 0%;
+        font-size: 3vw;
+    }
     #resButtons{
         position: relative;
         top: 0vw;
