@@ -196,6 +196,10 @@ function loadGameState(){//loads the current game state from the database (slo S
             if (gameState[movesHistory[g+1]].charAt(0) !== "e") { //if capturing a piece
                 addToMochiGoma(gameState[movesHistory[g+1]]);//add it to the proper place in mochigoma array
             }
+                //need to take off the * if there is one (if the piece was newly promoted)
+                if(movesHistory[g+2].charAt(movesHistory[g+2].length - 1) == "*"){
+                    movesHistory[g+2] = movesHistory[g+2].substring(0, movesHistory[g+2].length - 1);//cut off the last * character
+                }
                 gameState[movesHistory[g+1]] = movesHistory[g+2]; //move the piece to the new square
                 gameState[movesHistory[g]] = "empty"; //make the space where the piece moved from empty
         }

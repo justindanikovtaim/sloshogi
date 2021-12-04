@@ -160,10 +160,12 @@ function pieceToKanji(piece){
     }
 }
 //add the time taken
-let timeMins = Math.floor(gameHistory[9]/60);
+/*let timeMins = Math.floor(gameHistory[9]/60);
 let timesecs = gameHistory[9]%60;
 let timeDisplay = timeMins +":"+timesecs;
-promptText += " 思考時間: "+timeDisplay+" | ";
+promptText += " 思考時間: "+timeDisplay+" | ";*/
+promptText += "  "; //TEMPORARY
+
 //add whose turn it is to play
 if(gameHistory[7] != null){//if a winner has been set
     promptText += gameHistory[7] + " が勝ちました";

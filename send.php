@@ -1,5 +1,5 @@
 <?php
-
+require 'connect.php';
 $in = file_get_contents('php://input');
 $decoded = json_decode($in, true);
 $gametofind = $decoded['gameId'];
@@ -18,13 +18,18 @@ $turn = $decoded['turn'];
 $deleteRule = $decoded['delete'];
 $chatSeen = $decoded['chatSeen'];
 
+//make sure data wasn't send multiple times
+$checkForDuplicateSend = mysqli_query($link, 'SELECT turn FROM gamerecord WHERE id = "'.$gametofind.'"');
+    $lastTurn = mysqli_fetch_array($checkForDuplicateSend);
+    if($lastTurn['turn'] != $turn){ //if not sending a duplicate, update everything
+
 $delete1 = 'reservation1 = "",';
 $chop1 = 'reservation1 = SUBSTR(reservation1,(1+CHAR_LENGTH(SUBSTRING_INDEX(reservation1,";", 3)))),';
 $delete2 = 'reservation2 = "",';
 $chop2 = 'reservation2 = SUBSTR(reservation2,(1+CHAR_LENGTH(SUBSTRING_INDEX(reservation2,";", 3)))),';
 $delete3 = 'reservation3 = "",';
 $chop3 = 'reservation3 = SUBSTR(reservation3,(1+CHAR_LENGTH(SUBSTRING_INDEX(reservation3,";", 3)))),';
-require 'connect.php';
+
 //write code for delete command
     switch($deleteRule){
         case "1":
@@ -59,5 +64,9 @@ require 'connect.php';
     lastMoveTime = '.$playerTime.'- moveTimestamp'.$playerColor.',
     moveTimestamp'.$opColor.' = '.$opTime.', moveTimestamp'.$playerColor.' = '.$playerTime.'  WHERE id ='; 
 
+
     mysqli_query($link, $updatecommand.$gametofind);
+}else{
+    echo "<script>console.log('already played')</script>";
+}
  ?>
