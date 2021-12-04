@@ -144,7 +144,7 @@ $chatHistory = explode("%%", $chatArray['chat']);
     <img class ="msgIcon" src="images/new_message_icon.png" id ="newMessageInMenu">
     <a href="#" id ="resignButton" onClick = "resign()">校了・Resign</a>
     <a href="kifu/write_kifu.php?id=<?=$gameID?>">棋譜をダウンロード・Download Kifu</a>
-    <a href="feedback_form.php?src=gameboard&id=<?=$gameID?>">バッグ報告・Report a bug</a>
+    <a href="feedback_form.php?src=gameboard&id=<?=$gameID?>">バグ報告・Report a bug</a>
 </div>
 
     <div class = "popupChat" id ="popupChat">

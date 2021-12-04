@@ -322,7 +322,11 @@ function movePiece(id) {
 
     drawBoard();
     deselectAll();
-    
+    if(playerMoveSequence.length > 3){
+        setTimeout(function(){aiMove();drawBoard();}, 500);
+
+        
+    }
 
 }
 function wrongMove(){
@@ -333,6 +337,12 @@ function wrongMove(){
 function tsumeSolved(){
     setMessage("正解！Correct!");
     disableAll();
+}
+function aiMove(){
+    gameState[playerMoveSequence[1]] = playerMoveSequence[2];
+    gameState[playerMoveSequence[0]] = "empty";
+    turn ++;
+    playerMoveSequence.splice(0,3);//get rid of the first 3 elements in the move sequence array (the last move)
 }
 function disableAll(){
     for(i=0; i<81; i++){
@@ -385,6 +395,7 @@ function deselectAll() {
     checkingPieces = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     selectedPiece = null;
     id = null;
+    mochiGomaAlreadySelected = false;
 }
 
 function placePiece(piece) {

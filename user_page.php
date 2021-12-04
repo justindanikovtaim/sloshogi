@@ -137,7 +137,8 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
 <div id = "finishedGames"></div>
 </div>
 <br>
-<h1><a href="feedback_form.php?src=user_page&id=na">バッグ報告・Report a bug</a></h1>
+<h1><a href="feedback_form.php?src=user_page&id=na">バグ報告・Report a bug</a></h1>
+<h1><a href = "slo_tsumeshogi.php">詰将棋（β版）</a></h1>
 <h1><a href = "logout.php" id = "logoutButton">ログアウトLog Out</a></h1>
 
 </div>
