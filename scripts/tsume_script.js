@@ -304,28 +304,39 @@ function movePiece(id) {
         mochiGomaArray[mochigomaPlace]--; //remove a piece from the array
         isMochiGoma = gameState[81];
     }
-
-    if(playerMoveSequence[0] == selectedPiece && playerMoveSequence[1] == id && playerMoveSequence[2] ==gameState[selectedPiece]){
+    //if there's only one more move, check if it's correct or not using the checkForMate function
+    if(playerMoveSequence.length == 3){
+        gameState[id] = gameState[selectedPiece]; //move the piece to the new square
+        gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
+        turn++;
+        drawBoard();
+        deselectAll();
+        if(checkForMate("W") == true){
+            tsumeSolved();
+        }else{
+            gameState[id] = gameState[selectedPiece]; //move the piece to the new square
+            gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
+            wrongMove();
+        }
+    }else if(playerMoveSequence[0] == selectedPiece && playerMoveSequence[1] == id && playerMoveSequence[2] ==gameState[selectedPiece]){
         //if the move matches
         playerMoveSequence.splice(0,3);//get rid of the first 3 elements in the move sequence array (the last move)
+        gameState[id] = gameState[selectedPiece]; //move the piece to the new square
+        gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
         turn++;//increment the turn
-        //if the moves have been played to the end and the move sequence array is empty
-        if(playerMoveSequence.length < 3){
-            tsumeSolved();
+        drawBoard();
+        deselectAll();
+        if(playerMoveSequence.length > 3){
+            setTimeout(function(){aiMove();drawBoard();}, 500);
+    
+            
         }
     }else{
+        gameState[id] = gameState[selectedPiece]; //move the piece to the new square
+        gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
+        drawBoard();
+        deselectAll();
         wrongMove();
-    }
-
-    gameState[id] = gameState[selectedPiece]; //move the piece to the new square
-    gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
-
-    drawBoard();
-    deselectAll();
-    if(playerMoveSequence.length > 3){
-        setTimeout(function(){aiMove();drawBoard();}, 500);
-
-        
     }
 
 }
