@@ -7,6 +7,13 @@ require 'connect.php';
   $moveSequence = $_POST['moveSequence'];
   $createdBy = $_COOKIE['current_user_cookie'];
 
+  //this nonsense is needed in case a prolem is deleted. It resets the auto-increment to whatever the next number above the highest current id is
+$lastRow = mysqli_query($link, "SELECT MAX(id) FROM tsumeshogi");
+$result = mysqli_fetch_row($lastRow);
+$number = $result[0];
+mysqli_query($link, "ALTER TABLE tsumeshogi AUTO_INCREMENT = ".$number +1);
+
+
 $query = "INSERT INTO tsumeshogi (problemName, boardSetup, mochigomaSetup, mainSequence, createdBy) VALUES ('$problemName', '$boardConfig', '$mochigomaConfig', '$moveSequence', '$createdBy')";
 
 ?>
