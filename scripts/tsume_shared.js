@@ -118,6 +118,9 @@ function showMove(square, komaType) {
                         if (gameState[moveSquare + moveFormulas[i]].charAt(0) !== turnColor) {
                             //add it to the move array
                             move.push(moveSquare + moveFormulas[i]);
+                        }else{
+                            //if an own piece is in the square, isBlocked = true
+                            isBlocked = true;
                         }
                         //start by checking if the square is on the edge or not
 

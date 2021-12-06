@@ -5,6 +5,7 @@ require 'connect.php';
   $problemName = $_POST['problemName'];
   $mochigomaConfig = $_POST['mochigomaConfig'];
   $moveSequence = $_POST['moveSequence'];
+  $timeLimit = $_POST['timeLimit'];
   $createdBy = $_COOKIE['current_user_cookie'];
 
   //this nonsense is needed in case a prolem is deleted. It resets the auto-increment to whatever the next number above the highest current id is
@@ -14,7 +15,7 @@ $number = $result[0];
 mysqli_query($link, "ALTER TABLE tsumeshogi AUTO_INCREMENT = ".$number +1);
 
 
-$query = "INSERT INTO tsumeshogi (problemName, boardSetup, mochigomaSetup, mainSequence, createdBy) VALUES ('$problemName', '$boardConfig', '$mochigomaConfig', '$moveSequence', '$createdBy')";
+$query = "INSERT INTO tsumeshogi (problemName, boardSetup, mochigomaSetup, mainSequence, createdBy, timeLimit) VALUES ('$problemName', '$boardConfig', '$mochigomaConfig', '$moveSequence', '$createdBy', '$timeLimit')";
 
 ?>
 <!DOCTYPE html>

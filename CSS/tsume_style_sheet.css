@@ -300,7 +300,16 @@
         height: 100%;
         object-fit: fill;
     }
-
+    #timer{
+        position:relative;
+        float: left;
+        left: 1VW;
+        width: 45vw;
+        height: 10vw;
+        max-height: 11vw;
+        margin-top: .5vh;
+        border: 1vw solid red;
+    }
 
     #skipButtons{
         position:relative;

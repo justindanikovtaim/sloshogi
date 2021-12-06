@@ -57,6 +57,7 @@ $problemName = $row['problemName'];
  <h3 id = "playerPrompt"></h3> 
 </div>
 
+<h1 id = "timer"></h1>
  <div id = "skipButtons">
  <button class = "skipButton" id = "fullBack" onClick = "resetTsume()">リセット</button>
 
@@ -76,6 +77,25 @@ $problemName = $row['problemName'];
    let sequence = "<?=$sequence?>";
    var mainSequence = sequence.split(",");
    var problemName = "<?=$problemName?>";
+    let timeLimit = "<?=$timeLimit?>";
+
+    //set the timerand update it
+    let minutes = timeLimit / 60;
+    let seconds = timeLimit % 60;
+    let timerSet = setInterval(function(){updateTimer();}, 1000);
+    function updateTimer(){
+            if(timeLimit > -1){
+            minutes = parseInt(timeLimit / 60);
+            seconds = (timeLimit % 60);
+            if(seconds < 10){
+                seconds = "0" + seconds; //add a zero in the tens place if a single digit
+            }
+            document.getElementById("timer").innerHTML = minutes +":"+seconds;
+            timeLimit --;
+        }else{
+            clearInterval(timerSet);
+        }
+    }
 
    function showMenu(){
     document.getElementById("popupMenuId").classList.toggle("menuShow");
