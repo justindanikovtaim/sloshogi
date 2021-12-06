@@ -77,12 +77,12 @@ $problemName = $row['problemName'];
    let sequence = "<?=$sequence?>";
    var mainSequence = sequence.split(",");
    var problemName = "<?=$problemName?>";
-    let timeLimit = "<?=$timeLimit?>";
-
+   var originalTimeLimit = "<?=$timeLimit?>";
+    var timeLimit = originalTimeLimit;
     //set the timerand update it
     let minutes = timeLimit / 60;
     let seconds = timeLimit % 60;
-    let timerSet = setInterval(function(){updateTimer();}, 1000);
+    var timerSet = setInterval(function(){updateTimer();}, 1000);
     function updateTimer(){
             if(timeLimit > -1){
             minutes = parseInt(timeLimit / 60);
@@ -94,9 +94,13 @@ $problemName = $row['problemName'];
             timeLimit --;
         }else{
             clearInterval(timerSet);
+            timeUp();
         }
     }
-
+    function timeUp(){
+        setMessage("時間です！Time's Up! Try Again");
+        disableAll();
+    }
    function showMenu(){
     document.getElementById("popupMenuId").classList.toggle("menuShow");
     document.getElementById("menuBox").classList.toggle("turnRed");

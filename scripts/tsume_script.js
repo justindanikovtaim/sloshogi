@@ -346,9 +346,42 @@ function wrongMove(){
 
 }
 function tsumeSolved(){
-    setMessage("正解！Correct!");
+    clearInterval(timerSet);
+    let finalTime = originalTimeLimit - timeLimit;
+    let seconds = (finalTime % 60);
+            if(seconds < 10){
+                seconds = "0" + seconds; //add a zero in the tens place if a single digit
+            }
+    let solvedTime = parseInt(finalTime / 60)+":"+seconds;
+
+    setMessage("正解！Correct! " + solvedTime+"で溶けた");
     disableAll();
+
+    //update the scoreboard
+
+    let ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function()
+  {
+    // If ajax.readyState is 4, then the connection was successful
+    // If ajax.status (the HTTP return code) is 200, the request was successful
+    if(ajax.readyState == 4 && ajax.status == 200)
+    {
+      // Use ajax.responseText to get the raw response from the server
+      console.log(ajax.responseText);
+    }else {
+        console.log('Error: ' + ajax.status); // An error occurred during the request.
+    }
+  }
+  let json = JSON.stringify({
+    scoreBoard: finalTime, problemId: currentGameID
+  });
+
+console.log(json);
+    ajax.open("POST", 'update_scoreBoard.php', true); //asyncronous
+    ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+    ajax.send(json);//(sendToDatabase);
 }
+
 function aiMove(){
     gameState[playerMoveSequence[1]] = playerMoveSequence[2];
     gameState[playerMoveSequence[0]] = "empty";
