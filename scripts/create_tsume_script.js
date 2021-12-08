@@ -11,7 +11,9 @@ let mochiGomaAmmount = [];
 let spacer = 0;
 let mochiGomaOrder = ["MWF", "MWKO", "MWKEI", "MWGIN", "MWKIN", "MWKAKU", "MWHI",
 "MBF", "MBKO", "MBKEI", "MBGIN", "MBKIN", "MBKAKU", "MBHI"];
-let selectionGomaOrder = ["WGYOKU", "WF", "WKO", "WKEI", "WGIN", "WKIN", "WKAKU", "WHI","empty",
+let selectionGomaOrder = ["WGYOKU", "WF", "WKO", "WKEI", "WGIN", "WKIN", "WKAKU", "WHI",
+"empty", "WNF", "WNKO","WNKEI", "WNGIN", "empty", "WNKAKU", "WNHI",
+"empty", "BNF", "BNKO","BNKEI", "BNGIN", "empty", "BNKAKU", "BNHI",
 "BGYOKU", "BF", "BKO", "BKEI", "BGIN", "BKIN", "BKAKU", "BHI","empty"];
 let selectedSquare;
 
@@ -84,36 +86,60 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
 }
 
 //create the pieces that go inside the popup selection box
-spacer = 71;
-for (jupiter = 0; jupiter < 2; jupiter++) { 
-    for (x = 0; x < 9; x++) {
+spacer = 70.5;
+for (jupiter = 0; jupiter < 4; jupiter++) { 
+    for (x = 0; x < 8; x++) {
         if (jupiter === 0) { //if it's the first time through, we are drawing the white pieces
             selectionGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
             selectionGoma[x].src = "images/" + selectionGomaOrder[x] + ".png";
             selectionGoma[x].setAttribute("id", selectionGomaOrder[x]);
             selectionGoma[x].setAttribute("onClick", "addPiece(this.id)");
             selectionGoma[x].setAttribute("class", "selectionGoma");
-            selectionGoma[x].style.width = "8vw";
+            selectionGoma[x].style.width = "9vw";
             selectionGoma[x].style.position = "absolute";
             selectionGoma[x].style.right = spacer + "vw";
-            selectionGoma[x].style.top = "2%";
+            selectionGoma[x].style.top = ".5vw";
             document.getElementById("choosePieceId").appendChild(selectionGoma[x]);
 
-        } else {//otherwise it's the second time through, so we are drawing the black pieces
+        }else if(jupiter == 1){//drawing the white narigoma
+            selectionGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
+            selectionGoma[x].src = "images/" + selectionGomaOrder[x+8] + ".png";
+            selectionGoma[x].setAttribute("id", selectionGomaOrder[x+8]);
+            selectionGoma[x].setAttribute("onClick", "addPiece(this.id)");
+            selectionGoma[x].setAttribute("class", "selectionGoma");
+            selectionGoma[x].style.width = "9vw";
+            selectionGoma[x].style.position = "absolute";
+            selectionGoma[x].style.right = spacer + "vw";
+            selectionGoma[x].style.top = "10.5vw";
+            document.getElementById("choosePieceId").appendChild(selectionGoma[x]);
+
+        }else if(jupiter == 2){//drawing the black narigoma
+            selectionGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
+            selectionGoma[x].src = "images/" + selectionGomaOrder[x+16] + ".png";
+            selectionGoma[x].setAttribute("id", selectionGomaOrder[x+16]);
+            selectionGoma[x].setAttribute("onClick", "addPiece(this.id)");
+            selectionGoma[x].setAttribute("class", "selectionGoma");
+            selectionGoma[x].style.width = "9vw";
+            selectionGoma[x].style.position = "absolute";
+            selectionGoma[x].style.right = spacer + "vw";
+            selectionGoma[x].style.top = "21vw";
+            document.getElementById("choosePieceId").appendChild(selectionGoma[x]);
+
+        }else {//otherwise it's the last time through, so we are drawing the black pieces
             selectionGoma[x + 9] = document.createElement("img");//create a new img element for each mochigoma type
-            selectionGoma[x + 9].src = "images/" + selectionGomaOrder[x + 9] + ".png";
-            selectionGoma[x + 9].setAttribute("id",  selectionGomaOrder[x + 9]);
+            selectionGoma[x + 9].src = "images/" + selectionGomaOrder[x + 24] + ".png";
+            selectionGoma[x + 9].setAttribute("id",  selectionGomaOrder[x + 24]);
             selectionGoma[x + 9].setAttribute("onClick", "addPiece(this.id)");
             selectionGoma[x + 9].setAttribute("class", "selectionGoma");
-            selectionGoma[x + 9].style.width = "8vw";
+            selectionGoma[x + 9].style.width = "9vw";
             selectionGoma[x + 9].style.position = "absolute";
             selectionGoma[x + 9].style.right = spacer + "vw";
-            selectionGoma[x + 9].style.top = "11vw";
+            selectionGoma[x + 9].style.top = "31.5vw";
             document.getElementById("choosePieceId").appendChild(selectionGoma[x + 9]);
         }
-        spacer -= 8.8;
+        spacer -= 10;
     }
-    spacer = 71;
+    spacer = 70.5;
 }
 
 drawBoard();

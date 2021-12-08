@@ -403,10 +403,10 @@ function promotePiece(id) {
         //if it's a kei and in the top two rows, or a kyosha or fu in the top row, automatically promote
         let yesNo;
         switch (gameState[selectedPiece]) {
-            case "BKEI": if (id < 18) { yesNo = true; } else { yesNo = confirm("Promote?"); } break;
-            case "WKEI": if (id > 62) { yesNo = true; } else { yesNo = confirm("Promote?"); } break;
             case "BKO":
+            case "BKEI":
             case "BF": if (id < 9) { yesNo = true; } else { yesNo = confirm("Promote?"); } break;
+            case "WKEI":
             case "WKO":
             case "WF": if (id > 71) { yesNo = true; } else { yesNo = confirm("Promote?"); } break;
             default: yesNo = confirm("Promote?");
