@@ -33,8 +33,8 @@ if(sizeof($standingsArray)<2){//if there is noone in the standings yet
         $updatedStandings.= $insertArray[0] . $insertArray[1];
     }
 }
-echo "updated Standings: ".$updatedStandings;
-$query = "UPDATE tsumeShogi SET scoreBoard = '".$updatedStandings."' WHERE id = '".$problemTofind."'";
+$query = "UPDATE tsumeshogi SET scoreBoard = '".$updatedStandings."' WHERE id = '".$problemTofind."'";
+echo $query;
 mysqli_query($link, $query);
 
 ?>
