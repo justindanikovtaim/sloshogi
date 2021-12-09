@@ -23,6 +23,8 @@ let mochiGomaArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //array for bla
 //(Wfu, WKo, Wkei, Wgin, Wkin, Wkaku, Whi, Bfu, BKo, Bkei, Bgin, Bkin, Bkaku, Bhi)
 let mochiGomaAlreadySelected = false;
 let isCheck = null; //keep track of if it is check or not
+let justChecking = false;
+let isCheckMate = false;
 let checkingPieces = [];
 let move = [];
 let boardSquare = [];
@@ -215,6 +217,11 @@ if((gameHistory[6] == "4" && gameHistory[7] != gameHistory[8]) || (gameHistory[6
         //if the game is status 4 (someone was checkmated) and the person who lost is viewing it 
         //or if the game status is 5 (someone resigned) and the winner is viewing it
     showGameOver();
+}else{
+    //otherwise, check for checkmate
+    if(checkForMate(opponentColor)){
+        endGame();
+    }
 }
 
 
@@ -337,9 +344,7 @@ function sendMoveData(thingsToDelete){
       
       console.log(ajax.responseText);
       window.location.reload(); //once the data is sent, reload the page and check for checkmate
-      if(checkForMate(opponentColor)){
-          endGame();
-      }
+
     }else {
         console.log('Error: ' + ajax.status); // An error occurred during the request.
     }
@@ -529,754 +534,245 @@ function pieceClick(id) {
 
         } else { //otherwise, highlight the possible moves
             
-            let komaColor;
-            if ((turn % 2 == 0 && playerColor == "B") || (turn % 2 != 0 && playerColor == "W")){
-                komaColor = "W";
-               if(playerColor== "W"){
-                   flipped = true;
-               }else{
-                   flipped = false;
-               }
-            } else{
-                komaColor = "B";
-            }
             if (justChecking === false) {
                 selectedPiece = id; // define the selected piece
                 boardSquare[id].style.filter = "brightness(1.5)"; //highlight the selected piece only if not checking for checkmate
             }
 
-            if ((turn % 2 != 0 && playerColor == "B") 
-                || turn % 2 == 0 && playerColor == "W") { //if it's the player's turn and it's their turn
-                forward = -1; //forward direction is negative
-            } else {
-                forward = 1; //otherwise it's white, so forward is positive
-            }
-
-            switch (gameState[id].substr(1, 5)) { //take the string minus the first letter (eg. the B or W)
-                case "F": //if the clicked piece is a black fu
-                    showMoveF(id, komaColor); //0 for black
-                    break;
-
-                case "HI":
-                    showMoveHI(id, komaColor);
-                    break;
-
-                case "KAKU":
-                    showMoveKAKU(id, komaColor);
-                    break;
-
-                case "KO":
-                    showMoveKO(id, komaColor);
-                    break;
-
-                case "KEI":
-                    showMoveKEI(id, komaColor);
-                    break;
-
-                case "GIN":
-                    showMoveGIN(id, komaColor);
-                    break;
-
-
-                case "KIN": //all of the pieces that have the same movement as Kin
-                case "NGIN":
-                case "NKEI":
-                case "NKO":
-                case "NF":
-                    showMoveKIN(id, komaColor);
-                    break;
-                case "NHI":
-                    showMoveNHI(id, komaColor);
-                    break;
-                case "NKAKU":
-                    showMoveNKAKU(id, komaColor);
-                    break;
-                case "GYOKU":
-                    showMoveGYOKU(id, komaColor);
-                    break;
-
-                default:
-                    selectedPiece = null; //if an empty space was clicked, set selectedPiece to be null 
-                    break;
-            }
+            highlightSquares(showMove(id, gameState[id]));
 
         }
     }
 }
-function showMoveF(square, color) { 
-    if(flipped){
-        if(color == "B"){
-            color = "W";
-        }else{
-            color = "B";
-        }
-    }
-    if (gameState[square + (forward * 9)].charAt(0) !== color) {
-        move[0] = square + (forward * 9); //set the only possible move
-    }
-
-    eliminateIllegalMoves(color); //will remove all moves from move array that would result in check to own gyoku
-    if (justChecking === false) {
-        for (i = move.length - 1; i > -1; i--) {
-            if (move[i] !== null) {
-                boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
-            }
-        }
-    }
-}
-
-function showMoveKEI(square, color) {
-
-
-    if ((board9Row.includes(square) && color === "B") ||// if kei is black and on on the left edge
-        board1Row.includes(square) && color === "W") { //or white and on the right edge
-        move = [square + (forward * 19)];
-    } else if ((board9Row.includes(square) && color === "W") || //if kei is white and on the left edge
-        board1Row.includes(square) && color === "B") {// or black and on the right edge
-        move = [square + (forward * 17)]; // if kei is on the left edge, it can only move to one place
+function showMove(square, komaType) {
+    //this array represents the possible movements the pieces can do
+    //the first 8 are the movements to the 8 directions, starting with forward and going clockwise)
+    //1 means the piece can only move one space in that direction, 2 means it can move multiple spaces in the direction
+    //the 9th spot ([8]) is kei's move right, and the 10th ([9]) is kei's move left
+    //1 means black, 2 means white
+    let moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let moveFormulas = [-9, -10, -1, 8, 9, 10, 1, -8, 19, 17]; //the position of the move relative to where the piece is
+    //the knight's is adjusted by the negative or positive number in the moveDirections array
+    let turnColor;
+    if (turn % 2 == 0) {
+        turnColor = "W";
     } else {
-        move = [square + (forward * 19), square + (forward * 17)]; //otherwise, it can move to either space
+        turnColor = "B"
     }
-    if(flipped){
-        if(color == "B"){
-            color = "W";
-        }else{
-            color = "B";
-        }
+    switch (komaType) {
+        case "BF": moveDirections[0] = 1;
+            break;
+        case "WF": moveDirections[4] = 1;
+            break;
+        case "BKEI": moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, -1, -1];//negative will make it go backwards
+            break;
+        case "WKEI": moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1]; //positive will make it go forward
+            break;
+        case "BKO": moveDirections[0] = 2;
+            break;
+        case "WKO": moveDirections[4] = 2;
+            break;
+        case "BHI":
+        case "WHI": moveDirections = [2, 0, 2, 0, 2, 0, 2, 0, 0, 0];
+            break;
+        case "BKAKU":
+        case "WKAKU": moveDirections = [0, 2, 0, 2, 0, 2, 0, 2, 0, 0];
+            break;
+        case "BGIN": moveDirections = [1, 1, 0, 1, 0, 1, 0, 1, 0, 0];
+            break;
+        case "WGIN": moveDirections = [0, 1, 0, 1, 1, 1, 0, 1, 0, 0];
+            break;
+        case "BKIN":
+        case "BNGIN":
+        case "BNKEI":
+        case "BNKO":
+        case "BNF": moveDirections = [1, 1, 1, 0, 1, 0, 1, 1, 0, 0];
+            break;
+        case "WKIN":
+        case "WNGIN":
+        case "WNKEI":
+        case "WNKO":
+        case "WNF": moveDirections = [1, 0, 1, 1, 1, 1, 1, 0, 0, 0];
+            break;
+        case "BNHI":
+        case "WNHI": moveDirections = [2, 1, 2, 1, 2, 1, 2, 1, 0, 0];
+            break;
+        case "BNKAKU":
+        case "WNKAKU": moveDirections = [1, 2, 1, 2, 1, 2, 1, 2, 0, 0];
+            break;
+        case "BGYOKU":
+        case "WGYOKU": moveDirections = [1, 1, 1, 1, 1, 1, 1, 1, 0, 0];
+            break;
     }
 
-    eliminateIllegalMoves(color); //will remove all moves from move array that would result in check to own gyoku
-
-    if (justChecking === false) {
-        for (i = move.length - 1; i > -1; i--) {
-            if (move[i] !== null) {
-                if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
-
-                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
-                }
-            }
-        }
-    }
-
-}
-
-function showMoveKO(square, color) {
-
-    let pieceBlocking = false;
-    let advanceRow = 0;
-    if(flipped){
-        if(color == "B"){
-            color = "W";
-        }else{
-            color = "B";
-        }
-    }
-    while (pieceBlocking === false) {
-        if ((square + (9 * forward) + advanceRow) < 81 &&
-            (square + (9 * forward) + advanceRow) > -1) {//if square is on the board
-
-            if (gameState[square + (9 * forward) + advanceRow].charAt(0) === color) {//if space to move into contains own piece
-                pieceBlocking = true;
-            } else if (gameState[square + (9 * forward) + advanceRow].charAt(0) === "e") { // if space to move into is empty
-                move.push(square + (9 * forward) + advanceRow); //add space to possible moves
-                advanceRow = advanceRow + (forward * 9); //move to the next space
-            } else { //if space contains enemy piece
-                move.push(square + (9 * forward) + advanceRow);//add space to possible moves
-                pieceBlocking = true;
-            }
-        }
-    }
-    eliminateIllegalMoves(color); //will remove all moves from move array that would result in check to own gyoku
-
-    if (justChecking === false) {
-        for (i = move.length - 1; i > -1; i--) {
-            if (move[i] !== null) {
-                boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
-            }
-        }
-    }
-}
-
-function showMoveKIN(square, color) {
-
-    let onEdge = ""; //a string to hold a code showing which edges the piece is on
-    let kinMoves;
-
-    onEdge += color; //add the color as the first part of the string ######## changed
+    //eliminate the illegal moves
+    //check if the piece is on an edge
+    let onRightEdge = false;
+    let onLeftEdge = false;
+    let onTopEdge = false;
+    let onBottomEdge = false;
 
     if (board9Row.includes(square)) {//fill string with 1 for yes, 0 for no
-        onEdge += "1";
-    } else {
-        onEdge += "0";
+        onLeftEdge = true;
+        moveDirections[5] = 0;//the piece can't move down/left diagonally
+        moveDirections[6] = 0; //the piece can't move to the left
+        moveDirections[7] = 0; //the piece can't move up/left diagonally
     }
     if (boardTopEdge.includes(square)) {
-        onEdge += "1";
-    } else {
-        onEdge += "0";
+        onTopEdge = true;
+        moveDirections[7] = 0;//the piece can't move up/left diagonally
+        moveDirections[0] = 0;//the piece can't move up
+        moveDirections[1] = 0;//the piece can't move up/right diagonally
+        //figure out how to test the kei position too
     }
     if (board1Row.includes(square)) {
-        onEdge += "1";
-    } else {
-        onEdge += "0";
+        onRightEdge = true;
+        moveDirections[1] = 0; //the piece can't move up/right diagonally
+        moveDirections[2] = 0;//the piece can't move right
+        moveDirections[3] = 0;//the piece can't move down/right diagonally
     }
     if (boardBottomEdge.includes(square)) {
-        onEdge += "1";
-    } else {
-        onEdge += "0";
+        onBottomEdge = true;
+        moveDirections[3] = 0;//the piece can't move down/right diagonally
+        moveDirections[4] = 0;//the piece can't move down
+        moveDirections[5] = 0;//the piece can't move down/left diagonally
     }
 
-    switch (onEdge) { // set the potential spaces that the pice can move into based on its location
-        case "B1000": //black on the left edge
-        case "W0010"://white on right edge
-            kinMoves = [square + (forward * 10), square + (forward * -9),
-            square + (forward * 1), square + (forward * 9)];
-            break;
 
-        case "B1100": //black in top left corner
-        case "W0011": //white in bottom right corner
-            kinMoves = [square + (forward * 1), square + (forward * -9)];
-            break;
+    //go through each (non-kei) direction that the piece could move and determine how far it can move in that direction
+    let isBlocked;
+    let moveSquare;
+    for (i = 0; i < 8; i++) {
+        //if it's possible to move in that direction
+        if (moveDirections[i] > 0) {
+            //check if the player's own piece is not in the square 
+            if (gameState[square + moveFormulas[i]].charAt(0) !== turnColor) {
+                //if not, add the first square to the move array
+                move.push(square + moveFormulas[i]);
+                //check if the piece can move just one or multiple squares
+                if (moveDirections[i] == 2) {
+                    //if it can move multiple squares, continue checking the squares and adding any that are empty 
+                    //or have an opponent's piece until the edge of the board is reached
+                    isBlocked = false;
+                    moveSquare = square;
+                    while (!isBlocked) {
+                        //if the space doesn't contain an own piece
+                        if (gameState[moveSquare + moveFormulas[i]].charAt(0) !== turnColor) {
+                            //add it to the move array
+                            move.push(moveSquare + moveFormulas[i]);
+                        }else{
+                            //if an own piece is in the square, isBlocked = true
+                            isBlocked = true;
+                        }
+                        //start by checking if the square is on the edge or not
 
-        case "B0100"://Black on top row
-        case "W0001": //white on bottom row
-            kinMoves = [square + (forward * 1), square + (forward * -1), square + (forward * -9)];
-            break;
+                        //figure out which direction to check [-9,-10,-1,+8,+9,+10,+1,-8,19,17]
+                        switch (moveFormulas[i]) {
+                            case -9: //up
+                                if (boardTopEdge.includes(moveSquare + moveFormulas[i])) {
+                                    isBlocked = true;
+                                }
+                                break;
 
-        case "B0110": //black in top right corner
-        case "W1001": //white in bottom left corner
-            kinMoves = [square + (forward * -1), square + (forward * -9)];
-            break;
+                            case -10://up/right
+                                if (boardTopEdge.includes(moveSquare + moveFormulas[i]) ||
+                                    board1Row.includes(moveSquare + moveFormulas[i])) {
+                                    isBlocked = true;
+                                }
+                                break;
 
-        case "B0010"://black on right edge
-        case "W1000"://white on left edge
-            kinMoves = [square + (forward * 8), square + (forward * -9),
-            square + (forward * -1), square + (forward * 9)];
-            break;
+                            case -1: //right
+                                if (board1Row.includes(moveSquare + moveFormulas[i])) {
+                                    isBlocked = true;
+                                }
+                                break;
 
-        case "B0011"://black in bottom right corner
-        case "W1100"://White in top left corner
-            kinMoves = [square + (forward * 8),
-            square + (forward * -1), square + (forward * 9)];
-            break;
+                            case 8://down/right
+                                if (boardBottomEdge.includes(moveSquare + moveFormulas[i]) ||
+                                    board1Row.includes(moveSquare + moveFormulas[i])) {
+                                    isBlocked = true;
+                                }
+                                break;
 
-        case "B0001": //black on bottom row
-        case "W0100"://white on top row
-            kinMoves = [square + (forward * 1), square + (forward * 8), square + (forward * 10),
-            square + (forward * -1), square + (forward * 9)];
-            break;
+                            case 9: //down
+                                if (boardBottomEdge.includes(moveSquare + moveFormulas[i])) {
+                                    isBlocked = true;
+                                }
+                                break;
 
-        case "B1001": //black in bottom left corner
-        case "W0110": //white in top right corner
-            kinMoves = [square + (forward * 10), square + (forward * -9),
-            square + (forward * -1), square + (forward * 9)];
-            break;
+                            case 10://down/left
+                                if (boardBottomEdge.includes(moveSquare + moveFormulas[i]) ||
+                                    board9Row.includes(moveSquare + moveFormulas[i])) {
+                                    isBlocked = true;
+                                }
+                                break;
 
-        default:
-            kinMoves = [square + (forward * 1), square + (forward * 8), square + (forward * -9), square + (forward * 10),
-            square + (forward * -1), square + (forward * 9)];
-            break;
-    }
-    if(flipped){
-        if(color == "B"){
-            color = "W";
-        }else{
-            color = "B";
-        }
-    }
-    for (i = kinMoves.length - 1; i > -1; i--) {
-        if (gameState[kinMoves[i]].charAt(0) === color) {//if own piece is in the square
-            //do nothing
-        } else {//if the square is empty or has enemy piece
-            move.push(kinMoves[i]);//add the space to the array of possible moves
-        }
-    }
+                            case 1: //left
+                                if (board9Row.includes(moveSquare + moveFormulas[i])) {
+                                    isBlocked = true;
+                                }
+                                break;
 
-    eliminateIllegalMoves(color); //will remove all moves from move array that would result in check to own gyoku
+                            case -8://up/left
+                                if (boardTopEdge.includes(moveSquare + moveFormulas[i]) ||
+                                    board9Row.includes(moveSquare + moveFormulas[i])) {
+                                    isBlocked = true;
+                                }
+                                break;
+                            default: alert("there's an error in the switch statement");
+                                isBlocked = true;
+                                break;
+                        }
+                        moveSquare += moveFormulas[i];//move to the next square in that direction
 
-    if (justChecking === false) {
-        for (i = move.length - 1; i > -1; i--) {
-            if (move[i] !== null) {
-                if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
-
-                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
+                    }
                 }
             }
         }
     }
+    //if the piece is a kei
+    if (moveDirections[8] != 0) {
 
+        //if it's moving upwards (it's black)
+        if (moveDirections[8] == -1) {
+            if (onRightEdge) {
+                moveDirections[8] = 0;
+            }
+            if (onLeftEdge) {
+                moveDirections[9] = 0;
+            }
+
+            //otherwise it's moving down (it's white)
+        } else {
+            if (onRightEdge) {
+                moveDirections[9] = 0;
+            }
+            if (onLeftEdge) {
+                moveDirections[8] = 0;
+            }
+        }
+        for(i=8; i<10; i++){
+            if(moveDirections[i] != 0){
+                move.push(square + (moveFormulas[i]*moveDirections[i]));
+            }
+        }
+
+    }
+    //eliminate moves that would put the gyoku in check
+    if (turn % 2 == 0) {
+        eliminateIllegalMoves("W");
+    } else {
+        eliminateIllegalMoves("B");
+    }
+
+    //return the array of squares that can be moved to;
+    return move;
 }
-
-function showMoveGIN(square, color) {
-    let onEdge = ""; //a string to hold a code showing which edges the piece is on
-    let ginMoves;
-
-    onEdge += color; //add the color as the first part of the string
-
-    if (board9Row.includes(square)) {//fill string with 1 for yes, 0 for no
-        onEdge += "1";
-    } else {
-        onEdge += "0";
-    }
-    if (boardTopEdge.includes(square)) {
-        onEdge += "1";
-    } else {
-        onEdge += "0";
-    }
-    if (board1Row.includes(square)) {
-        onEdge += "1";
-    } else {
-        onEdge += "0";
-    }
-    if (boardBottomEdge.includes(square)) {
-        onEdge += "1";
-    } else {
-        onEdge += "0";
-    }
-
-    switch (onEdge) { // set the potential spaces that the pice can move into based on its location
-        case "B1000": //black on the left edge
-        case "W0010": //white on right edge
-            ginMoves = [square + (forward * 10), square + (forward * 9), square + (forward * -8)];
-            break;
-
-        case "B1100": //black in top left corner
-        case "W0011": //white in bottom right corner
-            ginMoves = [square + (forward * -8)];
-            break;
-
-        case "B0100"://Black on top row
-        case "W0001": //white on bottom row
-            ginMoves = [square + (forward * -10), square + (forward * -8)];
-            break;
-
-        case "B0110": //black in top right corner
-        case "W1001": //white in bottom left corner
-            ginMoves = [square + (forward * -10)];
-            break;
-
-        case "B0010"://black on right edge
-        case "W1000"://white on left edge
-            ginMoves = [square + (forward * 8), square + (forward * -10), square + (forward * 9)];
-            break;
-
-        case "B0011"://black in bottom right corner
-        case "W1100"://White in top left corner
-            ginMoves = [square + (forward * 8), square + (forward * 9)];
-            break;
-
-        case "B0001": //black on bottom row
-        case "W0100"://white on top row
-            ginMoves = [square + (forward * 8), square + (forward * 10), square + (forward * 9)];
-            break;
-
-        case "B1001": //black in bottom left corner
-        case "W0110": //white in top right corner
-            ginMoves = [square + (forward * 10), square + (forward * -9), square + (forward * 9)];
-            break;
-
-        default:
-            ginMoves = [square + (forward * -8), square + (forward * 8), square + (forward * -10),
-            square + (forward * 10), square + (forward * 9)];
-            break;
-    }
-    if(flipped){
-        if(color == "B"){
-            color = "W";
-        }else{
-            color = "B";
-        }
-    }
-
-    for (i = ginMoves.length - 1; i > -1; i--) {
-        if (gameState[ginMoves[i]].charAt(0) === color) {//if own piece is in the square
-            //do nothing
-        } else {//if the square is empty or has enemy piece
-            move.push(ginMoves[i]);//add the space to the array of possible moves
-        }
-    }
-
-    eliminateIllegalMoves(color); //will remove all moves from move array that would result in check to own gyoku
-
-
+function highlightSquares(highlightArray) {
     if (justChecking === false) {
-        for (i = move.length - 1; i > -1; i--) {
-            if (move[i] !== null) {
-                if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
-
-                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
-                }
-            }
-        }
-    }
-
-}
-
-function showMoveHI(square, color) {
-    let pieceBlocking = false;
-    let advanceRow = 0;
-    if(flipped){
-        if(color == "B"){
-            color = "W";
-        }else{
-            color = "B";
-        }
-    }
-    while (pieceBlocking === false) {//check the forward row
-        if ((square + (9 * forward) + advanceRow) < 81 &&
-            (square + (9 * forward) + advanceRow) > -1) {//if square is on the board
-
-            if (gameState[square + (9 * forward) + advanceRow].charAt(0) === color) {//if space to move into contains own piece
-                pieceBlocking = true;
-            } else if (gameState[square + (9 * forward) + advanceRow].charAt(0) === "e") { // if space to move into is empty
-                move.push(square + (9 * forward) + advanceRow); //add space to possible moves
-                advanceRow = advanceRow + (forward * 9); //move to the next space
-            } else { //if space contains enemy piece
-                move.push(square + (9 * forward) + advanceRow);//add space to possible moves
-                pieceBlocking = true;
-            }
-        } else {
-            pieceBlocking = true;//set to true to prevent infinite loop
-        }
-    }
-    advanceRow = 0; //reset the row counter
-    pieceBlocking = false; //reset piece blocking tracker
-
-    while (pieceBlocking === false) {//check the backward row
-        if ((square + (-9 * forward) + advanceRow) < 81 &&
-            (square + (-9 * forward) + advanceRow) > -1) {//if square is on the board
-
-            if (gameState[square + (-9 * forward) + advanceRow].charAt(0) === color) {//if space to move into contains own piece
-                pieceBlocking = true;
-            } else if (gameState[square + (-9 * forward) + advanceRow].charAt(0) === "e") { // if space to move into is empty
-                move.push(square + (-9 * forward) + advanceRow); //add space to possible moves
-                advanceRow = advanceRow + (forward * -9); //move to the next space
-            } else { //if space contains enemy piece
-                move.push(square + (-9 * forward) + advanceRow);//add space to possible moves
-                pieceBlocking = true;
-            }
-        } else {
-            pieceBlocking = true;//set to true to prevent infinite loop
-        }
-    }
-
-    advanceRow = 0; //reset the row counter
-
-    if (board1Row.includes(square)){//if it is  on right edge
-        pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
-    } else {
-        pieceBlocking = false;
-    }
-
-    while (pieceBlocking === false) {//check the right row
-
-        if (gameState[square + (1 * forward) + advanceRow].charAt(0) === color) {//if space to move into contains own piece
-            pieceBlocking = true;
-        } else if (gameState[square + (1 * forward) + advanceRow].charAt(0) === "e") { // if space to move into is empty
-            move.push(square + (1 * forward) + advanceRow); //add space to possible moves
-            advanceRow = advanceRow + (forward * 1); //move to the next space
-        } else { //if space contains enemy piece
-            move.push(square + (1 * forward) + advanceRow);//add space to possible moves
-            pieceBlocking = true;
-        }
-
-        if (board1Row.includes(square + advanceRow) ||
-            board9Row.includes(square + advanceRow)) {//if reached the edge of the board
-            pieceBlocking = true;
-        }
-    }
-
-    advanceRow = 0; //reset the row counter
-
-    if (board9Row.includes(square)){//if on the left edge
-        pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
-    } else {
-        pieceBlocking = false;
-    }
-
-    while (pieceBlocking === false) {//check the left row
-        if (gameState[square + (-1 * forward) + advanceRow].charAt(0) === color) {//if space to move into contains own piece
-            pieceBlocking = true;
-        } else if (gameState[square + (-1 * forward) + advanceRow].charAt(0) === "e") { // if space to move into is empty
-            move.push(square + (-1 * forward) + advanceRow); //add space to possible moves
-            advanceRow = advanceRow + (forward * -1); //move to the next space
-        } else { //if space contains enemy piece
-            move.push(square + (-1 * forward) + advanceRow);//add space to possible moves
-            pieceBlocking = true;
-        }
-        if (board1Row.includes(square + advanceRow) ||
-            board9Row.includes(square + advanceRow)) {//if reached the edge of the board
-            pieceBlocking = true;
-        }
-    }
-    eliminateIllegalMoves(color); //will remove all moves from move array that would result in check to own gyoku
-
-
-    if (justChecking === false) {
-        for (i = move.length - 1; i > -1; i--) {
-            if (move[i] !== null) {
-                if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
-
-                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
-                }
-            }
-        }
-    }
-}
-
-function showMoveKAKU(square, color) {
-    let pieceBlocking = false;
-    let advanceRow = 0;
-    if(flipped){
-        if(color == "B"){
-            color = "W";
-        }else{
-            color = "B";
-        }
-    }
-    if (board1Row.includes(square)) {//if on the right edge
-        pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
-    } else {
-        pieceBlocking = false;
-    }
-    while (pieceBlocking === false) {//check the forward right diagonal
-        if ((square + (10 * forward) + advanceRow) < 81 &&
-            (square + (10 * forward) + advanceRow) > -1) {//if square is on the board
-
-            if (gameState[square + (10 * forward) + advanceRow].charAt(0) === color) {//if space to move into contains own piece
-                pieceBlocking = true;
-            } else if (gameState[square + (10 * forward) + advanceRow].charAt(0) === "e") { // if space to move into is empty
-                move.push(square + (10 * forward) + advanceRow); //add space to possible moves
-                advanceRow = advanceRow + (forward * 10); //move to the next space
-            } else { //if space contains enemy piece
-                move.push(square + (10 * forward) + advanceRow);//add space to possible moves
-                pieceBlocking = true;
-            }
-        } else {
-            pieceBlocking = true;//set to true to prevent infinite loop
-        }
-
-        if (board1Row.includes(square + advanceRow) ||
-            board9Row.includes(square + advanceRow)) {//if reached the edge of the board
-            pieceBlocking = true;
-        }
-    }
-    advanceRow = 0; //reset the row counter
-
-    if (board1Row.includes(square)){//if on the right edge
-        pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
-    } else {
-        pieceBlocking = false;
-    }
-
-    while (pieceBlocking === false) {//check the backward right diagonal
-        if ((square + (-8 * forward) + advanceRow) < 81 &&
-            (square + (-8 * forward) + advanceRow) > -1) {//if square is on the board
-
-            if (gameState[square + (-8 * forward) + advanceRow].charAt(0) === color) {//if space to move into contains own piece
-                pieceBlocking = true;
-            } else if (gameState[square + (-8 * forward) + advanceRow].charAt(0) === "e") { // if space to move into is empty
-                move.push(square + (-8 * forward) + advanceRow); //add space to possible moves
-                advanceRow = advanceRow + (forward * -8); //move to the next space
-            } else { //if space contains enemy piece
-                move.push(square + (-8 * forward) + advanceRow);//add space to possible moves
-                pieceBlocking = true;
-            }
-        } else {
-            pieceBlocking = true;//set to true to prevent infinite loop
-        }
-        if (board1Row.includes(square + advanceRow) ||
-            board9Row.includes(square + advanceRow)) {//if reached the edge of the board
-            pieceBlocking = true;
-        }
-    }
-    advanceRow = 0; //reset the row counter
-
-    if (board9Row.includes(square)) {//if on the left edge
-        pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
-    } else {
-        pieceBlocking = false;
-    }
-    while (pieceBlocking === false) {//check the forward left diagonal
-        if ((square + (8 * forward) + advanceRow) < 81 &&
-            (square + (8 * forward) + advanceRow) > -1) {//if square is on the board
-
-            if (gameState[square + (8 * forward) + advanceRow].charAt(0) === color) {//if space to move into contains own piece
-                pieceBlocking = true;
-            } else if (gameState[square + (8 * forward) + advanceRow].charAt(0) === "e") { // if space to move into is empty
-                move.push(square + (8 * forward) + advanceRow); //add space to possible moves
-                advanceRow = advanceRow + (forward * 8); //move to the next space
-            } else { //if space contains enemy piece
-                move.push(square + (8 * forward) + advanceRow);//add space to possible moves
-                pieceBlocking = true;
-            }
-        } else {
-            pieceBlocking = true;//set to true to prevent infinite loop
-        }
-        if (board1Row.includes(square + advanceRow) ||
-            board9Row.includes(square + advanceRow)) {//if reached the edge of the board
-            pieceBlocking = true;
-        }
-    }
-    advanceRow = 0; //reset the row counter
-
-    if (board9Row.includes(square)) {//if on the left edge
-        pieceBlocking = true;//skip next section (it can't move anywhere, anyway)
-    } else {
-        pieceBlocking = false;
-    }
-
-    while (pieceBlocking === false) {//check the backward right diagonal
-        if ((square + (-10 * forward) + advanceRow) < 81 &&
-            (square + (-10 * forward) + advanceRow) > -1) {//if square is on the board
-
-            if (gameState[square + (-10 * forward) + advanceRow].charAt(0) === color) {//if space to move into contains own piece
-                pieceBlocking = true;
-            } else if (gameState[square + (-10 * forward) + advanceRow].charAt(0) === "e") { // if space to move into is empty
-                move.push(square + (-10 * forward) + advanceRow); //add space to possible moves
-                advanceRow = advanceRow + (forward * -10); //move to the next space
-            } else { //if space contains enemy piece
-                move.push(square + (-10 * forward) + advanceRow);//add space to possible moves
-                pieceBlocking = true;
-            }
-        } else {
-            pieceBlocking = true;//set to true to prevent infinite loop
-        }
-        if (board1Row.includes(square + advanceRow) ||
-            board9Row.includes(square + advanceRow)) {//if reached the edge of the board
-            pieceBlocking = true;
-        }
-    }
-
-    eliminateIllegalMoves(color); //will remove all moves from move array that would result in check to own gyoku
-
-
-    if (justChecking === false) {
-        for (i = move.length - 1; i > -1; i--) {
-            if (move[i] !== null) {
-                if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
-
-                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
-                }
-            }
-        }
-    }
-}
-
-function showMoveNHI(square, color) {
-    showMoveGYOKU(square, color);
-    showMoveHI(square, color);
-}
-
-function showMoveNKAKU(square, color) {
-    showMoveGYOKU(square, color);
-    showMoveKAKU(square, color);
-}
-
-function showMoveGYOKU(square, color) {
-    let onEdge = ""; //a string to hold a code showing which edges the piece is on
-    let ouMoves;
-
-    onEdge += color; //add the color as the first part of the string
-
-    if (board9Row.includes(square)) {//fill string with 1 for yes, 0 for no
-        onEdge += "1";
-    } else {
-        onEdge += "0";
-    }
-    if (boardTopEdge.includes(square)) {
-        onEdge += "1";
-    } else {
-        onEdge += "0";
-    }
-    if (board1Row.includes(square)) {
-        onEdge += "1";
-    } else {
-        onEdge += "0";
-    }
-    if (boardBottomEdge.includes(square)) {
-        onEdge += "1";
-    } else {
-        onEdge += "0";
-    }
-
-    switch (onEdge) { // set the potential spaces that the pice can move into based on its location
-        case "B1000": //black on the left edge
-        case "W0010"://white on right edge
-            ouMoves = [square + (forward * -9), square + (forward * 10), square + (forward * -8),
-            square + (forward * 1), square + (forward * 9)];
-            break;
-
-        case "B1100": //black in top left corner
-        case "W0011": //white in bottom right corner
-            ouMoves = [square + (forward * 1), square + (forward * -8), square + (forward * -9)];
-            break;
-
-        case "B0100"://Black on top row
-        case "W0001": //white on bottom row
-            ouMoves = [square + (forward * 1), square + (forward * -1), square + (forward * -9),
-            square + (forward * -10), square + (forward * -8)];
-            break;
-
-        case "B0110": //black in top right corner
-        case "W1001": //white in bottom left corner
-            ouMoves = [square + (forward * -1), square + (forward * -9), square + (forward * -10)];
-            break;
-
-        case "B0010"://black on right edge
-        case "W1000"://white on left edge
-            ouMoves = [square + (forward * 8), square + (forward * -9),
-            square + (forward * -1), square + (forward * 9), square + (forward * -10)];
-            break;
-
-        case "B0011"://black in bottom right corner
-        case "W1100"://White in top left corner
-            ouMoves = [square + (forward * 8),
-            square + (forward * -1), square + (forward * 9)];
-            break;
-
-        case "B0001": //black on bottom row
-        case "W0100"://white on top row
-            ouMoves = [square + (forward * 1), square + (forward * 8), square + (forward * 10),
-            square + (forward * -1), square + (forward * 9)];
-            break;
-
-        case "B1001": //black in bottom left corner
-        case "W0110": //white in top right corner
-            ouMoves = [square + (forward * 9), square + (forward * 10),
-            square + (forward * 1)];
-            break;
-
-        default:
-            ouMoves = [square + (forward * 1), square + (forward * 8), square + (forward * 9), square + (forward * 10),
-            square + (forward * -1), square + (forward * -8), square + (forward * -9), square + (forward * -10)];
-            break;
-    }
-    if(flipped){
-        if(color == "B"){
-            color = "W";
-        }else{
-            color = "B";
-        }
-    }
-    for (i = ouMoves.length - 1; i > -1; i--) {
-        if (gameState[ouMoves[i]].charAt(0) === color) {//if own piece is in the square
-            //do nothing
-        } else {//if the square is empty or has enemy piece
-            move.push(ouMoves[i]);//add the space to the array of possible moves
-        }
-    }
-
-    eliminateIllegalMoves(color); //will remove all moves from move array that would result in check to own gyoku
-
-
-    if (justChecking === false) {
-        
-        for (i = move.length - 1; i > -1; i--) {
-            if (move[i] !== null) {
-                if ((gameState[move[i]].charAt(0) !== color)) {  //check the first character to see if it the opposite color or empty
-
-                    boardSquare[move[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
-                }
+        for (i = highlightArray.length - 1; i > -1; i--) {
+            if (highlightArray[i] !== null) {
+                boardSquare[highlightArray[i]].style.background = "rgb(230, 197, 11)";//highlight each possible square to move into
             }
         }
     }
@@ -1440,7 +936,14 @@ function promotePiece() {
     if (gameState[selectedPiece].charAt(1) !== "N" && //if the piece is not promoted yet
         gameState[selectedPiece].substr(1, 3) !== "KIN" &&
         gameState[selectedPiece].substr(1, 5) !== "GYOKU") { //and not a kin or Gyoku
-        let yesNo = confirm("Promote?");
+            let yesNo;
+            switch (gameState[selectedPiece].substr(1,gameState[selectedPiece].length)) {
+                case "KO":
+                case "KEI":
+                case "F": if (id < 9) { yesNo = true; } else { yesNo = confirm("Promote?"); } break;
+                default: yesNo = confirm("Promote?");
+                    break;
+            }
         if (yesNo) {
             gameState[selectedPiece] = gameState[selectedPiece].substr(0, 1) + "N" + gameState[selectedPiece].substr(1, 4); // add an N for nari after the first character
             newlyPromoted = true;
@@ -1614,7 +1117,7 @@ function checkForCheck(gyokuColor) {
     let gyokuOnRightColumn;
     let gyokuOnLeftColumn;
 
-    if (!justChecking) {
+    if (!justChecking && turn%2 == 1) {
         gyokuForward = -1; //black ou moves negatively to go forward
         //this will check to see if the gyoku is on any of the edges of the board and set the corresponding spot
         //in the checkingPieces array to 2, which will prevent it from being checked in the next part
@@ -2226,31 +1729,31 @@ function checkForCheck(gyokuColor) {
             checkingPosition += (8 * gyokuForward); //increment the counter
         }
     }
-   //check the left side keima spot
-if((gyokuColor == "B" && gyokuPosition < 27) || (gyokuColor == "W" && gyokuPosition > 54)){
-    checkingPieces[16] = 0; //no keima can check if gyoku is in the top 3 rows
-}else if (checkingPieces[16] !== 2 && 
-    (gameState[gyokuPosition + (gyokuForward * 17)].charAt(0) != gyokuColor && gameState[gyokuPosition + (gyokuForward * 17)].substr(1,3) == "KEI")){
+    //check the left side keima spot
+    if ((gyokuColor == "B" && gyokuPosition < 27) || (gyokuColor == "W" && gyokuPosition > 54)) {
+        checkingPieces[16] = 0; //no keima can check if gyoku is in the top 3 rows
+    } else if (checkingPieces[16] !== 2 &&
+        (gameState[gyokuPosition + (gyokuForward * 17)].charAt(0) != gyokuColor && gameState[gyokuPosition + (gyokuForward * 17)].substr(1, 3) == "KEI")) {
 
-       checkingPieces[16] = gyokuPosition + (gyokuForward * 17);
-       //added to the array of checking pieces
-       isCheck = gyokuColor;
-} else {
-checkingPieces[16] = 0;// own piece is in the square, so no check
-}
+        checkingPieces[16] = gyokuPosition + (gyokuForward * 17);
+        //added to the array of checking pieces
+        isCheck = gyokuColor;
+    } else {
+        checkingPieces[16] = 0;// own piece is in the square, so no check
+    }
 
-   //check the right side keima spot
-if((gyokuColor == "B" && gyokuPosition < 27) || (gyokuColor == "W" && gyokuPosition > 54)){
-    checkingPieces[17] = 0; //no keima can check if gyoku is in the top 3 rows
-}else if (checkingPieces[17] !== 2 && 
-    (gameState[gyokuPosition + (gyokuForward * 19)].charAt(0) != gyokuColor && gameState[gyokuPosition + (gyokuForward * 19)].substr(1,3) == "KEI")){
+    //check the right side keima spot
+    if ((gyokuColor == "B" && gyokuPosition < 27) || (gyokuColor == "W" && gyokuPosition > 54)) {
+        checkingPieces[17] = 0; //no keima can check if gyoku is in the top 3 rows
+    } else if (checkingPieces[17] !== 2 &&
+        (gameState[gyokuPosition + (gyokuForward * 19)].charAt(0) != gyokuColor && gameState[gyokuPosition + (gyokuForward * 19)].substr(1, 3) == "KEI")) {
 
-       checkingPieces[17] = gyokuPosition + (gyokuForward * 19);
-       //added to the array of checking pieces
-       isCheck = gyokuColor;
-} else {
-checkingPieces[17] = 0;// own piece is in the square, so no check
-}
+        checkingPieces[17] = gyokuPosition + (gyokuForward * 19);
+        //added to the array of checking pieces
+        isCheck = gyokuColor;
+    } else {
+        checkingPieces[17] = 0;// own piece is in the square, so no check
+    }
 
 
     for (i = 0; i < checkingPieces.length; i++) {
@@ -2259,7 +1762,6 @@ checkingPieces[17] = 0;// own piece is in the square, so no check
         }
     }
     return isCheck;
-    //return checkingPieces; //need to change this to return isCheck
 }
 
 function eliminateIllegalMoves(color) {
@@ -2296,8 +1798,7 @@ function eliminateIllegalMoves(color) {
     move = tempMoveArray;
     console.log(move);
 }
-let justChecking = false;
-let isCheckMate = false;
+
 function checkForMate(color) {
     let counterForMove = 0;
     justChecking = true; //this will affect all the functions called

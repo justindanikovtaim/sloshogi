@@ -290,7 +290,7 @@ function movePiece(id) {
         }
 
         if ((gameState[selectedPiece].charAt(1) !== "N") && promoteZone){//if the piece isn't already promoted (the second letter isn't N) and it is in or will move into the promotion zone
-            promotePiece();
+            promotePiece(id);
         }
 
         if (gameState[id].charAt(0) !== "e") { //if capturing a piece
@@ -324,30 +324,7 @@ function movePiece(id) {
 }
 
 
-function promotePiece() {
-    if (gameState[selectedPiece].charAt(1) !== "N" && //if the piece is not promoted yet
-        gameState[selectedPiece].substr(1, 3) !== "KIN" &&
-        gameState[selectedPiece].substr(1, 5) !== "GYOKU") { //and not a kin or Gyoku
-        //if it's a kei and in the top two rows, or a kyosha or fu in the top row, automatically promote
-        let yesNo;
-        switch (gameState[selectedPiece]) {
-            case "BKEI": if (id < 18) { yesNo = true; } else { yesNo = confirm("Promote?"); } break;
-            case "WKEI": if (id > 62) { yesNo = true; } else { yesNo = confirm("Promote?"); } break;
-            case "BKO":
-            case "BF": if (id < 9) { yesNo = true; } else { yesNo = confirm("Promote?"); } break;
-            case "WKO":
-            case "WF": if (id > 71) { yesNo = true; } else { yesNo = confirm("Promote?"); } break;
-            default: yesNo = confirm("Promote?");
-                break;
-        }
-        if (yesNo) {
-            gameState[selectedPiece] = gameState[selectedPiece].substr(0, 1) + "N" + gameState[selectedPiece].substr(1, 4); // add an N for nari after the first character
-            newlyPromoted = true;
 
-        }
-    }
-    return;
-}
 function yesNoPromote() {
     //add code to make a confirmation popup appear on the screen
 }

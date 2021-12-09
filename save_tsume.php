@@ -12,7 +12,7 @@ require 'connect.php';
 $lastRow = mysqli_query($link, "SELECT MAX(id) FROM tsumeshogi");
 $result = mysqli_fetch_row($lastRow);
 $number = $result[0];
-mysqli_query($link, "ALTER TABLE tsumeshogi AUTO_INCREMENT = ".$number +1);
+mysqli_query($link, "ALTER TABLE tsumeshogi AUTO_INCREMENT = '".($number +1)."'");
 
 
 $query = "INSERT INTO tsumeshogi (problemName, boardSetup, mochigomaSetup, mainSequence, createdBy, timeLimit) VALUES ('$problemName', '$boardConfig', '$mochigomaConfig', '$moveSequence', '$createdBy', '$timeLimit')";

@@ -396,30 +396,7 @@ function disableAll(){
         mochiGoma[x].setAttribute("onClick", null);
     }
 }
-function promotePiece(id) {
-    if (gameState[selectedPiece].charAt(1) !== "N" && //if the piece is not promoted yet
-        gameState[selectedPiece].substr(1, 3) !== "KIN" &&
-        gameState[selectedPiece].substr(1, 5) !== "GYOKU") { //and not a kin or Gyoku
-        //if it's a kei and in the top two rows, or a kyosha or fu in the top row, automatically promote
-        let yesNo;
-        switch (gameState[selectedPiece]) {
-            case "BKO":
-            case "BKEI":
-            case "BF": if (id < 9) { yesNo = true; } else { yesNo = confirm("Promote?"); } break;
-            case "WKEI":
-            case "WKO":
-            case "WF": if (id > 71) { yesNo = true; } else { yesNo = confirm("Promote?"); } break;
-            default: yesNo = confirm("Promote?");
-                break;
-        }
-        if (yesNo) {
-            gameState[selectedPiece] = gameState[selectedPiece].substr(0, 1) + "N" + gameState[selectedPiece].substr(1, 4); // add an N for nari after the first character
-            newlyPromoted = true;
 
-        }
-    }
-    return;
-}
 function yesNoPromote() {
     //add code to make a confirmation popup appear on the screen
 }
