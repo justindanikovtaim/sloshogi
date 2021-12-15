@@ -219,11 +219,13 @@ if((gameHistory[6] == "4" && gameHistory[7] != gameHistory[8]) || (gameHistory[6
     showGameOver();
 }else{
     //otherwise, check for checkmate
-    if(checkForMate(opponentColor)){
+    if(gameHistory[6] != "4" && checkForMate(opponentColor)){
         endGame();
+    }else{
+        selectedPiece = null;
     }
 }
-
+highlightLastMove();
 
 function loadGameState(placeCalled){//loads the current game state from the database (slo Shogi v.1)
     if(movesHistory != undefined){
@@ -254,23 +256,6 @@ function loadGameState(placeCalled){//loads the current game state from the data
         turn++;
     }
     }
-    if(movesHistory[movesHistory.length - 1] != 100 && movesHistory[movesHistory.length - 1] != 101){//if the game hasn't ended in resgination (100) or checkmate(101)
-    
-    let redSquare1;
-    let redSquare2;
-    if(playerColor == "W"){ //flip the move indicator position if the white player is viewing
-        redSquare1 = 80 - movesHistory[movesHistory.length -3]; 
-       redSquare2 = 80 - movesHistory[movesHistory.length-2];
-    }else{
-        redSquare1 = movesHistory[movesHistory.length -3];
-        redSquare2 =  movesHistory[movesHistory.length-2];
-    }
-
-    boardSquare[redSquare2].style.background = "red";
-    if(movesHistory[movesHistory.length -3] != 81){
-        boardSquare[redSquare1].style.background = "red";
-    }
-}
 
 }
 if((turn %2 != 0 && playerColor == "B") || (turn % 2 == 0 && playerColor == "W")){
@@ -317,7 +302,28 @@ if(playerColor == "W"){
 }
 
 }
-
+function highlightLastMove(){
+    let searchPoint;
+    if(movesHistory[movesHistory.length - 1] == 100 || movesHistory[movesHistory.length - 1] == 101){//if the game hasn't ended in resgination (100) or checkmate(101)
+        searchPoint = movesHistory.length - 3;//chop off the numbers 100 or 101 that are placed into the array when someone resigns of loses
+    }else{
+        searchPoint = movesHistory.length;
+    }
+        let redSquare1;
+        let redSquare2;
+        if(playerColor == "W"){ //flip the move indicator position if the white player is viewing
+            redSquare1 = 80 - movesHistory[searchPoint -3]; 
+           redSquare2 = 80 - movesHistory[searchPoint-2];
+        }else{
+            redSquare1 = movesHistory[searchPoint -3];
+            redSquare2 =  movesHistory[searchPoint-2];
+        }
+    
+        boardSquare[redSquare2].style.background = "red";
+        if(movesHistory[searchPoint -3] != 81){
+            boardSquare[redSquare1].style.background = "red";
+        }
+}
 function sendMoveData(thingsToDelete){
     let tempObject = JSON.parse(sendToDatabase);
     tempObject['delete'] = thingsToDelete;// add the rules about what to delete to the JSON object
@@ -554,19 +560,24 @@ function showMove(square, komaType) {
     let moveFormulas = [-9, -10, -1, 8, 9, 10, 1, -8, 19, 17]; //the position of the move relative to where the piece is
     //the knight's is adjusted by the negative or positive number in the moveDirections array
     let turnColor;
+    let realKomaType = komaType;
+    if(justChecking){
+        //if just checking, the piece should always be treated like a white koma
+        komaType = "W" + komaType.substr(1,komaType.length);
+        turnColor = "W";
+    }else
     if (turn % 2 == 0) {
         turnColor = "W";
     } else {
         turnColor = "B"
     }
+
     switch (komaType) {
-        case "BF": moveDirections[0] = 1;
+        case "BF": 
+        case "WF": moveDirections[0] = 1;
             break;
-        case "WF": moveDirections[4] = 1;
-            break;
-        case "BKEI": moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, -1, -1];//negative will make it go backwards
-            break;
-        case "WKEI": moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1]; //positive will make it go forward
+        case "BKEI": moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, -1, -1];break;//just added!
+        case "WKEI": moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1];//negative will make it go backwards, positive forwards
             break;
         case "BKO": moveDirections[0] = 2;
             break;
@@ -656,10 +667,14 @@ function showMove(square, komaType) {
                     isBlocked = false;
                     moveSquare = square;
                     while (!isBlocked) {
-                        //if the space doesn't contain an own piece
-                        if (gameState[moveSquare + moveFormulas[i]].charAt(0) !== turnColor) {
+                        //if the space is empty
+                        if(gameState[moveSquare + moveFormulas[i]] == "empty"){
+                            move.push(moveSquare + moveFormulas[i]);
+                            //if the space has an enemy piece
+                        }else if (gameState[moveSquare + moveFormulas[i]].charAt(0) !== turnColor) {
                             //add it to the move array
                             move.push(moveSquare + moveFormulas[i]);
+                            isBlocked = true;
                         }else{
                             //if an own piece is in the square, isBlocked = true
                             isBlocked = true;
@@ -741,7 +756,7 @@ function showMove(square, komaType) {
             if (onLeftEdge) {
                 moveDirections[9] = 0;
             }
-
+            
             //otherwise it's moving down (it's white)
         } else {
             if (onRightEdge) {
@@ -751,6 +766,13 @@ function showMove(square, komaType) {
                 moveDirections[8] = 0;
             }
         }
+                    //eliminate the squares if an own piece is in the square
+                    if (gameState[square + (moveFormulas[8]*moveDirections[8])].charAt(0) == komaType.charAt(0)){
+                        moveDirections[8] = 0;
+                    }
+                    if (gameState[square + (moveFormulas[9]*moveDirections[9])].charAt(0) == komaType.charAt(0)){
+                        moveDirections[9] = 0;
+                    }
         for(i=8; i<10; i++){
             if(moveDirections[i] != 0){
                 move.push(square + (moveFormulas[i]*moveDirections[i]));
@@ -759,11 +781,8 @@ function showMove(square, komaType) {
 
     }
     //eliminate moves that would put the gyoku in check
-    if (turn % 2 == 0) {
-        eliminateIllegalMoves("W");
-    } else {
-        eliminateIllegalMoves("B");
-    }
+    eliminateIllegalMoves(realKomaType.charAt(0));
+
 
     //return the array of squares that can be moved to;
     return move;
@@ -973,10 +992,12 @@ function placePiece(piece) {
         || piece.charAt(1) != playerColor) { //if the currently selected piece is clicked again
         deselectAll();
         mochiGomaAlreadySelected = false;
+        selectedPiece = null;
     } else if(mochiGomaAlreadySelected){
         //if a mochigoma is already selected, this makes sure that multiple pieces can't be highlighted at the same time
         deselectAll();
         mochiGomaAlreadySelected = false;
+        selectedPiece = null;
     }else{
         selectedPiece = 81; //set selected piece to number outside of the board
         gameState[81] = piece.substr(1, piece.length); //put the piece in the 81st spot of the gameState array
@@ -1117,7 +1138,7 @@ function checkForCheck(gyokuColor) {
     let gyokuOnRightColumn;
     let gyokuOnLeftColumn;
 
-    if (!justChecking && turn%2 == 1) {
+    if ((gyokuColor == "B" && !flipped) || (gyokuColor == "W" && flipped) ) {
         gyokuForward = -1; //black ou moves negatively to go forward
         //this will check to see if the gyoku is on any of the edges of the board and set the corresponding spot
         //in the checkingPieces array to 2, which will prevent it from being checked in the next part

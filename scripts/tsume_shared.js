@@ -114,10 +114,14 @@ function showMove(square, komaType) {
                     isBlocked = false;
                     moveSquare = square;
                     while (!isBlocked) {
-                        //if the space doesn't contain an own piece
-                        if (gameState[moveSquare + moveFormulas[i]].charAt(0) !== turnColor) {
+                        //if the space is empty
+                        if(gameState[moveSquare + moveFormulas[i]] == "empty"){
+                            move.push(moveSquare + moveFormulas[i]);
+                            //if the space has an enemy piece
+                        }else if (gameState[moveSquare + moveFormulas[i]].charAt(0) !== turnColor) {
                             //add it to the move array
                             move.push(moveSquare + moveFormulas[i]);
+                            isBlocked = true;
                         }else{
                             //if an own piece is in the square, isBlocked = true
                             isBlocked = true;

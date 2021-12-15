@@ -168,7 +168,7 @@ promptText += "  "; //TEMPORARY
 
 //add whose turn it is to play
 if(gameHistory[7] != null){//if a winner has been set
-    promptText += gameHistory[7] + " が勝ちました";
+    promptText = gameHistory[7] + " が勝ちました";
 
 }else if(turn % 2 == 0){    //update the prompt showing which player's turn it is
 //White's turn
