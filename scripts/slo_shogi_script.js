@@ -565,12 +565,15 @@ function showMove(square, komaType) {
         //if just checking, the piece should always be treated like a white koma
         komaType = "W" + komaType.substr(1,komaType.length);
         turnColor = "W";
-    }else
-    if (turn % 2 == 0) {
-        turnColor = "W";
-    } else {
-        turnColor = "B"
+    }else{
+        komaType = "B" + komaType.substr(1,komaType.length);
+        if (turn % 2 == 0) {
+            turnColor = "W";
+        } else {
+            turnColor = "B"
+        }
     }
+
 
     switch (komaType) {
         case "BF": 
@@ -767,10 +770,10 @@ function showMove(square, komaType) {
             }
         }
                     //eliminate the squares if an own piece is in the square
-                    if (gameState[square + (moveFormulas[8]*moveDirections[8])].charAt(0) == komaType.charAt(0)){
+                    if (gameState[square + (moveFormulas[8]*moveDirections[8])].charAt(0) == turnColor){
                         moveDirections[8] = 0;
                     }
-                    if (gameState[square + (moveFormulas[9]*moveDirections[9])].charAt(0) == komaType.charAt(0)){
+                    if (gameState[square + (moveFormulas[9]*moveDirections[9])].charAt(0) == turnColor){
                         moveDirections[9] = 0;
                     }
         for(i=8; i<10; i++){
