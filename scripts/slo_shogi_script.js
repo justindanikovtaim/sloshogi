@@ -1986,3 +1986,8 @@ console.log(json);
     ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     ajax.send(json);//(sendToDatabase);
 }
+function sendForTsume(){
+    document.getElementById("boardConfig").value = gameState.toString();
+    document.getElementById('mochigomaConfig').value = mochiGomaArray.toString();
+    document.getElementById('tsumeInfo').submit();
+}

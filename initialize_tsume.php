@@ -1,4 +1,4 @@
-<?php 
+<?php //
 session_start();
 
 //if the rest post superglobal is set, that means the reset button was clicked

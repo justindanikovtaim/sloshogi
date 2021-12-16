@@ -1,4 +1,4 @@
-<?php
+<?php//
 session_start();
 $_SESSION['boardConfig'] = $_POST['boardConfig'];
 $_SESSION['mgConfig'] = $_POST['mochigomaConfig'];
@@ -49,7 +49,7 @@ $_SESSION['mgConfig'] = $_POST['mochigomaConfig'];
     <label for="problemName">問題の名前を入力してください</label>
     <input type="text" name = "problemName" id ="problemName">
     <br>
-    <label for="timelimit">タイマー（秒単位</label>
+    <label for="timelimit">タイマー（秒単位)</label>
     <input type="number" name = "timeLimit" id="timeLimit">）
     <input type="submit" value="問題を保存">
     <input type="hidden" name = "boardConfig" id="boardConfig" value = "<?=$_SESSION['boardConfig']?>">

@@ -1,5 +1,7 @@
 <?php 
 require 'connect.php';
+//for the turn into tsumeshogi function
+
 
 $gameID = $_GET['id'];
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
@@ -144,6 +146,7 @@ $chatHistory = explode("%%", $chatArray['chat']);
     <img class ="msgIcon" src="images/new_message_icon.png" id ="newMessageInMenu">
     <a href="#" id ="resignButton" onClick = "resign()">校了・Resign</a>
     <a href="kifu/write_kifu.php?id=<?=$gameID?>">棋譜をダウンロード・Download Kifu</a>
+    <a href="#" onClick = "sendForTsume()">この局面を詰将棋にする</a>
     <a href="feedback_form.php?src=gameboard&id=<?=$gameID?>">バグ報告・Report a bug</a>
 </div>
 
@@ -187,6 +190,12 @@ $chatHistory = explode("%%", $chatArray['chat']);
 </div>
 
 </div>
+<!-- this is the form to create a tsumeshogi problem -->
+<form id = "tsumeInfo" method ="post" action = "set_tsume.php">
+<input type="hidden" name = "boardConfig" id="boardConfig">
+<input type="hidden" name = "mochigomaConfig" id="mochigomaConfig">
+</form>
+
 </body>
  
  <script>
@@ -296,6 +305,7 @@ $chatHistory = explode("%%", $chatArray['chat']);
    function closeChat(){
     document.getElementById("popupChat").classList.toggle("chatShow");
    }
+
 
     </script>
 <script src= "scripts/track_gameboard_time.js"></script>
