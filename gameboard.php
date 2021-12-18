@@ -76,7 +76,14 @@ $chatHistory = explode("%%", $chatArray['chat']);
 
 <body>
 <div id = "wholeBoard">
+
+<div id = "pNoP">
+<img src="images/BGYOKU.png" id = "promote">
+<img src="images/BNHI.png" id = "dontPromote">
+</div>
+
 <div id ="boardColor">
+
 <a href = "user_page.php"id = "backButton">≪</a>
 
 <div  id = "opInfo">
@@ -121,7 +128,10 @@ $chatHistory = explode("%%", $chatArray['chat']);
     <div class="boardKanji" id="kanji1">九</div>
 
 
-    <div id = "board"></div>
+    <div id = "board">
+
+
+    </div>
     <div id = "blackMochigoma"></div>
  
     <div id ="undo" onClick = "window.location.reload()"><img src ="images/undo_button.png" id="undoImg"></div>
@@ -159,6 +169,8 @@ $chatHistory = explode("%%", $chatArray['chat']);
 <button onclick = "submitOnEnter('click')" id ="chatSend">SEND</button>
 
 </div>
+
+
 
     <div id = "promptBox">
  <h3 id = "playerPrompt"></h3> 

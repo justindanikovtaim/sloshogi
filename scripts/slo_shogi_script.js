@@ -35,23 +35,23 @@ let sendToDatabase; //an object used to pass JSON data of the move made to PHP
 //initialize gameboard
 let playerColor;
 let opponentColor;
-if(gameHistory[1] == phpColor){//blackplayer is stored in gameHistory[1]
+if (gameHistory[1] == phpColor) {//blackplayer is stored in gameHistory[1]
     playerColor = "B";
     opponentColor = "W";
-}else{
+} else {
     playerColor = "W";
     opponentColor = "B";
 }
 let usersTurn;//defined after gamestate is loaded
-let flipped;   
-   if(playerColor== "W"){
-       flipped = true;
-   }else{
-       flipped = false;
-   }
+let flipped;
+if (playerColor == "W") {
+    flipped = true;
+} else {
+    flipped = false;
+}
 let movesHistory;
-if(gameHistory[0] != ""){
-     movesHistory = gameHistory[0].split(","); //break the moves into an array 
+if (gameHistory[0] != "") {
+    movesHistory = gameHistory[0].split(","); //break the moves into an array 
 }
 
 let rowCounter = 0;
@@ -81,8 +81,8 @@ spacer = 60;
 
 mochiGomaOrder = ["MWF", "MWKO", "MWKEI", "MWGIN", "MWKIN", "MWKAKU", "MWHI",
     "MBF", "MBKO", "MBKEI", "MBGIN", "MBKIN", "MBKAKU", "MBHI"];
-if(playerColor == "B"){
-     
+if (playerColor == "B") {
+
     for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the board
         for (x = 0; x < 7; x++) {
             if (jupiter === 0) { //if it's the first time through, we are drawing the white mochigoma
@@ -124,7 +124,7 @@ if(playerColor == "B"){
         }
         spacer = 60;
     }
-}else{
+} else {
 
     for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the board
         for (x = 0; x < 7; x++) {
@@ -170,18 +170,18 @@ if(playerColor == "B"){
 }
 let gameState = [];
 
-function resetGameState(){
+function resetGameState() {
     gameState = ["WKO", "WKEI", "WGIN", "WKIN", "WGYOKU", "WKIN", "WGIN", "WKEI", "WKO",
-    "empty", "WKAKU", "empty", "empty", "empty", "empty", "empty", "WHI", "empty",
-    "WF", "WF", "WF", "WF", "WF", "WF", "WF", "WF", "WF",
-    "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty",
-    "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty",
-    "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty",
-    "BF", "BF", "BF", "BF", "BF", "BF", "BF", "BF", "BF",
-    "empty", "BHI", "empty", "empty", "empty", "empty", "empty", "BKAKU", "empty",
-    "BKO", "BKEI", "BGIN", "BKIN", "BGYOKU", "BKIN", "BGIN", "BKEI", "BKO", "empty"];
-// set each square in initial gamestate plus one extra at the end for mochigoma placements
- mochiGomaArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        "empty", "WKAKU", "empty", "empty", "empty", "empty", "empty", "WHI", "empty",
+        "WF", "WF", "WF", "WF", "WF", "WF", "WF", "WF", "WF",
+        "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty",
+        "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty",
+        "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty",
+        "BF", "BF", "BF", "BF", "BF", "BF", "BF", "BF", "BF",
+        "empty", "BHI", "empty", "empty", "empty", "empty", "empty", "BKAKU", "empty",
+        "BKO", "BKEI", "BGIN", "BKIN", "BGYOKU", "BKIN", "BGIN", "BKEI", "BKO", "empty"];
+    // set each square in initial gamestate plus one extra at the end for mochigoma placements
+    mochiGomaArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     turn = 1;
 }
 
@@ -193,256 +193,266 @@ realTurn = turn; //needed to make sure that the user can't play when looking at 
 drawBoard();
 drawMochigoma();
 document.getElementById("resButtons").style.visibility = "hidden";
-if(!usersTurn || gameHistory[6] == "3" || gameHistory[6] == "4"){//if not the user's turn or the game has ended
+if (!usersTurn || gameHistory[6] == "3" || gameHistory[6] == "4") {//if not the user's turn or the game has ended
     disableAll();
     document.getElementById("resButtons").style.visibility = "visible";
-    if(gameHistory[3].length>1){
+    if (gameHistory[3].length > 1) {
         //if there is a reservation in the first reservation slot
         document.getElementById("resButton1").src = "images/reservation/res_1_green.png";
         //make the button green instead of grey
     }
-    if(gameHistory[4].length>1){
+    if (gameHistory[4].length > 1) {
         //if there is a reservation in the second reservation slot
         document.getElementById("resButton2").src = "images/reservation/res_2_green.png";
         //make the button green instead of grey
     }
-    if(gameHistory[5].length>1){
+    if (gameHistory[5].length > 1) {
         //if there is a reservation in the third reservation slot
         document.getElementById("resButton3").src = "images/reservation/res_3_green.png";
         //make the button green instead of grey
     }
 
 }
-if((gameHistory[6] == "4" && gameHistory[7] != gameHistory[8]) || (gameHistory[6] == "5" && gameHistory[7] == gameHistory[8])){
-        //if the game is status 4 (someone was checkmated) and the person who lost is viewing it 
-        //or if the game status is 5 (someone resigned) and the winner is viewing it
+if ((gameHistory[6] == "4" && gameHistory[7] != gameHistory[8]) || (gameHistory[6] == "5" && gameHistory[7] == gameHistory[8])) {
+    //if the game is status 4 (someone was checkmated) and the person who lost is viewing it 
+    //or if the game status is 5 (someone resigned) and the winner is viewing it
     showGameOver();
-}else{
+} else {
     //otherwise, check for checkmate
-    if(gameHistory[6] != "4" && checkForMate(opponentColor)){
+    if (gameHistory[6] != "4" && checkForMate(opponentColor)) {
         endGame();
-    }else{
+    } else {
         selectedPiece = null;
     }
 }
 highlightLastMove();
 
-function loadGameState(placeCalled){//loads the current game state from the database (slo Shogi v.1)
-    if(movesHistory != undefined){
+function loadGameState(placeCalled) {//loads the current game state from the database (slo Shogi v.1)
+    if (movesHistory != undefined) {
 
-    for(g = 0; g < movesHistory.length; g+= 3){
-        if(Number(movesHistory[g]) > 99){//if the game ended in regination or checkmate (100 or 101)
-            break;
-        }else{
+        for (g = 0; g < movesHistory.length; g += 3) {
+            if (Number(movesHistory[g]) > 99) {//if the game ended in regination or checkmate (100 or 101)
+                break;
+            } else {
 
-        if(movesHistory[g] == "81"){
-            //if the piece is a mochigoma
-                let mochigomaPlace = mochiGomaOrder.indexOf("M" + movesHistory[g+2]); //find the place where it is
-                mochiGomaArray[mochigomaPlace]--; //remove a piece from the array
-        
-            gameState[movesHistory[g+1]] = movesHistory[g+2]; //move the piece to the new square
-        }else{
-            //otherwise, if it's a piece on the board
-            if (gameState[movesHistory[g+1]].charAt(0) !== "e") { //if capturing a piece
-                addToMochiGoma(gameState[movesHistory[g+1]]);//add it to the proper place in mochigoma array
-            }   
-                //need to take off the * if there is one (if the piece was newly promoted)
-                if(movesHistory[g+2].charAt(movesHistory[g+2].length - 1) == "*"){
-                    movesHistory[g+2] = movesHistory[g+2].substring(0, movesHistory[g+2].length - 1);//cut off the last * character
+                if (movesHistory[g] == "81") {
+                    //if the piece is a mochigoma
+                    let mochigomaPlace = mochiGomaOrder.indexOf("M" + movesHistory[g + 2]); //find the place where it is
+                    mochiGomaArray[mochigomaPlace]--; //remove a piece from the array
+
+                    gameState[movesHistory[g + 1]] = movesHistory[g + 2]; //move the piece to the new square
+                } else {
+                    //otherwise, if it's a piece on the board
+                    if (gameState[movesHistory[g + 1]].charAt(0) !== "e") { //if capturing a piece
+                        addToMochiGoma(gameState[movesHistory[g + 1]]);//add it to the proper place in mochigoma array
+                    }
+                    //need to take off the * if there is one (if the piece was newly promoted)
+                    if (movesHistory[g + 2].charAt(movesHistory[g + 2].length - 1) == "*") {
+                        movesHistory[g + 2] = movesHistory[g + 2].substring(0, movesHistory[g + 2].length - 1);//cut off the last * character
+                    }
+                    gameState[movesHistory[g + 1]] = movesHistory[g + 2]; //move the piece to the new square
+                    gameState[movesHistory[g]] = "empty"; //make the space where the piece moved from empty
                 }
-                gameState[movesHistory[g+1]] = movesHistory[g+2]; //move the piece to the new square
-                gameState[movesHistory[g]] = "empty"; //make the space where the piece moved from empty
+                turn++;
+            }
         }
-        turn++;
+        if (movesHistory[movesHistory.length - 1] != 100 && movesHistory[movesHistory.length - 1] != 101) {//if the game hasn't ended in resgination (100) or checkmate(101)
+
+            let redSquare1;
+            let redSquare2;
+            if (playerColor == "W") { //flip the move indicator position if the white player is viewing
+                redSquare1 = 80 - movesHistory[movesHistory.length - 3];
+                redSquare2 = 80 - movesHistory[movesHistory.length - 2];
+            } else {
+                redSquare1 = movesHistory[movesHistory.length - 3];
+                redSquare2 = movesHistory[movesHistory.length - 2];
+            }
+
+            boardSquare[redSquare2].style.background = "red";
+            if (movesHistory[movesHistory.length - 3] != 81) {
+                boardSquare[redSquare1].style.background = "red";
+            }
+        }
     }
+    if ((turn % 2 != 0 && playerColor == "B") || (turn % 2 == 0 && playerColor == "W")) {
+        //set whether or not it is the user's turn
+        usersTurn = true;
+    } else {
+        usersTurn = false;
+    }
+
+    if (playerColor == "W" && placeCalled == 1) {
+        //If it is the white player, flip the borard around so they're not playing upside down
+        let flipGamestate = [];
+        for (f = 0; f < 81; f++) {
+            flipGamestate[f] = gameState[80 - f];
+        }
+        gameState = flipGamestate; //put the flipped gamestate into gameState
+    }
+
+
+    viewTurn = turn - 1; // viewing the current game state
+    document.getElementById("undo").style.visibility = "hidden";
+
+    if (playerColor == "W") {
+        //switch the order of the numbers on the board
+        document.getElementById("topNumber1").innerHTML = "1";
+        document.getElementById("topNumber2").innerHTML = "2";
+        document.getElementById("topNumber3").innerHTML = "3";
+        document.getElementById("topNumber4").innerHTML = "4";
+        document.getElementById("topNumber5").innerHTML = "5";
+        document.getElementById("topNumber6").innerHTML = "6";
+        document.getElementById("topNumber7").innerHTML = "7";
+        document.getElementById("topNumber8").innerHTML = "8";
+        document.getElementById("topNumber9").innerHTML = "9";
+
+        document.getElementById("kanji9").innerHTML = "九";
+        document.getElementById("kanji8").innerHTML = "八";
+        document.getElementById("kanji7").innerHTML = "七";
+        document.getElementById("kanji6").innerHTML = "六";
+        document.getElementById("kanji5").innerHTML = "五";
+        document.getElementById("kanji4").innerHTML = "四";
+        document.getElementById("kanji3").innerHTML = "三";
+        document.getElementById("kanji2").innerHTML = "二";
+        document.getElementById("kanji1").innerHTML = "一";
     }
 
 }
-if((turn %2 != 0 && playerColor == "B") || (turn % 2 == 0 && playerColor == "W")){
-    //set whether or not it is the user's turn
-    usersTurn = true;
-}else{
-    usersTurn = false;
-}
-
-if(playerColor == "W" && placeCalled == 1){
-    //If it is the white player, flip the borard around so they're not playing upside down
-    let flipGamestate = [];
-    for(f = 0; f <81; f++){
-        flipGamestate[f] = gameState[80 - f];
-    }
-    gameState = flipGamestate; //put the flipped gamestate into gameState
-}
-
-
-viewTurn = turn - 1; // viewing the current game state
-document.getElementById("undo").style.visibility = "hidden";
-
-if(playerColor == "W"){
-    //switch the order of the numbers on the board
-    document.getElementById("topNumber1").innerHTML = "1";
-    document.getElementById("topNumber2").innerHTML = "2";
-    document.getElementById("topNumber3").innerHTML = "3";
-    document.getElementById("topNumber4").innerHTML = "4";
-    document.getElementById("topNumber5").innerHTML = "5";
-    document.getElementById("topNumber6").innerHTML = "6";
-    document.getElementById("topNumber7").innerHTML = "7";
-    document.getElementById("topNumber8").innerHTML = "8";
-    document.getElementById("topNumber9").innerHTML = "9";
-
-    document.getElementById("kanji9").innerHTML = "九";
-    document.getElementById("kanji8").innerHTML = "八";
-    document.getElementById("kanji7").innerHTML = "七";
-    document.getElementById("kanji6").innerHTML = "六";
-    document.getElementById("kanji5").innerHTML = "五";
-    document.getElementById("kanji4").innerHTML = "四";
-    document.getElementById("kanji3").innerHTML = "三";
-    document.getElementById("kanji2").innerHTML = "二";
-    document.getElementById("kanji1").innerHTML = "一";
-}
-
-}
-function highlightLastMove(){
+function highlightLastMove() {
     let searchPoint;
-    if(movesHistory[movesHistory.length - 1] == 100 || movesHistory[movesHistory.length - 1] == 101){//if the game hasn't ended in resgination (100) or checkmate(101)
+    if (movesHistory[movesHistory.length - 1] == 100 || movesHistory[movesHistory.length - 1] == 101) {//if the game hasn't ended in resgination (100) or checkmate(101)
         searchPoint = movesHistory.length - 3;//chop off the numbers 100 or 101 that are placed into the array when someone resigns of loses
-    }else{
+    } else {
         searchPoint = movesHistory.length;
     }
-        let redSquare1;
-        let redSquare2;
-        if(playerColor == "W"){ //flip the move indicator position if the white player is viewing
-            redSquare1 = 80 - movesHistory[searchPoint -3]; 
-           redSquare2 = 80 - movesHistory[searchPoint-2];
-        }else{
-            redSquare1 = movesHistory[searchPoint -3];
-            redSquare2 =  movesHistory[searchPoint-2];
-        }
-    
-        boardSquare[redSquare2].style.background = "red";
-        if(movesHistory[searchPoint -3] != 81){
-            boardSquare[redSquare1].style.background = "red";
-        }
+    let redSquare1;
+    let redSquare2;
+    if (playerColor == "W") { //flip the move indicator position if the white player is viewing
+        redSquare1 = 80 - movesHistory[searchPoint - 3];
+        redSquare2 = 80 - movesHistory[searchPoint - 2];
+    } else {
+        redSquare1 = movesHistory[searchPoint - 3];
+        redSquare2 = movesHistory[searchPoint - 2];
+    }
+
+    boardSquare[redSquare2].style.background = "red";
+    if (movesHistory[searchPoint - 3] != 81) {
+        boardSquare[redSquare1].style.background = "red";
+    }
 }
-function sendMoveData(thingsToDelete){
+function sendMoveData(thingsToDelete) {
     let tempObject = JSON.parse(sendToDatabase);
     tempObject['delete'] = thingsToDelete;// add the rules about what to delete to the JSON object
     tempObject['color'] = playerColor;
-    if(msgSent){
+    if (msgSent) {
         tempObject['chatSeen'] = chatSeenNum;
-    }else{
-        if(seenNotSent){
+    } else {
+        if (seenNotSent) {
             tempObject['chatSeen'] = 3;//everyone has seen
-        }else{
+        } else {
             tempObject['chatSeen'] = chatNoChange; // leave it the way it was 
         }
     }
     sendToDatabase = JSON.stringify(tempObject); // and convert it back to a string
 
     var ajax = new XMLHttpRequest();
-    ajax.onreadystatechange = function()
-  {
-    // If ajax.readyState is 4, then the connection was successful
-    // If ajax.status (the HTTP return code) is 200, the request was successful
-    if(ajax.readyState == 4 && ajax.status == 200)
-    {
-      // Use ajax.responseText to get the raw response from the server
-      
-      console.log(ajax.responseText);
-      window.location.reload(); //once the data is sent, reload the page and check for checkmate
+    ajax.onreadystatechange = function () {
+        // If ajax.readyState is 4, then the connection was successful
+        // If ajax.status (the HTTP return code) is 200, the request was successful
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            // Use ajax.responseText to get the raw response from the server
 
-    }else {
-        console.log('Error: ' + ajax.status); // An error occurred during the request.
+            console.log(ajax.responseText);
+            window.location.reload(); //once the data is sent, reload the page and check for checkmate
+
+        } else {
+            console.log('Error: ' + ajax.status); // An error occurred during the request.
+        }
+
     }
-
-  }
     ajax.open("POST", 'send.php', true); //asyncronous
     ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     ajax.send(sendToDatabase);//(sendToDatabase);
 }
 
-function resetGame(){
+function resetGame() {
     let confirmreset = confirm("本当にリセットする？");
-    if(confirmreset){
+    if (confirmreset) {
 
-    var ajax = new XMLHttpRequest();
-    ajax.onreadystatechange = function()
-  {
-    // If ajax.readyState is 4, then the connection was successful
-    // If ajax.status (the HTTP return code) is 200, the request was successful
-    if(ajax.readyState == 4 && ajax.status == 200)
-    {
-      // Use ajax.responseText to get the raw response from the server
-      console.log(ajax.responseText);
-    }else {
-        console.log('Error: ' + ajax.status); // An error occurred during the request.
+        var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function () {
+            // If ajax.readyState is 4, then the connection was successful
+            // If ajax.status (the HTTP return code) is 200, the request was successful
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                // Use ajax.responseText to get the raw response from the server
+                console.log(ajax.responseText);
+            } else {
+                console.log('Error: ' + ajax.status); // An error occurred during the request.
+            }
+        }
+        let json = JSON.stringify({
+            id: currentGameID,
+        });
+        console.log(json);
+        ajax.open("POST", 'reset.php', true); //asyncronous
+        ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        ajax.send(json);//(sendToDatabase);
     }
-  }
-  let json = JSON.stringify({
-    id: currentGameID,
-  });
-console.log(json);
-    ajax.open("POST", 'reset.php', true); //asyncronous
-    ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-    ajax.send(json);//(sendToDatabase);
+    loadGameState(1);
 }
-loadGameState(1);
-}
-function resign(){
+function resign() {
     let confirmresign = confirm("本当に投了しますか？");
-    if(confirmresign){
+    if (confirmresign) {
 
-    var ajax = new XMLHttpRequest();
-    ajax.onreadystatechange = function()
-  {
-    // If ajax.readyState is 4, then the connection was successful
-    // If ajax.status (the HTTP return code) is 200, the request was successful
-    if(ajax.readyState == 4 && ajax.status == 200)
-    {
-      // Use ajax.responseText to get the raw response from the server
-      console.log(ajax.responseText);
-      window.location.reload();
-    }else {
-        console.log('Error: ' + ajax.status); // An error occurred during the request.
+        var ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function () {
+            // If ajax.readyState is 4, then the connection was successful
+            // If ajax.status (the HTTP return code) is 200, the request was successful
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                // Use ajax.responseText to get the raw response from the server
+                console.log(ajax.responseText);
+                window.location.reload();
+            } else {
+                console.log('Error: ' + ajax.status); // An error occurred during the request.
+            }
+        }
+        let winnerName;
+        let loserName;
+        //set the winner and loser by finding the usernames of the players from the gamehistory array
+        if (playerColor == "B") {
+            winnerName = gameHistory[2];
+            loserName = gameHistory[1];
+        } else {
+            winnerName = gameHistory[1];
+            loserName = gameHistory[2];
+        }
+
+        let json = JSON.stringify({
+            id: currentGameID, winner: winnerName, loser: loserName
+        });
+
+        console.log(json);
+        ajax.open("POST", 'resign.php', true); //asyncronous
+        ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        ajax.send(json);//(sendToDatabase);
     }
-  }
-  let winnerName;
-  let loserName;
-  //set the winner and loser by finding the usernames of the players from the gamehistory array
-  if(playerColor == "B"){
-      winnerName = gameHistory[2];
-      loserName = gameHistory[1];
-  }else{
-      winnerName = gameHistory[1];
-      loserName = gameHistory[2];
-  }
-
-  let json = JSON.stringify({
-    id: currentGameID, winner: winnerName, loser: loserName
-  });
-
-console.log(json);
-    ajax.open("POST", 'resign.php', true); //asyncronous
-    ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-    ajax.send(json);//(sendToDatabase);
-}
 }
 //Starting formation
 function drawBoard() {
     for (i = 0; i < 81; i++) {
-        if(playerColor == "W"){
-            if(gameState[i].charAt(0) == "B"){
+        if (playerColor == "W") {
+            if (gameState[i].charAt(0) == "B") {
                 //switch the B with a W for display purposes
                 boardSquare[i].src = "images/W" + gameState[i].substr(1, gameState[i].length) + ".png";
-            }else if(gameState[i].charAt(0) == "W"){
+            } else if (gameState[i].charAt(0) == "W") {
                 //switch the W with B for display purposes
                 boardSquare[i].src = "images/B" + gameState[i].substr(1, gameState[i].length) + ".png";
-            }else{
+            } else {
                 boardSquare[i].src = "images/" + gameState[i] + ".png"; //empty square
             }
-        }else{
+        } else {
 
-        boardSquare[i].src = "images/" + gameState[i] + ".png"; //set each of the urls to match the image
+            boardSquare[i].src = "images/" + gameState[i] + ".png"; //set each of the urls to match the image
         }
     }
 }
@@ -513,12 +523,12 @@ function drawMochigoma() {
     }
 }
 function pieceClick(id) {
-    
+
     //first, make sure that the piece cicked is your own
-   if(!usersTurn && !justChecking){
-       deselectAll();
-   } else if ((((turn % 2 == 0) && gameState[id].charAt(0) != "W") || ((turn % 2 !== 0) && gameState[id].charAt(0) != "B")) &&
-        justChecking === false && boardSquare[id].style.background.substr(0,7) != "rgb(230"){
+    if (!usersTurn && !justChecking) {
+        deselectAll();
+    } else if ((((turn % 2 == 0) && gameState[id].charAt(0) != "W") || ((turn % 2 !== 0) && gameState[id].charAt(0) != "B")) &&
+        justChecking === false && boardSquare[id].style.background.substr(0, 7) != "rgb(230") {
         deselectAll();
         //do nothing
     } else {
@@ -528,18 +538,18 @@ function pieceClick(id) {
         if (justChecking === false) {
             console.log(id);
         }
-        if (boardSquare[id].style.background.substr(0,7) == "rgb(230") { 
+        if (boardSquare[id].style.background.substr(0, 7) == "rgb(230") {
             //if the clicked square is highlighted as a possible move
-            movePiece(id);
+            movePiece(selectedPiece, id);
 
         } else if (!justChecking && selectedPiece !== null && (id === selectedPiece ||
-            id !== selectedPiece && boardSquare[id].style.background.substr(0,7) != "rgb(230")) {
+            id !== selectedPiece && boardSquare[id].style.background.substr(0, 7) != "rgb(230")) {
             //if the same piece is clicked again or another unrelated place is clicked
             deselectAll();
             selectedPiece = null;
 
         } else { //otherwise, highlight the possible moves
-            
+
             if (justChecking === false) {
                 selectedPiece = id; // define the selected piece
                 boardSquare[id].style.filter = "brightness(1.5)"; //highlight the selected piece only if not checking for checkmate
@@ -561,12 +571,12 @@ function showMove(square, komaType) {
     //the knight's is adjusted by the negative or positive number in the moveDirections array
     let turnColor;
     let realKomaType = komaType;
-    if(justChecking){
+    if (justChecking) {
         //if just checking, the piece should always be treated like a white koma
-        komaType = "W" + komaType.substr(1,komaType.length);
+        komaType = "W" + komaType.substr(1, komaType.length);
         turnColor = "W";
-    }else{
-        komaType = "B" + komaType.substr(1,komaType.length);
+    } else {
+        komaType = "B" + komaType.substr(1, komaType.length);
         if (turn % 2 == 0) {
             turnColor = "W";
         } else {
@@ -576,10 +586,10 @@ function showMove(square, komaType) {
 
 
     switch (komaType) {
-        case "BF": 
+        case "BF":
         case "WF": moveDirections[0] = 1;
             break;
-        case "BKEI": moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, -1, -1];break;//just added!
+        case "BKEI": moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, -1, -1]; break;//just added!
         case "WKEI": moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1];//negative will make it go backwards, positive forwards
             break;
         case "BKO": moveDirections[0] = 2;
@@ -671,14 +681,14 @@ function showMove(square, komaType) {
                     moveSquare = square;
                     while (!isBlocked) {
                         //if the space is empty
-                        if(gameState[moveSquare + moveFormulas[i]] == "empty"){
+                        if (gameState[moveSquare + moveFormulas[i]] == "empty") {
                             move.push(moveSquare + moveFormulas[i]);
                             //if the space has an enemy piece
-                        }else if (gameState[moveSquare + moveFormulas[i]].charAt(0) !== turnColor) {
+                        } else if (gameState[moveSquare + moveFormulas[i]].charAt(0) !== turnColor) {
                             //add it to the move array
                             move.push(moveSquare + moveFormulas[i]);
                             isBlocked = true;
-                        }else{
+                        } else {
                             //if an own piece is in the square, isBlocked = true
                             isBlocked = true;
                         }
@@ -759,7 +769,7 @@ function showMove(square, komaType) {
             if (onLeftEdge) {
                 moveDirections[9] = 0;
             }
-            
+
             //otherwise it's moving down (it's white)
         } else {
             if (onRightEdge) {
@@ -769,16 +779,16 @@ function showMove(square, komaType) {
                 moveDirections[8] = 0;
             }
         }
-                    //eliminate the squares if an own piece is in the square
-                    if (gameState[square + (moveFormulas[8]*moveDirections[8])].charAt(0) == turnColor){
-                        moveDirections[8] = 0;
-                    }
-                    if (gameState[square + (moveFormulas[9]*moveDirections[9])].charAt(0) == turnColor){
-                        moveDirections[9] = 0;
-                    }
-        for(i=8; i<10; i++){
-            if(moveDirections[i] != 0){
-                move.push(square + (moveFormulas[i]*moveDirections[i]));
+        //eliminate the squares if an own piece is in the square
+        if (gameState[square + (moveFormulas[8] * moveDirections[8])].charAt(0) == turnColor) {
+            moveDirections[8] = 0;
+        }
+        if (gameState[square + (moveFormulas[9] * moveDirections[9])].charAt(0) == turnColor) {
+            moveDirections[9] = 0;
+        }
+        for (i = 8; i < 10; i++) {
+            if (moveDirections[i] != 0) {
+                move.push(square + (moveFormulas[i] * moveDirections[i]));
             }
         }
 
@@ -800,107 +810,119 @@ function highlightSquares(highlightArray) {
     }
 }
 
-function movePiece(id) {
+function movePiece(from, id) {
+
+
+    gameState[82] = gameState[id];//a temporary placeholder for the clicked place
+    if (from < 81) { //if it's other than the mochigoma
+        //see if piece can promote
+        if ((gameState[from].charAt(1) !== "N") && //if the piece isn't already promoted (the second letter isn't N)
+            (id < 27 ||// or if it is an odd turn and the piece will move into the third row or less
+                from < 27)) { //or the piece is already within the first 3 rows
+
+            promotePiece(from, id);
+        } else {
+            movePiecePt2(from, id);
+        }
+
+    }else {
+        movePiecePt2(from, id);
+    }
+}
+function movePiecePt2(from, id) {
     let isMochiGoma;
     let moveFromSend;
     let moveToSend;
 
-    gameState[82] = gameState[id];//a temporary placeholder for the clicked place
-    if (selectedPiece < 81) { //if it's other than the mochigoma
-        //see if piece can promote
-        if ((gameState[selectedPiece].charAt(1) !== "N") && //if the piece isn't already promoted (the second letter isn't N)
-            (id < 27 ||// or if it is an odd turn and the piece will move into the third row or less
-            selectedPiece < 27)) { //or the piece is already within the first 3 rows
 
-            promotePiece();
-        }
-        if (gameState[id].charAt(0) !== "e") { //if capturing a piece
-            addToMochiGoma(gameState[id]);
-        }
-
+    if (gameState[id].charAt(0) !== "e") { //if capturing a piece
+        addToMochiGoma(gameState[id]);
     }
-
-    if (selectedPiece === 81) {//if it is a mochigoma
-        let mochigomaPlace = mochiGomaOrder.indexOf("M" + gameState[selectedPiece]); //find the place where it is
+    if (from === 81) {//if it is a mochigoma
+        let mochigomaPlace = mochiGomaOrder.indexOf("M" + gameState[from]); //find the place where it is
         mochiGomaArray[mochigomaPlace]--; //remove a piece from the array
         isMochiGoma = gameState[81];
     }
 
     let tempMoveForGameHistory;
-    if(turn === 1){
+    if (turn === 1) {
         //on the first turn, we don't want to start by sending a comma in the data
-        sendToDatabase = JSON.stringify({"newmoves": selectedPiece.toString() + "," 
-            + id.toString() + "," + gameState[selectedPiece], "gameId": currentGameID, "turn": turn });//make the move into JSON object
+        sendToDatabase = JSON.stringify({
+            "newmoves": from.toString() + ","
+                + id.toString() + "," + gameState[from], "gameId": currentGameID, "turn": turn
+        });//make the move into JSON object
 
-            //this is for the forward and back buttons
-            tempMoveForGameHistory = selectedPiece.toString() + ","  + id.toString() + "," + gameState[selectedPiece];
-    }else{
+        //this is for the forward and back buttons
+        tempMoveForGameHistory = from.toString() + "," + id.toString() + "," + gameState[from];
+    } else {
         //otherwise, check if it is white and flip the move if it is
-        
-        if(turn % 2 == 0){
-            if(selectedPiece == 81){
+
+        if (turn % 2 == 0) {
+            if (from == 81) {
                 moveFromSend = 81; //mochi goma will be 81 no matter what
-            }else{
-                moveFromSend = 80 - selectedPiece;
+            } else {
+                moveFromSend = 80 - from;
             }
             moveToSend = 80 - id;
-        }else{
-            moveFromSend = selectedPiece
+        } else {
+            moveFromSend = from
             moveToSend = id;
         }
         //set the name of the piece to send
-        let gamePieceName; 
-        if(newlyPromoted){
-            gamePieceName = gameState[selectedPiece]+"*";//add an asterisk to the piecename in the gamerecord if it is newly promoted
-        }else{
-            gamePieceName = gameState[selectedPiece];
+        let gamePieceName;
+        if (newlyPromoted) {
+            gamePieceName = gameState[from] + "*";//add an asterisk to the piecename in the gamerecord if it is newly promoted
+        } else {
+            gamePieceName = gameState[from];
         }
         newlyPromoted = false;//reset to false (probably not important since the page will be reloaded anyway, but just in case that changes later...)
         //also, start by sending a comma to separate the move from the last one stored
-        sendToDatabase = JSON.stringify({"newmoves": "," + moveFromSend.toString() + "," 
-        + moveToSend.toString() + "," + gamePieceName, "gameId": currentGameID, "turn": turn });//make the move into JSON object
+        sendToDatabase = JSON.stringify({
+            "newmoves": "," + moveFromSend.toString() + ","
+                + moveToSend.toString() + "," + gamePieceName, "gameId": currentGameID, "turn": turn
+        });//make the move into JSON object
 
         //for Forward and Back buttons
-        tempMoveForGameHistory = "," + moveFromSend.toString() + "," + moveToSend.toString() + "," + gameState[selectedPiece];
-        
-    }
-    
-        
-    gameState[id] = gameState[selectedPiece]; //move the piece to the new square
-    gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
-    
+        tempMoveForGameHistory = "," + moveFromSend.toString() + "," + moveToSend.toString() + "," + gameState[from];
 
-    drawBoard();     
-    
+    }
+
+
+    gameState[id] = gameState[from]; //move the piece to the new square
+    gameState[from] = "empty"; //make the space where the piece moved from empty
+
+
+    drawBoard();
+
     drawMochigoma();
 
     disableAll();
-     //only the piece that was moved can be clicked, and it will trigger the confirmMove function and pass it the needed variables
-    boardSquare[id].setAttribute("onclick", "confirmMove(" + moveFromSend+ ","+ moveToSend+ ", '"+ tempMoveForGameHistory+"'," + id+")");  
-    document.getElementById("undo").style.visibility="visible";
-    document.getElementById("playerPrompt").innerHTML="再度クリックで承認｜Click again to confirm";
+    //only the piece that was moved can be clicked, and it will trigger the confirmMove function and pass it the needed variables
+    boardSquare[id].setAttribute("onclick", "confirmMove(" + moveFromSend + "," + moveToSend + ", '" + tempMoveForGameHistory + "'," + id + ")");
+    document.getElementById("undo").style.visibility = "visible";
+    document.getElementById("playerPrompt").innerHTML = "再度クリックで承認｜Click again to confirm";
 
 
 
 }
-function confirmMove(moveFromSend, moveToSend, tempMoveForGameHistory, currentPlace){
-        turn++; //increase the turn counter
-        
-        gameHistory[0] += tempMoveForGameHistory; //for forward and back buttons
-        movesHistory = gameHistory[0].split(","); //break the moves into an array 
+function confirmMove(moveFromSend, moveToSend, tempMoveForGameHistory, currentPlace) {
+    turn++; //increase the turn counter
 
-            if(turn > 1){
-            
-            handleReservations(moveFromSend, moveToSend, gameState[currentPlace]);
-            }else{
-                sendMoveData("skip");
-            }
+    gameHistory[0] += tempMoveForGameHistory; //for forward and back buttons
+    movesHistory = gameHistory[0].split(","); //break the moves into an array 
+
+    if (turn > 1) {
+
+        handleReservations(moveFromSend, moveToSend, gameState[currentPlace]);
+    } else {
+        sendMoveData("skip");
+    }
 }
 
 
-function handleReservations(movedFrom, movedTo, movedPiece){
+function handleReservations(movedFrom, movedTo, movedPiece) {
     let reservationArrays = [];
-    
+
     reservationArrays[0] = gameHistory[3].split(";"); //get the reserved moves and put each sequence into its own space in an array
     reservationArrays[1] = gameHistory[4].split(";");
     reservationArrays[2] = gameHistory[5].split(";");
@@ -910,70 +932,92 @@ function handleReservations(movedFrom, movedTo, movedPiece){
 
     let triggered = false;//keeps track of whether or not a reserved move has been found yet or not
     let resToDelete = "";
-    for(i = 0; i<3; i++){//go through each of the reservation arrays
-        if(reservationArrays[i].length >1){//if the reserved spot isn't empty
+    for (i = 0; i < 3; i++) {//go through each of the reservation arrays
+        if (reservationArrays[i].length > 1) {//if the reserved spot isn't empty
 
-            if(!triggered){//if another reservation hasn't been triggered yet
-            
-            let reservedSequence = reservationArrays[i][1].split(",");
-            if(reservedSequence[0] == movedFrom && reservedSequence[1] == movedTo && reservedSequence[2] == movedPiece){
-            //if the reservation perfectly macthes the move made
-            alert("予約手があります");
-            //add the user's move and the reserved move to the sendToDatabase string
-            sendToDatabase = JSON.stringify({"newmoves": "," + movedFrom +"," + movedTo + "," + movedPiece + "," +
-            reservationArrays[i][2], "gameId": currentGameID, "turn": turn });
-            triggered = true;
-            moveTriggered = reservationArrays[i][2];
-            resToDelete += String((i+1)); //add the reservation array the the list of reservation arrays to chop
-            }
-        }else{
-            if(reservationArrays[i][2] == moveTriggered){//if the first part of another reserved sequence is the same as one that was already trigged
-                resToDelete += String((i+1)); //add the reservation array the the list of reservation arrays to chop
+            if (!triggered) {//if another reservation hasn't been triggered yet
 
+                let reservedSequence = reservationArrays[i][1].split(",");
+                if (reservedSequence[0] == movedFrom && reservedSequence[1] == movedTo && reservedSequence[2] == movedPiece) {
+                    //if the reservation perfectly macthes the move made
+                    alert("予約手があります");
+                    //add the user's move and the reserved move to the sendToDatabase string
+                    sendToDatabase = JSON.stringify({
+                        "newmoves": "," + movedFrom + "," + movedTo + "," + movedPiece + "," +
+                            reservationArrays[i][2], "gameId": currentGameID, "turn": turn
+                    });
+                    triggered = true;
+                    moveTriggered = reservationArrays[i][2];
+                    resToDelete += String((i + 1)); //add the reservation array the the list of reservation arrays to chop
+                }
+            } else {
+                if (reservationArrays[i][2] == moveTriggered) {//if the first part of another reserved sequence is the same as one that was already trigged
+                    resToDelete += String((i + 1)); //add the reservation array the the list of reservation arrays to chop
+
+                }
             }
-        }
         }
     }
 
-        if(triggered){//if a reservation was triggered, sendMoveData Will only chop off the first move of the array from any that matched
-            sendMoveData(resToDelete);
-        }else{//otherwise, all will be cleared
-            sendMoveData("skip");
-        }
+    if (triggered) {//if a reservation was triggered, sendMoveData Will only chop off the first move of the array from any that matched
+        sendMoveData(resToDelete);
+    } else {//otherwise, all will be cleared
+        sendMoveData("skip");
+    }
 
 }
 
-function disableAll(){
-    for(i=0; i<81; i++){
+function disableAll() {
+    for (i = 0; i < 81; i++) {
         boardSquare[i].setAttribute("onClick", null);
     }
-    for(x = 0; x<14; x ++){
+    for (x = 0; x < 14; x++) {
         mochiGoma[x].setAttribute("onClick", null);
     }
-    if(gameHistory[6] == "3"){//if the game is finished
+    if (gameHistory[6] == "3") {//if the game is finished
         document.getElementById("resignButton").style.visibility = "hidden";
     }
 }
-function promotePiece() {
-    if (gameState[selectedPiece].charAt(1) !== "N" && //if the piece is not promoted yet
-        gameState[selectedPiece].substr(1, 3) !== "KIN" &&
-        gameState[selectedPiece].substr(1, 5) !== "GYOKU") { //and not a kin or Gyoku
-            let yesNo;
-            switch (gameState[selectedPiece].substr(1,gameState[selectedPiece].length)) {
-                case "KO":
-                case "KEI":
-                case "F": if (id < 9) { yesNo = true; } else { yesNo = confirm("Promote?"); } break;
-                default: yesNo = confirm("Promote?");
-                    break;
-            }
-        if (yesNo) {
-            gameState[selectedPiece] = gameState[selectedPiece].substr(0, 1) + "N" + gameState[selectedPiece].substr(1, 4); // add an N for nari after the first character
-            newlyPromoted = true;
 
+function promotePiece(from, id) {
+    if (gameState[from].charAt(1) !== "N" && //if the piece is not promoted yet
+        gameState[from].substr(1, 3) !== "KIN" &&
+        gameState[from].substr(1, 5) !== "GYOKU") { //and not a kin or Gyoku
+
+        document.getElementById("pNoP").style.left = "" + boardSquare[id].offsetLeft + "px";
+        document.getElementById("pNoP").style.top = "" + boardSquare[id].offsetTop + "px";
+
+        switch (gameState[from].substr(1, gameState[from].length)) {
+            case "KO":
+            case "KEI":
+            case "F": if (id < 9) { doPromote(from, id) } else {
+                document.getElementById("pNoP").style.visibility = "visible";
+                document.getElementById("promote").setAttribute("src", "images/BN" + gameState[from].substr(1, gameState[from].length) + ".png");
+                document.getElementById("dontPromote").setAttribute("src", "images/B" + gameState[from].substr(1, gameState[from].length) + ".png");
+                document.getElementById("promote").setAttribute("onclick", "doPromote(" + from + "," + id + ")");
+                document.getElementById("dontPromote").setAttribute("onclick", "movePiecePt2(" + from + "," + id + ")");
+
+                disableAll();
+            } break;
+            default: document.getElementById("pNoP").style.visibility = "visible";
+                document.getElementById("promote").setAttribute("src", "images/BN" + gameState[from].substr(1, gameState[from].length) + ".png");
+                document.getElementById("dontPromote").setAttribute("src", "images/B" + gameState[from].substr(1, gameState[from].length) + ".png");
+                document.getElementById("promote").setAttribute("onclick", "doPromote(" + from + "," + id + ")");
+                document.getElementById("dontPromote").setAttribute("onclick", "movePiecePt2(" + from + "," + id + ")");
+                disableAll();
+                break;
         }
+
     }
     return;
 }
+function doPromote(from, id) {
+    gameState[from] = gameState[from].substr(0, 1) + "N" + gameState[from].substr(1, 4); // add an N for nari after the first character
+    newlyPromoted = true;
+    document.getElementById("pNoP").style.visibility = "hidden";
+    movePiecePt2(from, id);
+}
+
 
 function deselectAll() {
 
@@ -996,12 +1040,12 @@ function placePiece(piece) {
         deselectAll();
         mochiGomaAlreadySelected = false;
         selectedPiece = null;
-    } else if(mochiGomaAlreadySelected){
+    } else if (mochiGomaAlreadySelected) {
         //if a mochigoma is already selected, this makes sure that multiple pieces can't be highlighted at the same time
         deselectAll();
         mochiGomaAlreadySelected = false;
         selectedPiece = null;
-    }else{
+    } else {
         selectedPiece = 81; //set selected piece to number outside of the board
         gameState[81] = piece.substr(1, piece.length); //put the piece in the 81st spot of the gameState array
         mochiGomaAlreadySelected = true;
@@ -1081,7 +1125,7 @@ function placePiece(piece) {
     }
 
 }
-function removeMG(gamePiece){
+function removeMG(gamePiece) {
     let gamePieceColor;
     if (gamePiece.charAt(1) === "N") {//if it's a promoted piece
         gamePiece = gamePiece.replace("N", ""); //remove the N
@@ -1124,7 +1168,7 @@ function removeMG(gamePiece){
             console.log("piece name is incorrect");
             break;
 
-    } 
+    }
 }
 
 // 15   8    9     
@@ -1141,7 +1185,7 @@ function checkForCheck(gyokuColor) {
     let gyokuOnRightColumn;
     let gyokuOnLeftColumn;
 
-    if ((gyokuColor == "B" && !flipped) || (gyokuColor == "W" && flipped) ) {
+    if ((gyokuColor == "B" && !flipped) || (gyokuColor == "W" && flipped)) {
         gyokuForward = -1; //black ou moves negatively to go forward
         //this will check to see if the gyoku is on any of the edges of the board and set the corresponding spot
         //in the checkingPieces array to 2, which will prevent it from being checked in the next part
@@ -1814,9 +1858,9 @@ function eliminateIllegalMoves(color) {
 
     //if there are any null values in the array, they need to be removed:
     let tempMoveArray = [];
-    for(i = 0; i < move.length; i++){
-        if(move[i] != null){
-          tempMoveArray.push(move[i]);
+    for (i = 0; i < move.length; i++) {
+        if (move[i] != null) {
+            tempMoveArray.push(move[i]);
         }
     }
     move = tempMoveArray;
@@ -1872,14 +1916,14 @@ function checkForMate(color) {
     return isCheckMate;
 }
 
-function disableSubmit(){
+function disableSubmit() {
     document.getElementById("submitmovebutton").style.visibility = "hidden";
 }
 
-function stepForward(){
+function stepForward() {
     //if it's not the first move and it's not displaying the current turn
-    if(realTurn > 1 && viewTurn < turn ){
-        viewTurn ++;
+    if (realTurn > 1 && viewTurn < turn) {
+        viewTurn++;
         movesHistory = gameHistory[0].split(",");
         movesHistory.splice(3 * viewTurn, movesHistory.length - (3 * viewTurn));
         resetGameState();
@@ -1890,20 +1934,20 @@ function stepForward(){
     }
 
 }
-function skipForward(){
+function skipForward() {
     viewTurn = realTurn - 1;
     movesHistory = gameHistory[0].split(",");
     resetGameState();
-        deselectAll();
-        loadGameState(1);
-        drawBoard();
-        drawMochigoma();
+    deselectAll();
+    loadGameState(1);
+    drawBoard();
+    drawMochigoma();
 }
 
-function stepBack(){
+function stepBack() {
     //if it's not the first move and it's not displaying the first move
-    if(turn > 1 && viewTurn > 1){
-        viewTurn --; //go back one turn 
+    if (turn > 1 && viewTurn > 1) {
+        viewTurn--; //go back one turn 
         movesHistory = gameHistory[0].split(",");
         movesHistory.splice(3 * viewTurn, movesHistory.length - (3 * viewTurn));
         resetGameState();
@@ -1914,82 +1958,98 @@ function stepBack(){
     }
 
 }
-function skipBack(){
+function skipBack() {
     viewTurn = 0;
     movesHistory = undefined;
     resetGameState();
-        deselectAll();
-        loadGameState(1);
-        drawBoard();
-        drawMochigoma();
+    deselectAll();
+    loadGameState(1);
+    drawBoard();
+    drawMochigoma();
 }
 
-function endGame(){
+function endGame() {
     alert("勝ちました。おめでとう！");
     let ajax = new XMLHttpRequest();
-    ajax.onreadystatechange = function()
-  {
-    // If ajax.readyState is 4, then the connection was successful
-    // If ajax.status (the HTTP return code) is 200, the request was successful
-    if(ajax.readyState == 4 && ajax.status == 200)
-    {
-      // Use ajax.responseText to get the raw response from the server
-      console.log(ajax.responseText);
-      window.location.reload();
-    }else {
-        console.log('Error: ' + ajax.status); // An error occurred during the request.
+    ajax.onreadystatechange = function () {
+        // If ajax.readyState is 4, then the connection was successful
+        // If ajax.status (the HTTP return code) is 200, the request was successful
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            // Use ajax.responseText to get the raw response from the server
+            console.log(ajax.responseText);
+            window.location.reload();
+        } else {
+            console.log('Error: ' + ajax.status); // An error occurred during the request.
+        }
     }
-  }
-  let winnerName;
-  let loserName;
-  //set the winner and loser by finding the usernames of the players from the gamehistory array
-  if(playerColor == "W"){
-      winnerName = gameHistory[2];
-      loserName = gameHistory[1];
-  }else{
-      winnerName = gameHistory[1];
-      loserName = gameHistory[2];
-  }
+    let winnerName;
+    let loserName;
+    //set the winner and loser by finding the usernames of the players from the gamehistory array
+    if (playerColor == "W") {
+        winnerName = gameHistory[2];
+        loserName = gameHistory[1];
+    } else {
+        winnerName = gameHistory[1];
+        loserName = gameHistory[2];
+    }
 
-  let json = JSON.stringify({
-    id: currentGameID, winner: winnerName, loser: loserName
-  });
+    let json = JSON.stringify({
+        id: currentGameID, winner: winnerName, loser: loserName
+    });
 
-console.log(json);
+    console.log(json);
     ajax.open("POST", 'gameOver.php', true); //asyncronous
     ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     ajax.send(json);//(sendToDatabase);
 }
-function showGameOver(){
-    if(gameHistory[7] == gameHistory[8]){
+function showGameOver() {
+    if (gameHistory[7] == gameHistory[8]) {
         //if the person who won is looking at the page
         alert("相手が校了しました　| Your opponent has resigned");
-    }else{
-        alert("対局が終了しました。　"+gameHistory[7]+" が勝ちました | Game over. "+gameHistory[7]+" has won.");
+    } else {
+        alert("対局が終了しました。　" + gameHistory[7] + " が勝ちました | Game over. " + gameHistory[7] + " has won.");
     }
     let ajax = new XMLHttpRequest();
-    ajax.onreadystatechange = function()
-  {
-    // If ajax.readyState is 4, then the connection was successful
-    // If ajax.status (the HTTP return code) is 200, the request was successful
-    if(ajax.readyState == 4 && ajax.status == 200)
-    {
-      // Use ajax.responseText to get the raw response from the server
-      console.log(ajax.responseText);
-    }else {
-        console.log('Error: ' + ajax.status); // An error occurred during the request.
+    ajax.onreadystatechange = function () {
+        // If ajax.readyState is 4, then the connection was successful
+        // If ajax.status (the HTTP return code) is 200, the request was successful
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            // Use ajax.responseText to get the raw response from the server
+            console.log(ajax.responseText);
+        } else {
+            console.log('Error: ' + ajax.status); // An error occurred during the request.
+        }
     }
-  }
-  let json = JSON.stringify({
-    id: currentGameID
-  });
+    let json = JSON.stringify({
+        id: currentGameID
+    });
 
-console.log(json);
+    console.log(json);
     ajax.open("POST", 'status_to_3.php', true); //asyncronous
     ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
     ajax.send(json);//(sendToDatabase);
 }
-function sendForTsume(){
+function sendForTsume() {
+    if(flipped){//need  to switch the koma to the opposite color if the white player is calling the function
+        for(x=0;x<81;x++){
+            if(gameState[x] != "empty"){
+                if(gameState[x].charAt(0) == "B"){
+                    gameState[x] = "W"+gameState[x].substr(1,gameState[x].length);//switch the B and W
+                }else{
+                    gameState[x] = "B"+gameState[x].substr(1,gameState[x].length);//switch the W and B
+                }
+
+            }
+        }
+        let flippedMochiGomaArray = [];
+        for(x=7;x<14;x++){
+            flippedMochiGomaArray.push(mochiGomaArray[x]);
+        }
+        for(x=0;x<7;x++){
+            flippedMochiGomaArray.push(mochiGomaArray[x]);
+        }
+        mochiGomaArray = flippedMochiGomaArray;
+    }
     document.getElementById("boardConfig").value = gameState.toString();
     document.getElementById('mochigomaConfig').value = mochiGomaArray.toString();
     document.getElementById('tsumeInfo').submit();

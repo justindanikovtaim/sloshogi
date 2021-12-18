@@ -1,6 +1,5 @@
 <?php //
 session_start();
-
 //if the rest post superglobal is set, that means the reset button was clicked
 if(isset($_POST['reset']) || isset($_GET['new'])){
     session_unset();

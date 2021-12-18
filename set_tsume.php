@@ -1,8 +1,7 @@
-<?php//
+<?php
 session_start();
 $_SESSION['boardConfig'] = $_POST['boardConfig'];
 $_SESSION['mgConfig'] = $_POST['mochigomaConfig'];
-
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +32,7 @@ $_SESSION['mgConfig'] = $_POST['mochigomaConfig'];
 <img class ="msgIcon" src="images/new_message_icon.png" id ="newMessage">
 </div>
     <div class = "popupMenu" id="popupMenuId">
-    <a href="feedback_form.php?src=gameboard&id=<?=$gameID?>">バグ報告・Report a bug</a>
+    <a href="feedback_form.php?src=set_tsume">バグ報告・Report a bug</a>
 </div>
 
     <div id = "promptBox">
@@ -59,9 +58,9 @@ $_SESSION['mgConfig'] = $_POST['mochigomaConfig'];
 
 </body>
 <script>
-    let tempstring = "<?=$_SESSION['boardConfig']?>";
+    let tempstring = "<?=$_POST['boardConfig']?>";
     var gameState = tempstring.split(",");
-    tempstring = "<?=$_SESSION['mgConfig']?>";
+    tempstring = "<?=$_POST['mochigomaConfig']?>";
     var mochiGomaArray = tempstring.split(","); 
 
     function showMenu(){

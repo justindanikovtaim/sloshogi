@@ -397,3 +397,18 @@
     #kanji1{
         top: 98vw;
     }
+
+    #pNoP{
+        visibility: hidden;
+        position:absolute;
+        background-color:rgb(255, 255, 255);
+        width:20%;
+        height: 5%;
+        border: 1vw solid rgb(70, 70, 70);
+        z-index: 2;
+    }
+    #promote, #dontPromote{
+        float:left;
+        width: 50%;
+        height: 100%;
+    }
