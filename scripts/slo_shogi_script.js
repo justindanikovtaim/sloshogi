@@ -995,7 +995,7 @@ function promotePiece(from, id) {
                 document.getElementById("promote").setAttribute("src", "images/BN" + gameState[from].substr(1, gameState[from].length) + ".png");
                 document.getElementById("dontPromote").setAttribute("src", "images/B" + gameState[from].substr(1, gameState[from].length) + ".png");
                 document.getElementById("promote").setAttribute("onclick", "doPromote(" + from + "," + id + ")");
-                document.getElementById("dontPromote").setAttribute("onclick", "movePiecePt2(" + from + "," + id + ")");
+                document.getElementById("dontPromote").setAttribute("onclick", "dontPromote(" + from + "," + id + ")");
 
                 disableAll();
             } break;
@@ -1003,7 +1003,7 @@ function promotePiece(from, id) {
                 document.getElementById("promote").setAttribute("src", "images/BN" + gameState[from].substr(1, gameState[from].length) + ".png");
                 document.getElementById("dontPromote").setAttribute("src", "images/B" + gameState[from].substr(1, gameState[from].length) + ".png");
                 document.getElementById("promote").setAttribute("onclick", "doPromote(" + from + "," + id + ")");
-                document.getElementById("dontPromote").setAttribute("onclick", "movePiecePt2(" + from + "," + id + ")");
+                document.getElementById("dontPromote").setAttribute("onclick", "dontPromote(" + from + "," + id + ")");
                 disableAll();
                 break;
         }
@@ -1017,7 +1017,10 @@ function doPromote(from, id) {
     document.getElementById("pNoP").style.visibility = "hidden";
     movePiecePt2(from, id);
 }
-
+function dontPromote(from, id){
+    document.getElementById("pNoP").style.visibility = "hidden";
+    movePiecePt2(from, id);
+}
 
 function deselectAll() {
 
