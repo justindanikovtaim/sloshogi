@@ -110,8 +110,10 @@ $chatHistory = explode("%%", $chatArray['chat']);
    let sequence = "<?=$sequence?>";
    var mainSequence = sequence.split(",");
    var problemName = "<?=$problemName?>";
-   var originalTimeLimit = "<?=$timeLimit?>";
+   //check below!
+   var originalTimeLimit = "<?php if(isset($_COOKIE[$tsumeID.'timeLimit'])){echo $_COOKIE[$tsumeID.'timeLimit'];}else {echo $timeLimit;}?>";
     var timeLimit = originalTimeLimit;
+    
     document.getElementById("scoreBoardText").innerHTML = "<?=$leaderBoard?>";
     //set the timerand update it
     let minutes = timeLimit / 60;
@@ -131,6 +133,15 @@ $chatHistory = explode("%%", $chatArray['chat']);
             timeUp();
         }
     }
+
+    //record the current remaining time whenever the page is navigated away from
+    document.addEventListener("visibilitychange", function logTime() {
+  if (document.visibilityState === 'hidden') {
+    let $data = JSON.stringify({id: currentGameID, seconds: timeLimit});
+        navigator.sendBeacon("/sloshogi/tsume_time.php", $data);
+  }
+});
+
     function timeUp(){
         setMessage("時間です！Time's Up! Try Again");
         disableAll();
@@ -237,4 +248,6 @@ $chatHistory = explode("%%", $chatArray['chat']);
     </script>
     <script src= "scripts/tsume_shared.js"></script>
 <script src= "scripts/tsume_script.js"></script>
+<script src= "scripts/tsume_ai.js"></script>
+
 

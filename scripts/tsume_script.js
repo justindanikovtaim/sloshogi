@@ -50,7 +50,7 @@ for (i = 0; i < 9; i++) {
         boardSquare[sC].style.right = columnCounter + "vw"; //set the distance from the right side of the board
         boardSquare[sC].style.top = rowCounter + "vw"; //set the distance from the top
         boardSquare[sC].setAttribute("id", sC);
-        boardSquare[sC].setAttribute("onclick", "pieceClick(Number(this.id))"); //run the piececlick funtion when clicked
+        boardSquare[sC].setAttribute("onclick", "pieceClick(Number(this.id), false)"); //run the piececlick funtion when clicked
         document.getElementById("board").appendChild(boardSquare[sC]); //add the image to the screen
 
         columnCounter += 10; //add space between the right side for the next piece
@@ -74,7 +74,7 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
             mochiGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
             mochiGoma[x].src = "images/" + mochiGomaOrder[x] + ".png";
             mochiGoma[x].setAttribute("id", mochiGomaOrder[x]);
-            mochiGoma[x].setAttribute("onClick", "placePiece(this.id)");
+           // mochiGoma[x].setAttribute("onClick", "placePiece(this.id)");
             mochiGoma[x].style.width = "9vw";
             mochiGoma[x].style.position = "absolute";
             mochiGoma[x].style.right = spacer + "vw";
@@ -186,7 +186,7 @@ function addToMochiGoma(gamePiece) {
 }
 
 
-function pieceClick(id) {
+function pieceClick(id, justChecking) {
 
     if ((((turn % 2 == 0) && gameState[id].charAt(0) != "W") || ((turn % 2 !== 0) && gameState[id].charAt(0) != "B")) &&
         justChecking === false && boardSquare[id].style.background.substr(0, 7) != "rgb(230") {
@@ -199,10 +199,9 @@ function pieceClick(id) {
         if (justChecking === false) {
             console.log(id);
         }
-        if (boardSquare[id].style.background.substr(0, 7) == "rgb(230") { //need to sample just this part of the string, becasue different browsers write it differently
+        if (!justChecking && boardSquare[id].style.background.substr(0, 7) == "rgb(230") { //need to sample just this part of the string, becasue different browsers write it differently
             //if the clicked square is highlighted as a possible move
-            movePiece(id);
-
+                movePiece(id, selectedPiece);    
         } else if (!justChecking && selectedPiece !== null && (id === selectedPiece ||
             id !== selectedPiece && boardSquare[id].style.background.substr(0, 7) != "rgb(230")) {
             //if the same piece is clicked again or another unrelated place is clicked
@@ -224,19 +223,18 @@ function pieceClick(id) {
     }
 }
 
-function eliminateIllegalMoves(color) {
+function eliminateIllegalMoves(color, piece) {
     //only worry about eliminating the illegal moves if there is a gyoku of the player's color
     //eg. tsume problem with only the opponent's gyoku doesn't need it
 if(gameState.includes(color+"GYOKU")){
     let moveFromHolder;
     let moveToHolder;
     for (c = 0; c < move.length; c++) { //go through each potential move
-        moveFromHolder = gameState[selectedPiece];
+        moveFromHolder = gameState[piece];
         moveToHolder = gameState[move[c]];
 
-        gameState[move[c]] = gameState[selectedPiece]; //test executing the move
-        gameState[selectedPiece] = "empty";
-
+        gameState[move[c]] = gameState[piece]; //test executing the move
+        gameState[piece] = "empty";
 
         if (checkForCheck(color) === color) {//if the move would result in check
             gameState[move[c]] = moveToHolder; //reset move to how it was before
@@ -245,7 +243,7 @@ if(gameState.includes(color+"GYOKU")){
             gameState[move[c]] = moveToHolder; //reset the move to how it was before
         }
 
-        gameState[selectedPiece] = moveFromHolder; //reset selectedpiece square to how it was before
+        gameState[piece] = moveFromHolder; //reset selectedpiece square to how it was before
         checkingPieces = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         isCheck = null; //needs to be reset, otherwise if previous spots check returned true, it will still return true
     }
@@ -258,7 +256,7 @@ if(gameState.includes(color+"GYOKU")){
         }
     }
     move = tempMoveArray;
-    console.log(move);
+    console.log(gameState[piece] + " at square " + piece + ", moves not eliminated: " + move);
 }
 }
 function highlightSquares(highlightArray) {
@@ -272,24 +270,24 @@ function highlightSquares(highlightArray) {
 }
 
 
-function movePiece(id) {
+function movePiece(id, piece) {
     let isMochiGoma;
 
     gameState[82] = gameState[id];//a temporary placeholder for the clicked place
-    if (selectedPiece < 81) { //if it's other than the mochigoma
+    if (piece < 81) { //if it's other than the mochigoma
         //see if piece can promote
         let promoteZone = false;
         if(turn % 2 == 0){  
-            if (id > 53 || selectedPiece > 53){
+            if (id > 53 || piece > 53){
                 promoteZone = true;
             }
         }else{
-            if(id < 27 || selectedPiece < 27){
+            if(id < 27 || piece < 27){
                 promoteZone = true;
             }
         }
 
-        if ((gameState[selectedPiece].charAt(1) !== "N") && promoteZone){//if the piece isn't already promoted (the second letter isn't N) and it is in or will move into the promotion zone
+        if ((gameState[piece].charAt(1) !== "N") && promoteZone){//if the piece isn't already promoted (the second letter isn't N) and it is in or will move into the promotion zone
             promotePiece(id);
         }
 
@@ -299,30 +297,45 @@ function movePiece(id) {
 
     }
 
-    if (selectedPiece === 81) {//if it is a mochigoma
-        let mochigomaPlace = mochiGomaOrder.indexOf("M" + gameState[selectedPiece]); //find the place where it is
+    if (piece === 81) {//if it is a mochigoma
+        let mochigomaPlace = mochiGomaOrder.indexOf("M" + gameState[piece]); //find the place where it is
         mochiGomaArray[mochigomaPlace]--; //remove a piece from the array
         isMochiGoma = gameState[81];
     }
+    //test if the move is even a checking move or not
+    let fromHolder = gameState[piece];
+    let toHolder = gameState[id];
+    gameState[id] = gameState[piece]; //move the piece to the new square
+    gameState[piece] = "empty"; //make the space where the piece moved from empty
+    turn++;
+    if(checkForCheck("W") != "W"){
+        deselectAll();
+        drawBoard();
+        disableAll();
+        wrongMove(false);
+    }else{//put everything back
+        gameState[piece] = fromHolder;
+        gameState[id] = toHolder;
+        turn--;
+
     //if there's only one more move, check if it's correct or not using the checkForMate function
     if(playerMoveSequence.length == 3){
-        gameState[id] = gameState[selectedPiece]; //move the piece to the new square
-        gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
+        gameState[id] = gameState[piece]; //move the piece to the new square
+        gameState[piece] = "empty"; //make the space where the piece moved from empty
         turn++;
         drawBoard();
         deselectAll();
         if(checkForMate("W") == true){
             tsumeSolved();
         }else{
-            gameState[id] = gameState[selectedPiece]; //move the piece to the new square
-            gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
-            wrongMove();
+            drawBoard();
+            wrongMove(true);
         }
-    }else if(playerMoveSequence[0] == selectedPiece && playerMoveSequence[1] == id && playerMoveSequence[2] ==gameState[selectedPiece]){
+    }else if(playerMoveSequence[0] == piece && playerMoveSequence[1] == id && playerMoveSequence[2] ==gameState[piece]){
         //if the move matches
         playerMoveSequence.splice(0,3);//get rid of the first 3 elements in the move sequence array (the last move)
-        gameState[id] = gameState[selectedPiece]; //move the piece to the new square
-        gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
+        gameState[id] = gameState[piece]; //move the piece to the new square
+        gameState[piece] = "empty"; //make the space where the piece moved from empty
         turn++;//increment the turn
         drawBoard();
         deselectAll();
@@ -332,18 +345,32 @@ function movePiece(id) {
             
         }
     }else{
-        gameState[id] = gameState[selectedPiece]; //move the piece to the new square
-        gameState[selectedPiece] = "empty"; //make the space where the piece moved from empty
+        gameState[id] = gameState[piece]; //move the piece to the new square
+        gameState[piece] = "empty"; //make the space where the piece moved from empty
+        turn++;
         drawBoard();
         deselectAll();
-        wrongMove();
+        wrongMove(true);
     }
-
+    }
 }
-function wrongMove(){
-    setMessage("間違えました。Try Again");
-    disableAll();
 
+function wrongMove(playNoPlay){
+    if(playNoPlay){
+        turn ++;
+        drawBoard();
+        let wrongMoveResponse = decideBestMove();
+        if(wrongMoveResponse.length == 1 ){//if there was an unforseen way to checkmate
+            tsumeSolved();
+        }else{
+        gameState[wrongMoveResponse[1]] = wrongMoveResponse[2];
+        gameState[wrongMoveResponse[0]] = "empty";
+        drawBoard();
+        deselectAll();
+        setMessage("間違えました。Try Again");
+
+    }
+}
 }
 function tsumeSolved(){
     clearInterval(timerSet);
@@ -426,8 +453,7 @@ function placePiece(piece) {
     }else{
         playerColor = "B";
     }
-    if ((mochiGoma[mochiGomaOrder.indexOf(piece)].style.filter === "brightness(1.5)") && justChecking === false
-        || piece.charAt(1) != playerColor) { //if the currently selected piece is clicked again
+    if ((mochiGoma[mochiGomaOrder.indexOf(piece)].style.filter === "brightness(1.5)") && justChecking === false) { //if the currently selected piece is clicked again
         deselectAll();
         mochiGomaAlreadySelected = false;
     } else if (mochiGomaAlreadySelected) {
@@ -521,7 +547,7 @@ function placePiece(piece) {
                 }
         }
 
-        eliminateIllegalMoves(MGColor); //will remove all moves from move array that would result in check to own gyoku
+        eliminateIllegalMoves(MGColor, 81); //will remove all moves from move array that would result in check to own gyoku
 
         if (justChecking === false) {
             for (i = move.length - 1; i > -1; i--) {
@@ -592,7 +618,7 @@ function checkForCheck(gyokuColor) {
     let gyokuOnRightColumn;
     let gyokuOnLeftColumn;
 
-    if (!justChecking && turn%2 == 1) {
+    if (gyokuColor == "B") {//JUST UPDATED 
         gyokuForward = -1; //black ou moves negatively to go forward
         //this will check to see if the gyoku is on any of the edges of the board and set the corresponding spot
         //in the checkingPieces array to 2, which will prevent it from being checked in the next part
@@ -1249,7 +1275,7 @@ function checkForMate(color) {
 
         if (gameState[s].charAt(0) === color) {//if it's an own piece
             selectedPiece = s;
-            pieceClick(s);//call the piececlick function to get the moves
+            pieceClick(s, true);//call the piececlick function to get the moves
 
             for (b = 0; b < move.length; b++) {
                 counterForMove += move[b];

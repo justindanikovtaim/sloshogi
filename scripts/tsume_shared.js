@@ -2,7 +2,7 @@
 function setMessage(msgText){
     document.getElementById("playerPrompt").innerHTML = msgText;
 }
-function showMove(square, komaType) {
+function showMove(square, komaType, checkingOnly) {
     //this array represents the possible movements the pieces can do
     //the first 8 are the movements to the 8 directions, starting with forward and going clockwise)
     //1 means the piece can only move one space in that direction, 2 means it can move multiple spaces in the direction
@@ -12,11 +12,16 @@ function showMove(square, komaType) {
     let moveFormulas = [-9, -10, -1, 8, 9, 10, 1, -8, 19, 17]; //the position of the move relative to where the piece is
     //the knight's is adjusted by the negative or positive number in the moveDirections array
     let turnColor;
-    if (turn % 2 == 0) {
-        turnColor = "W";
-    } else {
-        turnColor = "B"
+    if(typeof checkingOnly !== 'undefined'){
+        turnColor = checkingOnly;
+    }else{
+        if (turn % 2 == 0) {
+            turnColor = "W";
+        } else {
+            turnColor = "B"
+        }
     }
+
     switch (komaType) {
         case "BF": moveDirections[0] = 1;
             break;
@@ -105,8 +110,6 @@ function showMove(square, komaType) {
         if (moveDirections[i] > 0) {
             //check if the player's own piece is not in the square 
             if (gameState[square + moveFormulas[i]].charAt(0) !== turnColor) {
-                //if not, add the first square to the move array
-                move.push(square + moveFormulas[i]);
                 //check if the piece can move just one or multiple squares
                 if (moveDirections[i] == 2) {
                     //if it can move multiple squares, continue checking the squares and adding any that are empty 
@@ -188,6 +191,9 @@ function showMove(square, komaType) {
                         moveSquare += moveFormulas[i];//move to the next square in that direction
 
                     }
+                }else{
+                    //if it can only move one square at a time, add the first square to the move array
+                     move.push(square + moveFormulas[i]);
                 }
             }
         }
@@ -221,11 +227,9 @@ function showMove(square, komaType) {
 
     }
     //eliminate moves that would put the gyoku in check
-    if (turn % 2 == 0) {
-        eliminateIllegalMoves("W");
-    } else {
-        eliminateIllegalMoves("B");
-    }
+    justChecking = true;
+        eliminateIllegalMoves(turnColor, square);
+    justChecking = false;
 
     //return the array of squares that can be moved to;
     return move;

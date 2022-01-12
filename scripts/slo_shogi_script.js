@@ -222,6 +222,7 @@ if ((gameHistory[6] == "4" && gameHistory[7] != gameHistory[8]) || (gameHistory[
     if (gameHistory[6] != "4" && checkForMate(opponentColor)) {
         endGame();
     } else {
+        deselectAll();
         selectedPiece = null;
     }
 }
@@ -569,21 +570,21 @@ function showMove(square, komaType) {
     let moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let moveFormulas = [-9, -10, -1, 8, 9, 10, 1, -8, 19, 17]; //the position of the move relative to where the piece is
     //the knight's is adjusted by the negative or positive number in the moveDirections array
-    let turnColor;
     let realKomaType = komaType;
+    let turnColor = realKomaType.charAt(0);
     if (justChecking) {
         //if just checking, the piece should always be treated like a white koma
         komaType = "W" + komaType.substr(1, komaType.length);
-        turnColor = "W";
+       // turnColor = "W";
     } else {
         komaType = "B" + komaType.substr(1, komaType.length);
-        if (turn % 2 == 0) {
+      /*  if (turn % 2 == 0) {
             turnColor = "W";
         } else {
             turnColor = "B"
-        }
+        }*/
     }
-
+    
 
     switch (komaType) {
         case "BF":
@@ -794,7 +795,7 @@ function showMove(square, komaType) {
 
     }
     //eliminate moves that would put the gyoku in check
-    eliminateIllegalMoves(realKomaType.charAt(0));
+    eliminateIllegalMoves(realKomaType.charAt(0), turnColor);//the second color is the fake color(what the function is treating it as)
 
 
     //return the array of squares that can be moved to;
@@ -1116,7 +1117,7 @@ function placePiece(piece) {
                 }
         }
 
-        eliminateIllegalMoves(MGColor); //will remove all moves from move array that would result in check to own gyoku
+        eliminateIllegalMoves(MGColor, MGColor); //will remove all moves from move array that would result in check to own gyoku
 
         if (justChecking === false) {
             for (i = move.length - 1; i > -1; i--) {
@@ -1835,7 +1836,7 @@ function checkForCheck(gyokuColor) {
     return isCheck;
 }
 
-function eliminateIllegalMoves(color) {
+function eliminateIllegalMoves(color, fakeColor) {
 
     let moveFromHolder;
     let moveToHolder;
@@ -1847,7 +1848,7 @@ function eliminateIllegalMoves(color) {
         gameState[selectedPiece] = "empty";
 
 
-        if (checkForCheck(color) === color) {//if the move would result in check
+        if (checkForCheck(fakeColor) === fakeColor) {//if the move would result in check
             gameState[move[c]] = moveToHolder; //reset move to how it was before
             move[c] = null;
         } else {
