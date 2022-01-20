@@ -84,6 +84,9 @@ $chatHistory = explode("%%", $chatArray['chat']);
 </div>
 </div>
 
+<div id = "waitingMsg">
+    <h2>AI検討中</h2>
+</div>
 <div id = "promptBox">
  <h3 id = "playerPrompt"></h3> 
 </div>
@@ -91,7 +94,7 @@ $chatHistory = explode("%%", $chatArray['chat']);
 
 <h1 id = "timer"></h1>
  <div id = "skipButtons">
- <button class = "skipButton" id = "fullBack" onClick = "resetTsume()">リセット</button>
+ <button class = "skipButton" id = "fullBack" onClick = "resetTsume(<?=$timeLimit?>)">リセット</button>
 
  <a href = "tsume.php?id=<?=$tsumeID + 1?>"><button class = "skipButton" id = "fullForward">≫</button></a>
  

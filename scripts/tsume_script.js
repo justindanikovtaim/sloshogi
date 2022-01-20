@@ -359,6 +359,8 @@ function wrongMove(playNoPlay){
     if(playNoPlay){
         turn ++;
         drawBoard();
+        document.getElementById("waitingMsg").style.display = 'block';
+        setTimeout(function(){
         let wrongMoveResponse = decideBestMove();
         if(wrongMoveResponse.length == 1 ){//if there was an unforseen way to checkmate
             tsumeSolved();
@@ -368,8 +370,9 @@ function wrongMove(playNoPlay){
         drawBoard();
         deselectAll();
         setMessage("間違えました。Try Again");
-
     }
+    document.getElementById("waitingMsg").style.display = 'none';
+}, 50);
 }
 }
 function tsumeSolved(){
@@ -400,7 +403,7 @@ function tsumeSolved(){
     }
   }
   let json = JSON.stringify({
-    scoreBoard: finalTime, problemId: currentGameID
+    scoreBoard: finalTime, problemId: currentGameID, startingTime: originalTimeLimit
   });
 
 console.log(json);
@@ -1317,7 +1320,15 @@ function checkForMate(color) {
     return isCheckMate;
 }
 
-function resetTsume(){
-    //this needs to be updated to save the player's time and continue running down the clock
+function resetTsume(originalTime){
+    //if the timer has run out, reset the time, but send the user's information so that they can't set a high score
+    let $data;
+    if(timeLimit < 1){
+        $data = JSON.stringify({id: currentGameID, seconds: originalTime, startingTime: originalTime});
+        //need to add code here to send data that the player couldn't solve it
+    }else{
+        $data = JSON.stringify({id: currentGameID, seconds: timeLimit, startingTime: originalTime});
+    }
+    navigator.sendBeacon("/sloshogi/tsume_time.php", $data);
     window.location.reload();
 }

@@ -8,6 +8,7 @@ function showMove(square, komaType, checkingOnly) {
     //1 means the piece can only move one space in that direction, 2 means it can move multiple spaces in the direction
     //the 9th spot ([8]) is kei's move right, and the 10th ([9]) is kei's move left
     //1 means black, 2 means white
+    move = [];
     let moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let moveFormulas = [-9, -10, -1, 8, 9, 10, 1, -8, 19, 17]; //the position of the move relative to where the piece is
     //the knight's is adjusted by the negative or positive number in the moveDirections array

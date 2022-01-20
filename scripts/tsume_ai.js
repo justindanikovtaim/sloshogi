@@ -4,6 +4,7 @@
 
 //analyze self for best move
 function analyzeSelf(){
+    move = [];
     allMovesArray = [];
 
     //go through each square on the board and try out every move for each white pieces
@@ -45,10 +46,6 @@ function analyzeSelf(){
 
     justChecking = false;
     return allMovesArray;
-}
-//analyze player to guess their best move
-function analyzePlayer(){
-
 }
 
 function decideBestMove(){

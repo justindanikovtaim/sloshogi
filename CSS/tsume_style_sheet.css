@@ -242,6 +242,18 @@
         right: 0%;
         font-size: 3vw;
     }
+    #waitingMsg{
+        display: none;
+        position:absolute;
+        top: 40%;
+        left: 30%;
+        background-color:seashell;
+        width:40%;
+        height: 10%;
+        text-align: center;
+        border: 2vw solid white;
+        z-index: 2;
+    }
     #resButtons{
         position: relative;
         top: 0vw;
