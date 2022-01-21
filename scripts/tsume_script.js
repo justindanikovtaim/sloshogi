@@ -1330,5 +1330,6 @@ function resetTsume(originalTime){
         $data = JSON.stringify({id: currentGameID, seconds: timeLimit, startingTime: originalTime});
     }
     navigator.sendBeacon("/sloshogi/tsume_time.php", $data);
-    window.location.reload();
+    setTimeout(function(){window.location.reload();},100);
+    
 }

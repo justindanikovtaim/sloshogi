@@ -7,8 +7,12 @@ require 'connect.php';
   $moveSequence = $_POST['moveSequence'];
   $timeLimit = $_POST['timeLimit'];
   $createdBy = $_COOKIE['current_user_cookie'];
-
-  //this nonsense is needed in case a prolem is deleted. It resets the auto-increment to whatever the next number above the highest current id is
+  if(isset($_GET['reSave'])){
+      $temp = $_GET['reSave'];
+      //need to just update the problem. WHERE finds both the id (stored in $_GET['reSave']) as well as the user's nusername, in case they changed the URL to a different problem
+      $query = "UPDATE tsumeshogi SET problemName = '$problemName', boardSetup = '$boardConfig', mochigomaSetup = '$mochigomaConfig', mainSequence = '$moveSequence', timeLimit = '$timeLimit' WHERE id = '$temp' AND createdBy = '$createdBy'";
+  }else{
+     //this nonsense is needed in case a prolem is deleted. It resets the auto-increment to whatever the next number above the highest current id is
 $lastRow = mysqli_query($link, "SELECT MAX(id) FROM tsumeshogi");
 $result = mysqli_fetch_row($lastRow);
 $number = $result[0];
@@ -17,6 +21,9 @@ mysqli_query($link, "ALTER TABLE tsumeshogi AUTO_INCREMENT = '".($number +1)."'"
 
 $query = "INSERT INTO tsumeshogi (problemName, boardSetup, mochigomaSetup, mainSequence, createdBy, timeLimit) VALUES ('$problemName', '$boardConfig', '$mochigomaConfig', '$moveSequence', '$createdBy', '$timeLimit')";
 
+  }
+
+ 
 ?>
 <!DOCTYPE html>
 <head>

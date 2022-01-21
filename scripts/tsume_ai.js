@@ -8,7 +8,7 @@ function analyzeSelf(){
     allMovesArray = [];
 
     //go through each square on the board and try out every move for each white pieces
-    for(x=0; x<80; x++){
+    for(x=0; x<81; x++){
         if(gameState[x].charAt(0) == "W"){
             let pieceType = gameState[x];
             let movedFrom = x;
