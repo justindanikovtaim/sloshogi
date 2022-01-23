@@ -402,8 +402,8 @@
         visibility: hidden;
         position:absolute;
         background-color:rgb(255, 255, 255);
-        width:20%;
-        height: 5%;
+        width:30vw;/*20%*/
+        height: 15vw;/*10%*/
         border: 1vw solid rgb(70, 70, 70);
         z-index: 2;
     }
