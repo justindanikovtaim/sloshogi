@@ -20,33 +20,33 @@ $numOfFriends = count($friendIds);
 <body>
 <a id = "backButton" href = "newGame.php">≪</a>
 <br>
-<h1>Choose a Friend to Challenge</h1>
+<h1>友達をチャレンジ</h1>
 <div class = "inputBox">
 <datalist id = "drawFriends"></datalist>
 <form action="new_challenge.php" name = "challengeData" method = "post">
-<label for = "opponentField">対戦相手　Opponent</label><br>
+<label for = "opponentField">対戦相手</label><br>
 <input list="drawFriends" name = "opponent" id = "opponentField" require>
 </div>
 
 <br>
 <div class = "inputBox">
-<h3>先手 First to Play</h3>
+<h3>先手</h3>
 <input type = "radio" id = "userColorBlack" name = "userColor" value = "blackplayer">
-<label for="userColorBlack">私　Me</label><br>
+<label for="userColorBlack">私</label><br>
 <input type = "radio" id = "userColorWhite" name = "userColor" value = "whiteplayer">
-<label for="userColorWhite">相手　Opponent</label><br>
+<label for="userColorWhite">相手</label><br>
 </div>
 
 <br>
 <div class = "inputBox">
-<h3>公開設定　Visibility</h3>
+<h3>公開設定</h3>
 <input type ="radio" id = "private" name = "publicPrivate" value = 1>
-<label for="private">非公開 Private</label><br>
+<label for="private">非公開</label><br>
 <input type ="radio" id = "notPrivate" name = "publicPrivate" value = 0>
-<label for="notPrivate">公開 Public</label><br>
+<label for="notPrivate">公開</label><br>
 </div>
 
-<input type="submit" value="Send Challenge">
+<input type="submit" value="チャレンジ送信">
 
 </form>
 

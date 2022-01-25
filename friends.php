@@ -19,19 +19,19 @@ $numOfFriends = count($friendIds);
 </head>
 <body>
 <a id = "backButton" href = "user_page.php">≪</a>
-<h1>Friends</h1>
+<h1>友達</h1>
 <div id = "drawFriends"></div>
 <br>
 <br>
 <a href = "add_friends.php" class="noUnderline">
 <div class ="buttonBorder">
-Add New Friends
+友達を追加
 </div>
 </a>
 <br>
 <a href = "invite_email.php"class="noUnderline">
 <div class ="buttonBorder">
-Send Email Invite
+未登録の友達をメールで招待
 </div>
 </a>
 <div id ="friendRequests">

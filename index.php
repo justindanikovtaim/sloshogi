@@ -18,13 +18,14 @@
 <body>
 <div id = "userLogin"><a href = "user_login.html" id = "userLoginText">ログイン Login</a></div>
 
-    <h1>SLO SHOGI</h1>
+    <h2>SLO SHOGIへようこそ</h2>
     <img id="screenshot" src= "images/screenshot.jpg">
-    <h3>SLO将棋はまだβ版です。</h3>
-    <p>でも、一緒に対局しテストしてくれる仲間を募集しています。興味がある方、気軽に公式Twitterにて連絡ください！</p>
-        <a href = "https://twitter.com/ShogiSlo" id="twitterContact">＠ShogiSlo</a></p>
-<br>
-<br>
+    <p>まずは簡単アカウント登録から：</p>
+    <a href = "new_account.html" id = 'buttonRow'>アカウント登録</a>
+    <br>
+    <a href='what_is_slo_shogi.html' style='color:dark-grey;'><p style='font-size:8vw;'>そもそもSLO SHOGIとは？</p></a>
+    <p style='font-size:6vw;'>Twitterの公式アカウントもチェックしてください！</p>
+        <a href = "https://twitter.com/ShogiSlo" id="twitterContact"><p>＠ShogiSlo</p></a>
 <h1><a href="feedback_form.php?src=index&id=na" id = "feedback">バグ報告・Report a bug</a></h1>
 
     <!--<h3>SLO将棋とは？</h3>

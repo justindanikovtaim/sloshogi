@@ -99,7 +99,7 @@ function checkNotificationPromise() {
     <button type = 'submit' id = "submitButton">更新/Update</button>
     </form>
 
-<h1><a href = "logout.php" id = logoutButton>ログアウトLog Out</a></h1>
+<h1><a href = "logout.php" class = logoutButton>ログアウトLog Out</a></h1>
 </div>
 
     </body>

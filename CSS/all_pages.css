@@ -7,6 +7,7 @@ button{
   font-family: "8Bit";
   font-size: 15px;
   padding: 10px 20px;
+  color: black;
 }
 
 html{
@@ -27,8 +28,9 @@ h3{
 a{
   font-size: 10vw;
 }
-#logoutButton{
+.logoutButton{
   font-size: 6vw;
+  color:grey;
 }
 
 body{
@@ -40,6 +42,7 @@ body{
   margin:2% 0px; 
   padding:0px 2%; 
   border:.5vw solid black;
+  background-color: rgba(184, 175, 159, 0.644);
 }
 
 input[type=radio] {

@@ -48,6 +48,7 @@ for($i = 0; $i < sizeof($recievedChallengesIdArray); $i++){
 <!DOCTYPE html>
 <head>
 <link href="CSS/all_pages.css" rel="stylesheet">
+<link href='CSS/user_page.css' rel='stylesheet'>
 
 <script>
         let sentChallengesArray = <?php echo json_encode($sentChallengesIdArray) ; ?>;
@@ -61,21 +62,26 @@ for($i = 0; $i < sizeof($recievedChallengesIdArray); $i++){
 <body>
 <a id = "backButton" href = "user_page.php">≪</a>
 <h1>NEW GAME</h1>
-
-<a href = "new_challenge.html.php">Challenge a Friend</a>
-<br>
-<a href = "create_open_game.html.php">New Open Game</a>
-<br>
-<a  href = "join_game.html.php">Join Open Game</a>
+<div class='buttonRow'>
+<a href = "new_challenge.html.php"><button class="bigMenuButton">&nbsp;友達をチャレンジ&nbsp;</button></a>
+</div>
+<br><br>
+<div class='buttonRow'>
+<a href = "create_open_game.html.php"><button class="bigMenuButton">オープン対局を作る</button></a>
+</div>
+<br><br>
+<div class='buttonRow'>
+<a  href = "join_game.html.php"><button class="bigMenuButton">オープン対局を探す</button></a>
+</div>
 <br>
 
 <div class = "user">
-    <h1>新着チャレンジ<br>Newly-Recieved Challenges</h1>
+    <h1>新着チャレンジ</h1>
 <div id = "recievedChallenges"></div>
 </div>
 
 <div class = "user">
-    <h1><?=$_COOKIE['current_user_cookie']?>のチャレンジ　<br><?=$_COOKIE['current_user_cookie']?>'s Challenges</h1>
+    <h1><?=$_COOKIE['current_user_cookie']?>のチャレンジ</h1>
 <div id = "sentChallenges"></div>
 </div>
 

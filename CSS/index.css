@@ -25,3 +25,14 @@ p{
 #feedback{
     font-size: 5vw;
 }
+
+.paragraphText{
+    color:rgb(61, 58, 53);
+}
+#buttonRow{
+    color:blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:8%;
+}

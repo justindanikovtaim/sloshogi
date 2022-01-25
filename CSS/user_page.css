@@ -63,8 +63,8 @@ height: 98vh;
     right: 0%;
     top:80%;
     width:20%;
-    text-align: right;
-    font-size: 2.5vw;
+    text-align: center;
+    font-size: 4vw;
 }
 
 #passForm{
@@ -77,4 +77,23 @@ height: 98vh;
 }
 .formLabel{
     font-size: 4vw;
+}
+
+.centered{
+    margin: auto;
+}
+
+.bigMenuButton{
+    font-size: 100%;
+    background-color: rgb(238, 166, 32);
+}
+.medMenuButton{
+    font-size: 80%;
+    background-color:lightslategrey;
+}
+.buttonRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:8%;
 }
