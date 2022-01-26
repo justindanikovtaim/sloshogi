@@ -219,8 +219,10 @@ if ((gameHistory[6] == "4" && gameHistory[7] != gameHistory[8]) || (gameHistory[
     showGameOver();
 } else {
     //otherwise, check for checkmate
-    if (gameHistory[6] != "4" && checkForMate(opponentColor)) {
-        endGame();
+    if (gameHistory[6] != "4" && checkForMate(opponentColor) ){
+        endGame(playerColor);
+    }else if(checkForMate(playerColor, 'checkForMateUserColor')){ //needs to check both players for checkmate
+        endGame(opponentColor);
     } else {
         deselectAll();
         selectedPiece = null;
@@ -523,7 +525,7 @@ function drawMochigoma() {
         blackOrWhite = 1;
     }
 }
-function pieceClick(id) {
+function pieceClick(id, placeCalled) {
 
     //first, make sure that the piece cicked is your own
     if (!usersTurn && !justChecking) {
@@ -556,12 +558,12 @@ function pieceClick(id) {
                 boardSquare[id].style.filter = "brightness(1.5)"; //highlight the selected piece only if not checking for checkmate
             }
 
-            highlightSquares(showMove(id, gameState[id]));
+            highlightSquares(showMove(id, gameState[id], placeCalled));
 
         }
     }
 }
-function showMove(square, komaType) {
+function showMove(square, komaType, placeCalled) {
     //this array represents the possible movements the pieces can do
     //the first 8 are the movements to the 8 directions, starting with forward and going clockwise)
     //1 means the piece can only move one space in that direction, 2 means it can move multiple spaces in the direction
@@ -573,8 +575,12 @@ function showMove(square, komaType) {
     let realKomaType = komaType;
     let turnColor = realKomaType.charAt(0);
     if (justChecking) {
-        //if just checking, the piece should always be treated like a white koma
-        komaType = "W" + komaType.substr(1, komaType.length);
+        //if just checking, the piece should always be treated like a white koma, unless it is the checkformate function called for the user's own color
+        if(placeCalled == 'checkForMateUserColor'){
+            komaType = "B" + komaType.substr(1, komaType.length);
+        }else{
+            komaType = "W" + komaType.substr(1, komaType.length);
+        }
        // turnColor = "W";
     } else {
         komaType = "B" + komaType.substr(1, komaType.length);
@@ -1802,7 +1808,8 @@ function checkForCheck(gyokuColor) {
         }
     }
     //check the left side keima spot
-    if ((gyokuColor == "B" && gyokuPosition < 27) || (gyokuColor == "W" && gyokuPosition > 54)) {
+    //needs to be fixed to account for checking a flipped board
+    if (((gyokuColor == "B" && !flipped || gyokuColor == "W" && flipped) && gyokuPosition < 27) || ((gyokuColor == "W" && !flipped|| gyokuColor == "B" && flipped) && gyokuPosition > 54)) {
         checkingPieces[16] = 0; //no keima can check if gyoku is in the top 3 rows
     } else if (checkingPieces[16] !== 2 &&
         (gameState[gyokuPosition + (gyokuForward * 17)].charAt(0) != gyokuColor && gameState[gyokuPosition + (gyokuForward * 17)].substr(1, 3) == "KEI")) {
@@ -1815,7 +1822,7 @@ function checkForCheck(gyokuColor) {
     }
 
     //check the right side keima spot
-    if ((gyokuColor == "B" && gyokuPosition < 27) || (gyokuColor == "W" && gyokuPosition > 54)) {
+    if (((gyokuColor == "B" && !flipped || gyokuColor == "W" && flipped) && gyokuPosition < 27) || ((gyokuColor == "W" && !flipped|| gyokuColor == "B" && flipped) && gyokuPosition > 54)) {
         checkingPieces[17] = 0; //no keima can check if gyoku is in the top 3 rows
     } else if (checkingPieces[17] !== 2 &&
         (gameState[gyokuPosition + (gyokuForward * 19)].charAt(0) != gyokuColor && gameState[gyokuPosition + (gyokuForward * 19)].substr(1, 3) == "KEI")) {
@@ -1871,14 +1878,14 @@ function eliminateIllegalMoves(color, fakeColor) {
     console.log(move);
 }
 
-function checkForMate(color) {
+function checkForMate(color, placeCalled) {
     let counterForMove = 0;
     justChecking = true; //this will affect all the functions called
     for (s = 0; s < 81; s++) {
 
         if (gameState[s].charAt(0) === color) {//if it's an own piece
             selectedPiece = s;
-            pieceClick(s);//call the piececlick function to get the moves
+            pieceClick(s, placeCalled);//call the piececlick function to get the moves
 
             for (b = 0; b < move.length; b++) {
                 counterForMove += move[b];
@@ -1972,8 +1979,10 @@ function skipBack() {
     drawMochigoma();
 }
 
-function endGame() {
-    alert("勝ちました。おめでとう！");
+function endGame(winner) {
+    if(winner == playerColor){
+        alert("勝ちました。おめでとう！");
+    }
     let ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function () {
         // If ajax.readyState is 4, then the connection was successful
@@ -1989,7 +1998,7 @@ function endGame() {
     let winnerName;
     let loserName;
     //set the winner and loser by finding the usernames of the players from the gamehistory array
-    if (playerColor == "W") {
+    if (winner == "W") {
         winnerName = gameHistory[2];
         loserName = gameHistory[1];
     } else {
