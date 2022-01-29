@@ -52,7 +52,7 @@ if($row['blackplayer'] == $_COOKIE['current_user_cookie']){
 $getUserInfo = mysqli_query($link, 'SELECT rating, icon, username FROM users WHERE username = "'.$opponentName.'"');
 $opInfo = mysqli_fetch_array($getUserInfo);
 
-$getUserInfo = mysqli_query($link, 'SELECT rating, icon, username FROM users WHERE username = "'.$_COOKIE['current_user_cookie'].'"');
+$getUserInfo = mysqli_query($link, 'SELECT rating, icon, username, komaSet FROM users WHERE username = "'.$_COOKIE['current_user_cookie'].'"');
 $userInfo = mysqli_fetch_array($getUserInfo);
 
 //get the chat history 
@@ -78,8 +78,8 @@ $chatHistory = explode("%%", $chatArray['chat']);
 <div id = "wholeBoard">
 
 <div id = "pNoP">
-<img src="images/BGYOKU.png" id = "promote">
-<img src="images/BNHI.png" id = "dontPromote">
+<img src="images/koma/<?=$userInfo['komaSet']?>/BGYOKU.png" id = "promote">
+<img src="images/koma/<?=$userInfo['komaSet']?>/BNHI.png" id = "dontPromote">
 </div>
 
 <div id ="boardColor">
@@ -220,6 +220,8 @@ $chatHistory = explode("%%", $chatArray['chat']);
    var chatSeenNum = <?=$chatSeenNum?>;
     var msgSent = false;
     var seenNotSent = false;
+    var komaSet = <?=$userInfo['komaSet']?>;
+
     if(newMsgIcon == 0){//if there are no new messages (0 = false)
         document.getElementById("newMessage").style.visibility = "hidden"; 
         document.getElementById("newMessageInMenu").style.visibility = "hidden"; 

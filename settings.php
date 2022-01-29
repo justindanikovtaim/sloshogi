@@ -80,7 +80,10 @@ function checkNotificationPromise() {
 <br><br>
 
 <div id = "resetPassLink">
+<img src ="images/koma/preview/<?=$userInfoArray['komaSet']?>.PNG" style="width: 15vw;"><a href = "change_koma_set.php" style="font-size: 6vw; padding:2vw;">使用する駒を選択</a>
+<br><br>
 <button onclick = "askNotificationPermission()" id = "allowPermish" class = "gameURL">通知を許可する Allow Notifications</button>
+<br><br>
 <a href= "#" onclick = "showPassReset()" class = "gameURL">パスワード変更 Change Password</a>
     </div>
 <br>
