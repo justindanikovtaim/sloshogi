@@ -191,13 +191,13 @@ $chatHistory = explode("%%", $chatArray['chat']);
         <h3 id ="resText">自動指し予約　Move Reservation</h3>
 </div>
     <div id = "resBox1">
-<a href="move_reservation.php?id=<?=$gameID?>&resBox=1" ><img src = images/reservation/res_1_grey.png id = "resButton1"></a>
+<a href="move_reservation.php?id=<?=$gameID?>&komaSet=<?=$userInfo['komaSet']?>&resBox=1" ><img src = images/reservation/res_1_grey.png id = "resButton1"></a>
 </div>
 <div id="resBox2">
-<a href="move_reservation.php?id=<?=$gameID?>&resBox=2" ><img src = images/reservation/res_2_grey.png id = "resButton2"></a>
+<a href="move_reservation.php?id=<?=$gameID?>&komaSet=<?=$userInfo['komaSet']?>&resBox=2" ><img src = images/reservation/res_2_grey.png id = "resButton2"></a>
 </div>
 <div id="resBox3">
-<a href="move_reservation.php?id=<?=$gameID?>&resBox=3" ><img src = images/reservation/res_3_grey.png id = "resButton3"></a>
+<a href="move_reservation.php?id=<?=$gameID?>&komaSet=<?=$userInfo['komaSet']?>&resBox=3" ><img src = images/reservation/res_3_grey.png id = "resButton3"></a>
 </div>
 </div>
 

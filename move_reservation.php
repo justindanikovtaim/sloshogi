@@ -6,7 +6,11 @@ $gameID = $_GET['id'];
 $reservationSlot = "reservation".$_GET['resBox'];
 
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
-
+if(isset($_GET['komaSet'])){
+    $komaSet = $_GET['komaSet'];  
+}else{
+    $komaSet = 1;
+}
 ?>
 
 <!DOCTYPE HTML>
@@ -43,6 +47,7 @@ array_push($temparray,$row["moves"], $row["blackplayer"], $row["whiteplayer"]);
  var reservationSlot = "<?= $reservationSlot?>";
    var gameHistory = <?php echo json_encode($temparray) ; ?>;
    var phpColor = "<?php echo $_COOKIE['current_user_cookie']; ?>";
+   var komaSet = <?=$komaSet?>;
     </script>
 
 <script src= "scripts/move-reservation.js"></script>

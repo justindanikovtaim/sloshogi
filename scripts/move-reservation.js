@@ -47,7 +47,7 @@ let flipped;
 for (i = 0; i < 9; i++) {
     for (x = 0; x < 9; x++) {
         boardSquare[sC] = document.createElement("img"); //create each of the 81 squares as an image in the document
-        boardSquare[sC].src = "images/empty.png"; //temporarily set image source 
+        boardSquare[sC].src = "images/koma/"+komaSet+"/empty.png"; //temporarily set image source 
         boardSquare[sC].style.width = "10vw"; //scale to fit board
         boardSquare[sC].style.position = "absolute";
         boardSquare[sC].style.right = columnCounter + "vw"; //set the distance from the right side of the board
@@ -75,7 +75,7 @@ if(playerColor == "B"){
         for (x = 0; x < 7; x++) {
             if (jupiter === 0) { //if it's the first time through, we are drawing the white mochigoma
                 mochiGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
-                mochiGoma[x].src = "images/" + mochiGomaOrder[x] + ".png";
+                mochiGoma[x].src = "images/koma/"+komaSet+"/" + mochiGomaOrder[x] + ".png";
                 mochiGoma[x].setAttribute("id", mochiGomaOrder[x]);
                 mochiGoma[x].setAttribute("onClick", "placePiece(this.id)");
                 mochiGoma[x].style.width = "9vw";
@@ -92,7 +92,7 @@ if(playerColor == "B"){
                 document.getElementById("blackMochigoma").appendChild(mochiGomaAmmount[x]);
             } else {//otherwise it's the second time through, so we are drawing the black mochigoma
                 mochiGoma[x + 7] = document.createElement("img");//create a new img element for each mochigoma type
-                mochiGoma[x + 7].src = "images/" + mochiGomaOrder[x + 7] + ".png";
+                mochiGoma[x + 7].src = "images/koma/"+komaSet+"/" + mochiGomaOrder[x + 7] + ".png";
                 mochiGoma[x + 7].setAttribute("id", mochiGomaOrder[x + 7]);
                 mochiGoma[x + 7].setAttribute("onClick", "placePiece(this.id)");
                 mochiGoma[x + 7].style.width = "9vw";
@@ -118,7 +118,7 @@ if(playerColor == "B"){
         for (x = 0; x < 7; x++) {
             if (jupiter === 0) { //if it's the first time through, we are drawing the white mochigoma
                 mochiGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
-                mochiGoma[x].src = "images/" + mochiGomaOrder[x + 7] + ".png";
+                mochiGoma[x].src = "images/koma/"+komaSet+"/" + mochiGomaOrder[x + 7] + ".png";
                 mochiGoma[x].setAttribute("id", mochiGomaOrder[x]);
                 mochiGoma[x].setAttribute("onClick", "placePiece(this.id)");
                 mochiGoma[x].style.width = "9vw";
@@ -135,7 +135,7 @@ if(playerColor == "B"){
                 document.getElementById("blackMochigoma").appendChild(mochiGomaAmmount[x]);
             } else {//otherwise it's the second time through, so we are drawing the black mochigoma
                 mochiGoma[x + 7] = document.createElement("img");//create a new img element for each mochigoma type
-                mochiGoma[x + 7].src = "images/" + mochiGomaOrder[x] + ".png";
+                mochiGoma[x + 7].src = "images/koma/"+komaSet+"/" + mochiGomaOrder[x] + ".png";
                 mochiGoma[x + 7].setAttribute("id", mochiGomaOrder[x + 7]);
                 mochiGoma[x + 7].setAttribute("onClick", "placePiece(this.id)");
                 mochiGoma[x + 7].style.width = "9vw";
@@ -271,16 +271,16 @@ function drawBoard() {
         if(playerColor == "W"){
             if(gameState[i].charAt(0) == "B"){
                 //switch the B with a W for display purposes
-                boardSquare[i].src = "images/W" + gameState[i].substr(1, gameState[i].length) + ".png";
+                boardSquare[i].src = "images/koma/"+komaSet+"/W" + gameState[i].substr(1, gameState[i].length) + ".png";
             }else if(gameState[i].charAt(0) == "W"){
                 //switch the W with B for display purposes
-                boardSquare[i].src = "images/B" + gameState[i].substr(1, gameState[i].length) + ".png";
+                boardSquare[i].src = "images/koma/"+komaSet+"/B" + gameState[i].substr(1, gameState[i].length) + ".png";
             }else{
-                boardSquare[i].src = "images/" + gameState[i] + ".png"; //empty square
+                boardSquare[i].src = "images/koma/"+komaSet+"/" + gameState[i] + ".png"; //empty square
             }
         }else{
 
-        boardSquare[i].src = "images/" + gameState[i] + ".png"; //set each of the urls to match the image
+        boardSquare[i].src = "images/koma/"+komaSet+"/" + gameState[i] + ".png"; //set each of the urls to match the image
         }
     }
 }
