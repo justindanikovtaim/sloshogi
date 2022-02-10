@@ -36,3 +36,10 @@ p{
     align-items: center;
     height:8%;
 }
+
+#compForm{
+    width: 100%;
+    font-size: 6vw;
+    border: 2px solid black;
+    background-color: rgb(192, 190, 184);
+}

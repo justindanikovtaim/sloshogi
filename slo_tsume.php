@@ -1,11 +1,16 @@
 <?php 
-require 'connect.php';
+require 'public_connect.php';
 
+if(isset($_COOKIE['current_user_cookie'])){
+    //redirect to the normal tsumeshogi page if it is a registered user
+    header('location: tsume.php?id='.$_GET['id']);
+}
+  
 $tsumeID = $_GET['id'];
 $result = mysqli_query($link, 'SELECT * FROM tsumeshogi WHERE id = "'.$tsumeID.'" AND published = 1'); //get all the current from moves
 if($result->num_rows == 0 ){
-    //if a problem id that doesn't exist is input go back to tsumeshogi main page
-    header('location: slo_tsumeshogi.php');
+    //if a problem id that doesn't exist is input go back to Sloshogi main page
+    header('location: index.php');
     die();
 }
 
@@ -33,12 +38,7 @@ $getChat = mysqli_query($link, 'SELECT chat FROM tsumeshogi WHERE id = "'.$tsume
 $chatArray = mysqli_fetch_array($getChat);
 $chatHistory = explode("%%", $chatArray['chat']);
 
-$result = mysqli_query($link, 'SELECT id FROM tsumeshogi WHERE published = 1'); //get all the published problems
-$publishedProblemsArray = [];
-while($row = mysqli_fetch_array($result)){
-    array_push($publishedProblemsArray, $row['id']);
-}
-$nextProblem = $publishedProblemsArray[array_search($tsumeID, $publishedProblemsArray)+1];//find the location of the current problem in the array and go to the next problem
+
 ?>
 
 <!DOCTYPE HTML>
@@ -101,24 +101,28 @@ $nextProblem = $publishedProblemsArray[array_search($tsumeID, $publishedProblems
  <div id = "skipButtons">
  <button class = "skipButton" id = "fullBack" onClick = "resetTsume(<?=$timeLimit?>)">リセット</button>
 
- <a href = "tsume.php?id=<?=$nextProblem?>"><button class = "skipButton" id = "fullForward">≫</button></a>
+ <a href = "tsume.php?id=<?=$tsumeID + 1?>"><button class = "skipButton" id = "fullForward">≫</button></a>
  
 </div>
+
+<form id = "newAccountForm" method ="post" action="make_account_tsume.php">
+    <input type="hidden" id="solvedTimeNewAccount" name="solvedTime">
+    <input type="hidden" name="problemId" value="<?=$_GET['id']?>">
+</form>
 
 </body>
  
  <script>
-     let playerName = "<?=$_COOKIE['current_user_cookie']?>";
+     let playerName = "Guest";
  var currentGameID = <?=$tsumeID?>;
    let setup = "<?=$setup?>";
    var gameState = setup.split(",");
    let mgArray = "<?=$mgSetup?>";
    var mochiGomaArray = mgArray.split(",");
-   var phpColor = "<?=$_COOKIE['current_user_cookie']?>";
    let sequence = "<?=$sequence?>";
    var mainSequence = sequence.split(",");
    var problemName = "<?=$problemName?>";
-   var isGuest = false;
+   var isGuest = true;
    //check below!
    var originalTimeLimit = "<?php if(isset($_COOKIE[$tsumeID.'timeLimit'])){echo $_COOKIE[$tsumeID.'timeLimit'];}else {echo $timeLimit;}?>";
     var timeLimit = originalTimeLimit;
@@ -219,7 +223,7 @@ $nextProblem = $publishedProblemsArray[array_search($tsumeID, $publishedProblems
     let userName = document.createElement("H3");
     userName.setAttribute("class", "chatNameHeader");
     userName.style = "text-align: right";
-    userName.innerHTML = "<?=$_COOKIE['current_user_cookie']?>";
+    userName.innerHTML = "Guest";
 
     let newMsg = document.createElement("p");
     newMsg.setAttribute("class", "chatEntryRight");

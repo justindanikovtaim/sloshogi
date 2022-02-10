@@ -44,7 +44,7 @@ let columnCounter = 0;
 for (i = 0; i < 9; i++) {
     for (x = 0; x < 9; x++) {
         boardSquare[sC] = document.createElement("img"); //create each of the 81 squares as an image in the document
-        boardSquare[sC].src = "images/empty.png"; //temporarily set image source 
+        boardSquare[sC].src = "images/koma/1/empty.png"; //temporarily set image source 
         boardSquare[sC].style.width = "10vw"; //scale to fit board
         boardSquare[sC].style.position = "absolute";
         boardSquare[sC].style.right = columnCounter + "vw"; //set the distance from the right side of the board
@@ -72,7 +72,7 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
     for (x = 0; x < 7; x++) {
         if (jupiter === 0) { //if it's the first time through, we are drawing the white mochigoma
             mochiGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
-            mochiGoma[x].src = "images/" + mochiGomaOrder[x] + ".png";
+            mochiGoma[x].src = "images/koma/1/" + mochiGomaOrder[x] + ".png";
             mochiGoma[x].setAttribute("id", mochiGomaOrder[x]);
             mochiGoma[x].setAttribute("onClick", "placePiece(this.id)");
             mochiGoma[x].style.width = "9vw";
@@ -89,7 +89,7 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
             document.getElementById("whiteMochigoma").appendChild(mochiGomaAmmount[x]);
         } else {//otherwise it's the second time through, so we are drawing the black mochigoma
             mochiGoma[x + 7] = document.createElement("img");//create a new img element for each mochigoma type
-            mochiGoma[x + 7].src = "images/" + mochiGomaOrder[x + 7] + ".png";
+            mochiGoma[x + 7].src = "images/koma/1/" + mochiGomaOrder[x + 7] + ".png";
             mochiGoma[x + 7].setAttribute("id", mochiGomaOrder[x + 7]);
             mochiGoma[x + 7].setAttribute("onClick", "placePiece(this.id)");
             mochiGoma[x + 7].style.width = "9vw";
@@ -120,7 +120,7 @@ drawBoard();
 //Starting formation
 function drawBoard() {
     for (i = 0; i < 81; i++) {
-        boardSquare[i].src = "images/" + gameState[i] + ".png"; //set each of the urls to match the image
+        boardSquare[i].src = "images/koma/1/" + gameState[i] + ".png"; //set each of the urls to match the image
     }
     //draw the correct mochigoma
     for(i = 0; i<14; i++){
