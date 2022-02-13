@@ -312,6 +312,7 @@ function movePiece(id, piece) {
         deselectAll();
         drawBoard();
         disableAll();
+        setMessage("間違えました。Try Again");
         wrongMove(false);
     }else{//put everything back
         gameState[piece] = fromHolder;
@@ -369,7 +370,7 @@ function wrongMove(playNoPlay){
         gameState[wrongMoveResponse[0]] = "empty";
         drawBoard();
         deselectAll();
-        setMessage("間違えました。Try Again");
+        //setMessage("間違えました。Try Again");
     }
     document.getElementById("waitingMsg").style.display = 'none';
 }, 50);
@@ -388,9 +389,11 @@ function tsumeSolved(){
     disableAll();
         
     if(isGuest){//if the player is a guest
+        setTimeout(function(){
         if(confirm("アカウント登録してスコアを残しますか？")){
             makeNewAccount(finalTime);
         }
+    }, 150);
     }else{
 
     //update the scoreboard

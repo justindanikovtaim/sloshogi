@@ -823,7 +823,9 @@ function movePiece(from, id) {
     gameState[82] = gameState[id];//a temporary placeholder for the clicked place
     if (from < 81) { //if it's other than the mochigoma
         //see if piece can promote
-        if ((gameState[from].charAt(1) !== "N") && //if the piece isn't already promoted (the second letter isn't N)
+        if ((gameState[from].charAt(1) !== "N" && //if the piece is not promoted yet
+        gameState[from].substr(1, 3) !== "KIN" && //and it isn't a kin or gyoku
+        gameState[from].substr(1, 5) !== "GYOKU") &&
             (id < 27 ||// or if it is an odd turn and the piece will move into the third row or less
                 from < 27)) { //or the piece is already within the first 3 rows
 
@@ -987,9 +989,7 @@ function disableAll() {
 }
 
 function promotePiece(from, id) {
-    if (gameState[from].charAt(1) !== "N" && //if the piece is not promoted yet
-        gameState[from].substr(1, 3) !== "KIN" &&
-        gameState[from].substr(1, 5) !== "GYOKU") { //and not a kin or Gyoku
+   
 
         document.getElementById("pNoP").style.left = "" + boardSquare[id].offsetLeft + "px";
         document.getElementById("pNoP").style.top = "" + boardSquare[id].offsetTop + "px";
@@ -1015,7 +1015,7 @@ function promotePiece(from, id) {
                 break;
         }
 
-    }
+    
     return;
 }
 function doPromote(from, id) {

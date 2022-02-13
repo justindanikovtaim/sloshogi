@@ -20,7 +20,7 @@ $numOfFriends = count($friendIds);
 <body>
 <a id = "backButton" href = "newGame.php">≪</a>
 <br>
-<h1>友達をチャレンジ</h1>
+<h1>友達と対局</h1>
 <div class = "inputBox">
 <datalist id = "drawFriends"></datalist>
 <form action="new_challenge.php" name = "challengeData" method = "post">
@@ -32,7 +32,7 @@ $numOfFriends = count($friendIds);
 <div class = "inputBox">
 <h3>先手</h3>
 <input type = "radio" id = "userColorBlack" name = "userColor" value = "blackplayer">
-<label for="userColorBlack">私</label><br>
+<label for="userColorBlack">自分</label><br>
 <input type = "radio" id = "userColorWhite" name = "userColor" value = "whiteplayer">
 <label for="userColorWhite">相手</label><br>
 </div>

@@ -80,6 +80,7 @@ function decideBestMove(){
         //if the move would make it so the gyoku can't be checked, break the loop and use that move
         if(moveAnalyzeArray[xray] == 0){
             bestMove = firstMovesArray[xray];
+            setMessage("間違えました。Try Again");
             break;
         }
     } 

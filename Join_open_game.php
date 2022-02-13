@@ -13,9 +13,9 @@ while($sqlArrayHolder = mysqli_fetch_array($getActiveGames)){//this loop goes th
 
     if(mysqli_query($link, "SELECT blackplayer FROM gamerecord WHERE id = '".$_GET['id']."'") == "NULL"){
         //if blackplayer is null, the opponent is the other color, so the user should become blackplayer
-        $joinGameCommand = 'UPDATE gamerecord SET status = 2, dateStarted = CURRENT_DATE(), blackplayer = "'.$_COOKIE["current_user_cookie"].'"'; 
+        $joinGameCommand = 'UPDATE gamerecord SET status = 2, dateStarted = CURRENT_DATE(), blackplayer = "'.$_COOKIE["current_user_cookie"].'" WHERE id = "'.$_GET['id'].'"'; 
     }else{
-        $joinGameCommand = 'UPDATE gamerecord SET status = 2, dateStarted = CURRENT_DATE(), whiteplayer = "'.$_COOKIE["current_user_cookie"].'"'; 
+        $joinGameCommand = 'UPDATE gamerecord SET status = 2, dateStarted = CURRENT_DATE(), whiteplayer = "'.$_COOKIE["current_user_cookie"].'" WHERE id = "'.$_GET['id'].'"'; 
     }
 
 

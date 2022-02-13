@@ -4,11 +4,15 @@ require 'connect.php';
 $tsumeID = $_GET['id'];
 $result = mysqli_query($link, 'SELECT * FROM tsumeshogi WHERE id = "'.$tsumeID.'" AND published = 1'); //get all the current from moves
 if($result->num_rows == 0 ){
+    $tryUserName = mysqli_query($link, 'SELECT * FROM tsumeshogi WHERE id = "'.$tsumeID.'" AND createdBy = "'.$_COOKIE['current_user_cookie'].'"'); //search based on the user's name in case it's an unpubllished problem
+    if($tryUserName->num_rows == 0 ){
     //if a problem id that doesn't exist is input go back to tsumeshogi main page
     header('location: slo_tsumeshogi.php');
     die();
+    }else{
+        $result = $tryUserName;//if it's an unpublished problem, this line is needed to make the rest of the code work
+    }
 }
-
 $row = mysqli_fetch_array($result);
 $setup = $row['boardSetup'];
 $mgSetup = $row['mochigomaSetup'];
@@ -38,7 +42,13 @@ $publishedProblemsArray = [];
 while($row = mysqli_fetch_array($result)){
     array_push($publishedProblemsArray, $row['id']);
 }
-$nextProblem = $publishedProblemsArray[array_search($tsumeID, $publishedProblemsArray)+1];//find the location of the current problem in the array and go to the next problem
+if(isset($publishedProblemsArray[array_search($tsumeID, $publishedProblemsArray)+1])){
+    $nextProblem = $publishedProblemsArray[array_search($tsumeID, $publishedProblemsArray)+1];//find the location of the current problem in the array and go to the next problem
+
+}else{
+    $nextProblem = $tsumeID+1;//if there is no next problem to go to, set it to nonexistant problem that will take the user back to the tsume shogi screen
+
+}
 ?>
 
 <!DOCTYPE HTML>
@@ -147,7 +157,7 @@ $nextProblem = $publishedProblemsArray[array_search($tsumeID, $publishedProblems
     document.addEventListener("visibilitychange", function logTime() {
   if (document.visibilityState === 'hidden') {
     let $data = JSON.stringify({id: currentGameID, seconds: timeLimit});
-        navigator.sendBeacon("/sloshogi/tsume_time.php", $data);
+        navigator.sendBeacon("/sloshogi/tsume_time.php", $data);//UPDATE!
   }
 });
 

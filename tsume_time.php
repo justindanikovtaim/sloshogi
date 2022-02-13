@@ -1,6 +1,5 @@
 <?php
-//$link = mysqli_connect('localhost', 'christopherd', 'A*3BYyM5o#Qcs', 'sloshogi');//*******UPDATE**********/
-require 'connect.php';
+require 'public_connect.php';
 $in = file_get_contents('php://input');
 $decoded = json_decode($in, true);
 $id = $decoded['id'];

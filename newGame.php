@@ -63,7 +63,7 @@ for($i = 0; $i < sizeof($recievedChallengesIdArray); $i++){
 <a id = "backButton" href = "user_page.php">≪</a>
 <h1>NEW GAME</h1>
 <div class='buttonRow'>
-<a href = "new_challenge.html.php"><button class="bigMenuButton">&nbsp;友達をチャレンジ&nbsp;</button></a>
+<a href = "new_challenge.html.php"><button class="bigMenuButton">&nbsp;友達と対局&nbsp;</button></a>
 </div>
 <br><br>
 <div class='buttonRow'>
@@ -76,12 +76,12 @@ for($i = 0; $i < sizeof($recievedChallengesIdArray); $i++){
 <br>
 
 <div class = "user">
-    <h1>新着チャレンジ</h1>
+    <h1>友達からの対局招待</h1>
 <div id = "recievedChallenges"></div>
 </div>
 
 <div class = "user">
-    <h1><?=$_COOKIE['current_user_cookie']?>のチャレンジ</h1>
+    <h1>承認待ち対局</h1>
 <div id = "sentChallenges"></div>
 </div>
 
