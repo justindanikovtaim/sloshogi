@@ -24,7 +24,7 @@ function analyzeSelf(){
             allMovesArray = allMovesArray.concat(movesArray);
         }
     }
-
+            //WANT TO ADD: only run the check on the mochigoma if the gyoku is separated from the checking piece (ie. an aigoma could actually block the check)
             //go through each mochigoma and try out the moves
             for(v=0; v<7;v++){
                 if (mochiGomaArray[v] > 0) {//if there is actually a mochigoma in that spot
