@@ -222,7 +222,14 @@ function showMove(square, komaType, checkingOnly) {
         }
         for(i=8; i<10; i++){
             if(moveDirections[i] != 0){
-                move.push(square + (moveFormulas[i]*moveDirections[i]));
+                //if the space is empty
+                if(gameState[square + (moveFormulas[i]*moveDirections[i])] == "empty"){
+                    move.push(square + (moveFormulas[i]*moveDirections[i]));
+                    //if the space has an enemy piece
+                }else if (gameState[square + (moveFormulas[i]*moveDirections[i])].charAt(0) !== turnColor) {
+                    //add it to the move array
+                    move.push(square + (moveFormulas[i]*moveDirections[i]));
+                }
             }
         }
 

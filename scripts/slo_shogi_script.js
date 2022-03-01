@@ -193,41 +193,44 @@ realTurn = turn; //needed to make sure that the user can't play when looking at 
 drawBoard();
 drawMochigoma();
 document.getElementById("resButtons").style.visibility = "hidden";
-if (!usersTurn || gameHistory[6] == "3" || gameHistory[6] == "4") {//if not the user's turn or the game has ended
-    disableAll();
-    document.getElementById("resButtons").style.visibility = "visible";
-    if (gameHistory[3].length > 1) {
-        //if there is a reservation in the first reservation slot
-        document.getElementById("resButton1").src = "images/reservation/res_1_green.png";
-        //make the button green instead of grey
+if(gameHistory[6] !="3"){
+    if (!usersTurn || gameHistory[6] == "3" || gameHistory[6] == "4") {//if not the user's turn or the game has ended
+        disableAll();
+        document.getElementById("resButtons").style.visibility = "visible";
+        if (gameHistory[3].length > 1) {
+            //if there is a reservation in the first reservation slot
+            document.getElementById("resButton1").src = "images/reservation/res_1_green.png";
+            //make the button green instead of grey
+        }
+        if (gameHistory[4].length > 1) {
+            //if there is a reservation in the second reservation slot
+            document.getElementById("resButton2").src = "images/reservation/res_2_green.png";
+            //make the button green instead of grey
+        }
+        if (gameHistory[5].length > 1) {
+            //if there is a reservation in the third reservation slot
+            document.getElementById("resButton3").src = "images/reservation/res_3_green.png";
+            //make the button green instead of grey
+        }
+    
     }
-    if (gameHistory[4].length > 1) {
-        //if there is a reservation in the second reservation slot
-        document.getElementById("resButton2").src = "images/reservation/res_2_green.png";
-        //make the button green instead of grey
-    }
-    if (gameHistory[5].length > 1) {
-        //if there is a reservation in the third reservation slot
-        document.getElementById("resButton3").src = "images/reservation/res_3_green.png";
-        //make the button green instead of grey
-    }
-
-}
-if ((gameHistory[6] == "4" && gameHistory[7] != gameHistory[8]) || (gameHistory[6] == "5" && gameHistory[7] == gameHistory[8])) {
-    //if the game is status 4 (someone was checkmated) and the person who lost is viewing it 
-    //or if the game status is 5 (someone resigned) and the winner is viewing it
-    showGameOver();
-} else {
-    //otherwise, check for checkmate
-    if (gameHistory[6] != "4" && checkForMate(opponentColor) ){
-        endGame(playerColor);
-    }else if(checkForMate(playerColor, 'checkForMateUserColor')){ //needs to check both players for checkmate
-        endGame(opponentColor);
+    if ((gameHistory[6] == "4" && gameHistory[7] != gameHistory[8]) || (gameHistory[6] == "5" && gameHistory[7] == gameHistory[8])) {
+        //if the game is status 4 (someone was checkmated) and the person who lost is viewing it 
+        //or if the game status is 5 (someone resigned) and the winner is viewing it
+        showGameOver();
     } else {
-        deselectAll();
-        selectedPiece = null;
+        //otherwise, check for checkmate
+        if (gameHistory[6] = "2" && checkForMate(opponentColor) ){
+            endGame(playerColor);
+        }else if(checkForMate(playerColor, 'checkForMateUserColor')){ //needs to check both players for checkmate
+            endGame(opponentColor);
+        } else {
+            deselectAll();
+            selectedPiece = null;
+        }
     }
 }
+
 highlightLastMove();
 
 function loadGameState(placeCalled) {//loads the current game state from the database (slo Shogi v.1)
