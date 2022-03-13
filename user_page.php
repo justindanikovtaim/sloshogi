@@ -116,6 +116,7 @@ $userInfoArray = mysqli_fetch_array($getUserInfo);
 <a href= 'finished_games.php'><button class="medMenuButton">過去対局</button></a>
 </div>
 <br>
+<h1><a style="font-size: 7vw; color: blue" href="forum/forum_top.php">ヘルプ・ディスカッション</h1>
 <h1><a href = "slo_tsumeshogi.php">詰将棋（β版）</a></h1>
 <h1><a href="feedback_form.php?src=user_page&id=na"  class='logoutButton'>バグ報告</a></h1>
 <h1><a href = "logout.php" class = "logoutButton">ログアウトLog Out</a></h1>
