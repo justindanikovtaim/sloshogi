@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="description" content="SLO将棋ディスカッション" />
+    <meta name="description" content="SLO将棋掲示板" />
     <title>SLO将棋ディスカッション</title>
     <link rel="stylesheet" href="../CSS/all_pages.css" type="text/css">
     <link rel="stylesheet" href="CSS/header_style.css" type="text/css">

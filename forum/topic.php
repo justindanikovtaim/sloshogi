@@ -34,7 +34,7 @@ else
 					</tr>';
 		
 			//fetch the posts from the database
-			$posts_sql = "SELECT
+			/*$posts_sql = "SELECT
 						forum_posts.post_topic,
 						forum_posts.post_content,
 						forum_posts.post_date,
@@ -48,7 +48,17 @@ else
 						forum_posts.post_by = users.username
 					WHERE
 						forum_posts.post_topic = " . mysqli_real_escape_string($link, $_GET['id']);
-						
+				*/
+				$posts_sql = "SELECT
+						post_topic,
+						post_content,
+						post_date,
+						post_by
+					FROM
+						forum_posts
+					WHERE
+						post_topic = " . mysqli_real_escape_string($link, $_GET['id']);	
+
 			$posts_result = mysqli_query($link, $posts_sql);
 			
 			if(!$posts_result)
@@ -61,7 +71,7 @@ else
 				while($posts_row = mysqli_fetch_assoc($posts_result))
 				{
 					echo '<tr class="topic-post">
-							<td class="user-post"><a style="font-size: 3vw" href="../view_friend.php?friendName='. $posts_row['username'].'">' . $posts_row['username'] . '</a><br/>' . date('d-m-Y H:i', strtotime($posts_row['post_date'])) . '</td>
+							<td class="user-post"><a style="font-size: 3vw" href="../view_friend.php?friendName='. $posts_row['post_by'].'">' . $posts_row['post_by'] . '</a><br/>' . date('d-m-Y H:i', strtotime($posts_row['post_date'])) . '</td>
 							<td class="post-content">' . htmlentities(stripslashes($posts_row['post_content'])) . '</td>
 						  </tr>';
 				}
