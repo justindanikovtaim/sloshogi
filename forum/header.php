@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="CSS/header_style.css" type="text/css">
 </head>
 <body>
-<h3>SLO将棋ディスカッション</h3>
+<h3>SLO将棋掲示板</h3>
     <div id="wrapper">
     <div id="menu">
         <a class="item" href="../user_page.php">ユーザーページへ</a> -
