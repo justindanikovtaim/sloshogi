@@ -62,6 +62,7 @@ table a:hover {
 th {
     background-color: rgb(238, 166, 32);
     color: black;
+    font-size: 4vw;
 }
  
 td {
@@ -137,4 +138,9 @@ form{
 }
 textarea{
     font-size: 16px;
+}
+#reply{
+    background-color: rgb(238, 166, 32);
+    font-size: 4vw;
+    margin-bottom: 0px;
 }

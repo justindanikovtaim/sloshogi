@@ -20,8 +20,7 @@ else
                           post_by) 
                 VALUES ('" . $_POST['reply-content'] . "',
                         NOW(),'
-                        " . mysqli_real_escape_string($link, $_GET['id']) . "','
-                        " . $_COOKIE['current_user_cookie'] . "')";
+                        " . mysqli_real_escape_string($link, $_GET['id']) . "',TRIM('" . $_COOKIE['current_user_cookie'] . "'))";
                          
         $result = mysqli_query($link, $sql);
                          

@@ -68,9 +68,9 @@ else
 			}
 			
 				//show reply box
-				echo '<tr><td colspan="2"><p class="post-content">リプライ:</p><br />
+				echo '<tr><td colspan="2"><p id="reply">返事:</p>
 					<form method="post" action="reply.php?id=' . $row['topic_id'] . '">
-						<textarea name="reply-content"></textarea><br /><br />
+						<textarea name="reply-content" required></textarea><br /><br />
 						<input type="submit" value="送信" />
 					</form></td></tr>';
 			

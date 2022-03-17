@@ -6,9 +6,9 @@ if($_SERVER['REQUEST_METHOD'] != 'POST')
 {
     //the form hasn't been posted yet, display it
     echo "<form method='post' action=''>
-        カテゴリー名: <input type='text' name='cat_name' />
-        カテゴリー説明: <textarea name='cat_description' /></textarea>
-        <input type='submit' value='カテゴリーを追加' />
+        カテゴリー名: <input type='text' name='cat_name' /><br>
+        カテゴリー説明: <textarea name='cat_description' /></textarea><br><br>
+        <input style='font-size:5vw' type='submit' value='カテゴリーを追加' />
      </form>";
 }
 else
