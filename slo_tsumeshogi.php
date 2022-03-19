@@ -13,6 +13,8 @@
     <br>
     <button class= "menuButton"><a href = "all_tsume.php">全問題を表示</a></button>
     <br><br>
+    <button class="menuButton"><a href = "pro_tsume.php">坂田慎吾5段作</a></button>
+    <br><br>
     <button class="menuButton"><a href = "my_tsume.php">自作問題を表示</a></button>
     <br><br>
     <button class= "menuButton"><a href = "initialize_tsume.php?new=yes">問題を新規作成</a></button>
