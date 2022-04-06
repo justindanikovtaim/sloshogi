@@ -220,7 +220,7 @@ if(gameHistory[6] !="3"){
         showGameOver();
     } else {
         //otherwise, check for checkmate
-        if (gameHistory[6] = "2" && checkForMate(opponentColor) ){
+        if (gameHistory[6] == "2" && checkForMate(opponentColor) ){
             endGame(playerColor);
         }else if(checkForMate(playerColor, 'checkForMateUserColor')){ //needs to check both players for checkmate
             endGame(opponentColor);

@@ -23,6 +23,9 @@ if($_POST["userColor"] == "blackplayer"){
    while($sqlArrayHolder = mysqli_fetch_array($getActiveGames)){//this loop goes though the user's active games and increments the counter for each
        $activeGameCount ++; 
    }
+   $getUserLevel = mysqli_query($link, "SELECT user_level FROM users WHERE username = '".$_COOKIE['current_user_cookie']."'");
+$userLevel = mysqli_fetch_array($getUserLevel);
+
 
 ?> 
 <!DOCTYPE html>
@@ -34,7 +37,7 @@ if($_POST["userColor"] == "blackplayer"){
 <a id = "backButton" href = "newGame.php">≪</a>
 <h1>
 <?php
-    if($activeGameCount < 5){
+    if($activeGameCount < 5  || $userLevel['user_level'] > 0){
 
     if(mysqli_query($link, $newChallenge)){
         echo "Challenge Sent!";

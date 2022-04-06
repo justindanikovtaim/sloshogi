@@ -16,6 +16,8 @@ require 'connect.php';
        $activeGameCount ++; 
    }
 
+   $getUserLevel = mysqli_query($link, "SELECT user_level FROM users WHERE username = '".$_COOKIE['current_user_cookie']."'");
+$userLevel = mysqli_fetch_array($getUserLevel);
 
 ?> 
 <!DOCTYPE html>
@@ -28,7 +30,7 @@ require 'connect.php';
 <a id = "backButton" href = "newGame.php">≪</a>
 <br><br>
 <?php
-    if($activeGameCount < 5){
+    if($activeGameCount < 5 || $userLevel['user_level'] > 0){
 
     if(mysqli_query($link, $newChallenge)){
         echo "Open game created";

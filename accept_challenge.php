@@ -10,7 +10,10 @@ while($sqlArrayHolder = mysqli_fetch_array($getActiveGames)){//this loop goes th
    $activeGameCount ++; 
 }
 
-if($activeGameCount < 5){
+$getUserLevel = mysqli_query($link, "SELECT user_level FROM users WHERE username = '".$_COOKIE['current_user_cookie']."'");
+$userLevel = mysqli_fetch_array($getUserLevel);
+
+if($activeGameCount < 5 || $userLevel['user_level'] > 0){
 
 
 

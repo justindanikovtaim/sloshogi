@@ -83,6 +83,7 @@ if(isset($publishedProblemsArray[array_search($tsumeID, $publishedProblemsArray)
 <div class = "popupMenu" id="popupMenuId">
     <a href="#" id ="leaderBoard" onClick = "toggleLeaderBoard()">トップスコア・Top Scores</a>
     <a href="#" onClick = "toggleChat()">チャット表示・View Chat</a>
+    <a href="#" onClick = "copyToClipboard(<?=$tsumeID?>)">共有URLを発行</a>
     <a href="feedback_form.php?src=gameboard&id=<?=$gameID?>">バグ報告・Report a bug</a>
 </div>
 <div class = "popupChat" id ="popupChat">
@@ -271,6 +272,11 @@ if($creator == 'kayanokoithi'){//if it's neko-san's problem
    function closeLeaderBoard(){
     document.getElementById("scoreBoard").classList.toggle("chatShow");
 
+   }
+
+   function copyToClipboard(id){
+       navigator.clipboard.writeText("https://www.sloshogi.com/slo_tsume.php?id="+id);
+       alert("クリップボードにコピーされた (注意！他人は非公開の詰将棋が見れないので、共有する前に公開されていることをチェックしましょう！");
    }
     </script>
     <script src= "scripts/tsume_shared.js"></script>
