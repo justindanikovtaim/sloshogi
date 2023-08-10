@@ -38,7 +38,7 @@ if($activeGameCount < 5){
         echo "<script>location.href='join_game.html.php';</script>";
     }
 }else{
-    echo "既に５つの対戦に参加しているため、新しい対戦に参加することはできません<br> You already have 5 active games/challenges. You cannot join a new game.";
+    echo "既に５つの対戦に参加しているため、新しい対戦に参加することはできません";
 }
  ?>
  </h1>

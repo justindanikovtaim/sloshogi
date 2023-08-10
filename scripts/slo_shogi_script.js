@@ -1105,6 +1105,12 @@ function placePiece(piece) {
                 endAfter = 72; //count for 72 squares (all but the last row)
                 startingPlace = 9;
 
+            for (i = startingPlace; i < startingPlace + endAfter; i++) {//cycle through each square in the board that is possible for that color
+                    if (gameState[i] === "empty") {
+                        move.push(i);//add all empty squares to the list of possible moves
+                    }
+                }
+                break;
             case "KEI": //kei can't be placed in the last 2 rows since they couldn't move
 
                 startingPlace = 18;

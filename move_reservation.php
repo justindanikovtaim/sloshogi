@@ -3,7 +3,8 @@ require 'connect.php';
 
 session_start();
 $gameID = $_GET['id'];
-$reservationSlot = "reservation".$_GET['resBox'];
+// 6/27 reducing the reservation buttons from 3 to 1
+//$reservationSlot = "reservation".$_GET['resBox'];
 
 $result = mysqli_query($link, 'SELECT * FROM gamerecord WHERE id = '.$gameID); //get all the current from moves
 if(isset($_GET['komaSet'])){

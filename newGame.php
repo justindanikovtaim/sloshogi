@@ -42,6 +42,19 @@ for($i = 0; $i < sizeof($recievedChallengesIdArray); $i++){
     }
 }
 
+$getOpenGameId = mysqli_query($link, "SELECT id FROM gamerecord WHERE status = 1 AND creator != '".$_COOKIE['current_user_cookie'] ."'" );
+$openGameIdArray =  [];
+while($row = mysqli_fetch_array($getOpenGameId)){
+    array_push($openGameIdArray, $row['id']);//add each open game id that user didn't make
+}
+$opponentNameArray = [];
+for($i = 0; $i < sizeof($openGameIdArray); $i++){
+    $getOpponent = mysqli_query($link, "SELECT creator FROM gamerecord WHERE id = '".$openGameIdArray[$i]."'");
+    $getOpponentArray = mysqli_fetch_array($getOpponent);
+    $getOpRating = mysqli_query($link, "SELECT rating FROM users WHERE username = '".$getOpponentArray['creator']."'");
+    $opRating = mysqli_fetch_array($getOpRating);
+    array_push($opponentNameArray, $getOpponentArray['creator']."(".$opRating['rating'].")");
+}
 
 ?>
 
@@ -61,7 +74,7 @@ for($i = 0; $i < sizeof($recievedChallengesIdArray); $i++){
 </head>
 <body>
 <a id = "backButton" href = "user_page.php">≪</a>
-<h1>NEW GAME</h1>
+<h1>新規対局</h1>
 <div class='buttonRow'>
 <a href = "new_challenge.html.php"><button class="bigMenuButton">&nbsp;友達と対局&nbsp;</button></a>
 </div>
@@ -70,14 +83,10 @@ for($i = 0; $i < sizeof($recievedChallengesIdArray); $i++){
 <a href = "create_open_game.html.php"><button class="bigMenuButton">オープン対局を作る</button></a>
 </div>
 <br><br>
-<div class='buttonRow'>
-<a  href = "join_game.html.php"><button class="bigMenuButton">オープン対局を探す</button></a>
-</div>
-<br>
 
 <div class = "user">
-    <h1>友達からの対局招待</h1>
-<div id = "recievedChallenges"></div>
+    <h1>オープン対局</h1>
+    <div id = "drawOpenGames"></div>
 </div>
 
 <div class = "user">
@@ -88,3 +97,17 @@ for($i = 0; $i < sizeof($recievedChallengesIdArray); $i++){
 <script src = "scripts/get_challenges.js"></script>
 
 </body>
+<script>
+        let getOpenGamesArray = <?php echo json_encode($openGameIdArray) ; ?>;
+        let currentGameOpponentArray = <?php echo json_encode($opponentNameArray) ; ?>;
+    let openGamesArray = [];
+
+    for(i = 0; i < getOpenGamesArray.length; i ++){
+    openGamesArray[i] = document.createElement("a");
+    openGamesArray[i].href = "join_open_game.php?id=" + getOpenGamesArray[i];
+    openGamesArray[i].innerHTML = "vs. " + currentGameOpponentArray[i];
+    document.getElementById("drawOpenGames").appendChild(openGamesArray[i]);
+    let lineBreak = document.createElement("br");
+    document.getElementById("drawOpenGames").appendChild(lineBreak);
+}
+    </script>
