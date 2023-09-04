@@ -1,5 +1,5 @@
 <?php
-require_once ABSPATH . 'template.php';
+require_once SHAREDPATH . 'template.php';
 
 /**
  * Renders the HTML markup for the database error page.

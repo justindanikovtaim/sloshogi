@@ -65,7 +65,18 @@ function load_route(string $route)
         '/send-feedback' => ABSPATH . 'Feedback/SendFeedback.php',
     );
 
-    if (file_exists($routes[$route])) {
+    function routeExist(string $route, array $routes) {
+        foreach ($routes as $key => $value) {
+            if ($route == $key) {
+                return true;
+            }
+        }
+    }
+
+    if (routeExist($route, $routes) && file_exists($routes[$route])) {
         require_once $routes[$route];
+    } else {
+        // send 404
+        header("HTTP/1.0 404 Not Found");
     }
 }
