@@ -1,6 +1,10 @@
 <?php
-require '../connect.php';
-$getGameData = mysqli_query($link, "SELECT * FROM gamerecord WHERE id = '".$_GET['id']."'");
+
+require_once SHAREDPATH . 'database.php';
+require_once SHAREDPATH . 'template.php';
+require_once SHAREDPATH . 'session.php';
+
+$getGameData = safe_sql_query("SELECT * FROM gamerecord WHERE id = ?", ['i', $_GET['id']]);
 $gameDataArray = mysqli_fetch_array($getGameData);
 
 $movesArray = explode(",", $gameDataArray['moves']);
@@ -10,12 +14,12 @@ $kifu = fopen($filename, "w");
 
 $turnCounter = 1;
 $lastMove = 0;
-$baseKifu = 
+$baseKifu =
 "開始日時：".$gameDataArray['dateStarted']."
 終了日時：".date('Y')."/".date('m')."/".date('d')."
 場所：SLO Shogi
 手合割：平手
-先手：".$gameDataArray['blackplayer']." 
+先手：".$gameDataArray['blackplayer']."
 後手：".$gameDataArray['whiteplayer']."
 手数----指手---------消費時間--";
 
@@ -157,7 +161,7 @@ function pieceToKanji($piece){
     }
 }
 
-//go through each move and convert it to .kif move 
+//go through each move and convert it to .kif move
 for($i = 0; $i < sizeof($movesArray); $i += 3){
     $baseKifu .= "\r\n".$turnCounter." ";//add the turn
 
@@ -221,5 +225,3 @@ die();
 
 
 echo $baseKifu;
-
-?>

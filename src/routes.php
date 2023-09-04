@@ -38,6 +38,7 @@ function load_route(string $route)
         '/new-game/new-challenge' => ABSPATH . 'NewGame/NewChallenge.php',
         '/new-game/create-open-game' => ABSPATH . 'NewGame/CreateOpenGame.php',
         '/new-game/join-game' => ABSPATH . 'NewGame/JoinGame.php',
+        '/private-game' => ABSPATH . 'NewGame/PrivateGame.php',
         // Friends
         '/friends' => ABSPATH . 'Friends/Friends.php',
         '/friends/add-friends' => ABSPATH . 'Friends/AddFriends.php',
@@ -53,6 +54,7 @@ function load_route(string $route)
         '/forum/topic' => ABSPATH . 'Forum/Topic.php',
         // SloTsumeshogi
         '/slotsumeshogi' => ABSPATH . 'SloTsumeshogi/SloTsumeshogi.php',
+        '/slotsumeshogi/set-tsume' => ABSPATH . 'SloTsumeshogi/SetTsume.php',
         '/slotsumeshogi/all-tsume' => ABSPATH . 'SloTsumeshogi/AllTsume.php',
         '/slotsumeshogi/all-tsume/tsume' => ABSPATH . 'SloTsumeshogi/Tsume.php',
         '/slotsumeshogi/pro-tsume' => ABSPATH . 'SloTsumeshogi/ProTsume.php',
