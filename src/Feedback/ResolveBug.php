@@ -1,7 +1,7 @@
 <?php
-require 'connect.php';
-if(mysqli_query($link, "DELETE FROM feedback WHERE id ='".$_GET['id']."'")){
-    echo"<h1>Resolved successfully</h1>";
-    header('location: dashboard.php');
-};
-?>
+require_once SHAREDPATH . 'database.php';
+
+if (safe_sql_query("DELETE FROM feedback WHERE id = ?", ['i', $_GET['id']])) {
+    echo "<h1>Resolved successfully</h1>";
+    header('location: /dashboard');
+}

@@ -1,33 +1,25 @@
 <?php
 
-require 'connect.php';
+require_once SHAREDPATH . 'database.php';
+require_once SHAREDPATH . 'template.php';
+require_once SHAREDPATH . 'session.php';
 
-    $sourcePage = htmlspecialchars($_POST['src']);
-    $feedbackType = htmlspecialchars($_POST['fBType']);
-    $comment = htmlspecialchars($_POST['comment']);
+$sourcePage = htmlspecialchars($_POST['src']);
+$feedbackType = htmlspecialchars($_POST['fBType']);
+$comment = htmlspecialchars($_POST['comment']);
 
-    $query = "INSERT INTO feedback (fbtype, user, source, comment) 
-    values ('".$feedbackType."', '".$_COOKIE['current_user_cookie']."', '".$sourcePage."', '".$comment."')";
-  
-?> 
-<!DOCTYPE html>
-<head>
-    <title>Slo Shogi Feedback</title>
-    <link href="CSS/all_pages.css" rel="stylesheet">
+$query = safe_sql_query("INSERT INTO feedback (fbtype, user, source, comment)
+    values (?, ?, ?, ?)", ['ssss', $feedbackType, getCurrentUser(), $sourcePage, $comment]);
 
-</head>
+begin_html_page("SLO Shogi Feedback");
+?>
+
 <h2>
-<a id = "backButton" href = "<?=$sourcePage?>">≪</a>
-<br><br>
-<?php
-    if(mysqli_query($link, $query)){
-        echo "フィードバックが配信されました！ありがとうございます。Feedback Sent! Thank you";
-    } else{
-        echo "ERROR: Not able to execute $newChallenge. " . mysqli_error($link);
-    }
+    <a id="backButton" href="<?= $sourcePage ?>">≪</a>
+    <br><br>
+    <?php if ($query) : ?>
+        フィードバックが配信されました！ありがとうございます。Feedback Sent! Thank you
+    <?php endif; ?>
+</h2>
 
- ?>
- </h2>
-
-
- </html>
+<?php end_html_page(); ?>
