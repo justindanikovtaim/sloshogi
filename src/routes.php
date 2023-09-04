@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Loads the route specified by the URL.
+ *
+ * @param string $route The URL route
+ */
+
 function load_route(string $route)
 {
     $routes = array(
@@ -34,9 +40,11 @@ function load_route(string $route)
         '/new-game/join-game' => ABSPATH . 'NewGame/JoinGame.php',
         // Friends
         '/friends' => ABSPATH . 'Friends/Friends.php',
-        '/friends/add-friend' => ABSPATH . 'Friends/AddFriend.php',
+        '/friends/add-friends' => ABSPATH . 'Friends/AddFriends.php',
         '/friends/invite-email' => ABSPATH . 'Friends/InviteEmail.php',
         '/friends/view-friend' => ABSPATH . 'Friends/ViewFriend.php',
+        '/friends/add-to-friends' => ABSPATH . 'Friends/AddToFriends.php',
+        '/friends/send-invite' => ABSPATH . 'Friends/SendInvite.php',
         // Forum
         '/forum' => ABSPATH . 'Forum/Forum.php',
         '/forum/forum-top' => ABSPATH . 'Forum/ForumTop.php',
