@@ -1,29 +1,31 @@
 <?php
 
-require 'connect.php';
-$userVar = $_COOKIE['current_user_cookie'];
+require_once SHAREDPATH . 'database.php';
+require_once SHAREDPATH . 'template.php';
+require_once SHAREDPATH . 'session.php';
+
+$userVar = getCurrentUser();
 $friendName = $_GET['name'];
-$getFriendId = mysqli_query($link, "SELECT id FROM users WHERE username = '".$friendName."'");
+$getFriendId = safe_sql_query("SELECT id FROM users WHERE username = ?", ['s', $friendName]);
 $friendIdArray = mysqli_fetch_array($getFriendId);
 $friendId = $friendIdArray['id'];
 
-$query = "UPDATE users SET friends = CONCAT(friends, ',".$friendId."') WHERE username = '".$userVar."'";
+$query = safe_sql_query("UPDATE users SET friends = CONCAT(friends, ?) WHERE id = ?", ['si', $friendId . ",", $userVar]);
+
+begin_html_page("SLO Shogi Add Friends", ['friends_page.css']);
 ?>
-<!DOCTYPE html>
-<head>
-<link href="CSS/all_pages.css" rel="stylesheet">
-<link href="CSS/friends_page.css" rel="stylesheet">
-</head>
-<body>
-<a id = "backButton" href = "view_friend.php?friendName=<?=$friendName?>">≪</a>
+
+<a id="backButton" href="view_friend.php?friendName=<?= $friendName ?>">≪</a>
 <br><br>
 <h3>
     <?php
-    if(mysqli_query($link, $query)){
+    if ($query) {
         echo "友達が追加されました！ Friend successfully added!";
-    }else{
+    } else {
         echo "エラーが発生しました。やり直してください。<br>There was an error. Please try again";
     }
     ?>
 </h3>
-</body>
+
+<?php
+end_html_page();
