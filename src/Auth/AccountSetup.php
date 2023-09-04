@@ -8,6 +8,8 @@ $OTP = isset($_GET['OTP']) && htmlspecialchars($_GET['OTP']);
 //delete old records from the newaccounts table
 safe_sql_query("DELETE FROM newaccounts WHERE timeCreated < (NOW() - INTERVAL 1440 MINUTE)");
 
+begin_html_page('Slo Shogi Create New Account');
+
 //search for user's OTP and get their account name and email in the process
 $result = safe_sql_query("SELECT * FROM newaccounts WHERE OTP = ?", ['s', $OTP]);
 
@@ -32,7 +34,6 @@ if ($result) {
 <?php
 }
 
-begin_html_page('Slo Shogi Create New Account');
 ?>
 
 <a href="/">トップに戻る・Return to Homepage</a>

@@ -1,5 +1,7 @@
 <?php
-session_start();
+
+require_once 'database.php';
+require_once 'session.php';
 
 $enteredPW = htmlspecialchars($_POST['pw']);
 $currentUser = htmlspecialchars($_POST['userData']);

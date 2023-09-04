@@ -18,11 +18,12 @@ $emailOkay = filter_var($enteredEmail, FILTER_VALIDATE_EMAIL); //make sure email
 if ($enteredEmail != $confirmEmail) {
     $emailOkay = false;
 }
+
 //https://www.informit.com/articles/article.aspx?p=30875&seqNum=5
-$userNameAvailable = mysqli_query($link, "SELECT * FROM users, newaccounts WHERE users.username = '" . $enteredUsername . "' OR newaccounts.username = '" . $enteredUsername . "'");
-$emailInUse = mysqli_query($link, "SELECT * FROM users, newaccounts WHERE users.email = '" . $enteredEmail . "' OR newaccounts.email = '" . $enteredEmail . "'");
+$userNameAvailable = safe_sql_query("SELECT * FROM users, newaccounts WHERE users.username = ? OR newaccounts.username = ?", ['ss', $enteredUsername, $enteredUsername]);
+$emailInUse = safe_sql_query("SELECT * FROM users, newaccounts WHERE users.email = ? OR newaccounts.email = ?", ['ss', $enteredEmail, $enteredEmail]);
 
-
+begin_html_page('SLO Shogi Account Creation Attempt');
 
 if (!$enteredUsername || !$emailOkay) { //if the username doesn't meet the criteria
     //give error message
@@ -38,8 +39,7 @@ if (!$enteredUsername || !$emailOkay) { //if the username doesn't meet the crite
 
     $OTP = random_int(100000, 999999); // generate 6-digit random int
 
-    $newUser = 'INSERT INTO newaccounts (email, username, OTP)
-    VALUES ("' . $enteredEmail . '", "' . $enteredUsername . '", ' . $OTP . ');';
+    $newUser = safe_sql_query("INSERT INTO newaccounts (email, username, OTP) VALUES (?, ?, ?)", ['ssi', $enteredEmail, $enteredUsername, $OTP]);
 
     //send email with OTP
     $message = "アカウントはまだ確定されていません！
@@ -54,16 +54,12 @@ if (!$enteredUsername || !$emailOkay) { //if the username doesn't meet the crite
 
     mail($enteredEmail, "SLO将棋アカウント承認　Verify SLO Shogi Account", $message);
 
-    if (mysqli_query($link, $newUser)) {
+    if ($newUser) {
         echo "Account information submitted. Please check your email within 1 hour to validate your account <br>
     アカウント情報は発信されました。1時間以内にメールをチェックしてアカウント有効化して下さい";
-    } else {
-        echo mysqli_error($link);
     }
 }
 
-
-begin_html_page('SLO Shogi Account Creation Attempt');
 ?>
 
 <a href="/">トップに戻る・Return to Homepage</a>
