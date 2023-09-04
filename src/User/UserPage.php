@@ -1,59 +1,42 @@
 <?php
-
 require_once SHAREDPATH . 'database.php';
 require_once SHAREDPATH . 'template.php';
 require_once SHAREDPATH . 'session.php';
 
 $currentUser = getCurrentUser();
 
-$currentGameQuery = "SELECT id FROM gamerecord WHERE ( blackplayer = ? OR whiteplayer = ?) AND (status = 2 OR (status = 4 AND winner != ? ) OR (status = 5 AND winner = ?))";
+$currentGameQuery = "SELECT id FROM gamerecord WHERE (blackplayer = ? OR whiteplayer = ?) AND (status = 2 OR (status = 4 AND winner != ?) OR (status = 5 AND winner = ?))";
 
 $getCurrentGameId = safe_sql_query($currentGameQuery, ['ssss', $currentUser, $currentUser, $currentUser, $currentUser]);
-$currentGameIdArray =  [];
+$currentGameIdArray = [];
 while ($row = mysqli_fetch_array($getCurrentGameId)) {
-    array_push($currentGameIdArray, $row['id']); //add each gameid related to the user to an array
+    array_push($currentGameIdArray, $row['id']); // Add each gameid related to the user to an array
 }
+
 $opponentNameArray = [];
-for ($i = 0; $i < sizeof($currentGameIdArray); $i++) {
-    $getOpponent = safe_sql_query("SELECT blackplayer, whiteplayer, turn FROM gamerecord WHERE id = ?", ['i', $currentGameIdArray[$i]]);
+foreach ($currentGameIdArray as $gameId) {
+    $getOpponent = safe_sql_query("SELECT blackplayer, whiteplayer, turn FROM gamerecord WHERE id = ?", ['i', $gameId]);
     $getOpponentArray = mysqli_fetch_array($getOpponent);
 
-    if ($getOpponentArray['blackplayer'] == $currentUser) {
+    $opponent = ($getOpponentArray['blackplayer'] == $currentUser) ? $getOpponentArray['whiteplayer'] : $getOpponentArray['blackplayer'];
+    $isPlayerTurn = ($getOpponentArray['turn'] % 2 == 0) ? 0 : 1;
 
-        array_push($opponentNameArray, $getOpponentArray['whiteplayer']);
-
-        if ($getOpponentArray['turn'] % 2 == 0) { //see if it is even turn (white)
-            array_push($opponentNameArray, 0); //add on a 0 for false, beause it is not the player's turn
-        } else {
-            array_push($opponentNameArray, 1); //add on a 1 for true becase it is the player's turn
-        }
-    } else {
-        array_push($opponentNameArray, $getOpponentArray['blackplayer']);
-        //for some reason, the next line isn't working when it's the first turn
-        if ($getOpponentArray['turn'] % 2 != 0) { //if it's the first turn or black's turn
-            array_push($opponentNameArray, 0); //add on a 0 for false, beause it is not the player's turn
-        } else {
-            array_push($opponentNameArray, 1); //add on a 1 for true becase it is the player's turn
-        }
-    }
+    array_push($opponentNameArray, $opponent, $isPlayerTurn);
 }
 
-$getNewChallenges = safe_sql_query("SELECT id FROM gamerecord WHERE status = 1 AND creator != ? AND ( blackplayer = ? OR whiteplayer = ?)", ['sss', $currentUser, $currentUser, $currentUser]);
-//get challenges that the user didn't create themselves
-$challengesIdArray =  [];
+$getNewChallenges = safe_sql_query("SELECT id FROM gamerecord WHERE status = 1 AND creator != ? AND (blackplayer = ? OR whiteplayer = ?)", ['sss', $currentUser, $currentUser, $currentUser]);
+$challengesIdArray = [];
 while ($row = mysqli_fetch_array($getNewChallenges)) {
-    array_push($challengesIdArray, $row['id']); //add each gameid related to the user to an array
+    array_push($challengesIdArray, $row['id']); // Add each gameid related to the user to an array
 }
-$challengingOpponentArray = [];
-for ($i = 0; $i < sizeof($challengesIdArray); $i++) {
-    $getOpponent = safe_sql_query("SELECT blackplayer, whiteplayer FROM gamerecord WHERE id = ?", ['s', $challengesIdArray[$i]]);
-    $getOpponentArray = mysqli_fetch_array($getOpponent);
-    if ($getOpponentArray['blackplayer'] == $currentUser) {
 
-        array_push($challengingOpponentArray, $getOpponentArray['whiteplayer']);
-    } else {
-        array_push($challengingOpponentArray, $getOpponentArray['blackplayer']);
-    }
+$challengingOpponentArray = [];
+foreach ($challengesIdArray as $challengesId) {
+    $getOpponent = safe_sql_query("SELECT blackplayer, whiteplayer FROM gamerecord WHERE id = ?", ['s', $challengesId]);
+    $getOpponentArray = mysqli_fetch_array($getOpponent);
+
+    $opponent = ($getOpponentArray['blackplayer'] == $currentUser) ? $getOpponentArray['whiteplayer'] : $getOpponentArray['blackplayer'];
+    array_push($challengingOpponentArray, $opponent);
 }
 
 $getUserInfo = safe_sql_query("SELECT * FROM users WHERE username = ?", ['s', $currentUser]);
@@ -73,7 +56,7 @@ begin_html_page('User Page', ['user_page.css']);
     <div id="nameIconRating">
         <h1 id="userName"><?= $currentUser ?></h1>
         <h2 id="rating">段級: ?</h2>
-        <h2 id="record"><?= $userInfoArray['record'] ?>&nbsp&nbsp </h2>
+        <h2 id="record"><?= $userInfoArray['record'] ?>&nbsp;&nbsp;</h2>
         <p id="hitokotoInput">"<?= $userInfoArray['hitokoto'] ?>"</p>
         <a href="/settings" id="settings">設定</a>
         <div id="iconBox">
@@ -81,17 +64,14 @@ begin_html_page('User Page', ['user_page.css']);
         </div>
     </div>
 
-
     <div class="user">
         <h3 class='centered'>対局中</h3>
         <br>
-
         <div id="allGames"></div>
     </div>
     <div class="user">
         <h3 class='centered'>新着チャレンジ</h3>
         <br>
-
         <div id="newChallenges"></div>
     </div>
 
@@ -115,3 +95,4 @@ begin_html_page('User Page', ['user_page.css']);
 
 <?php
 end_html_page();
+?>
