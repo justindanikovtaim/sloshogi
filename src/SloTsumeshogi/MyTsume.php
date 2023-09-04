@@ -14,11 +14,11 @@ $result = mysqli_query($link, "SELECT id, problemName, createdBy, published FROM
 <body>
 <a href = "slo_tsumeshogi.php"id = "backButton">≪</a><br>
     <h1>SLO詰将棋問題集</h1>
-    <?php 
+    <?php
     while($row = mysqli_fetch_array($result)){
         //list all of the tsume shogi problems
         echo "<a class = 'problemList' href = 'tsume.php?id=".$row['id']."'>#".$row['id']." ".$row['problemName']." by ".$row['createdBy']."</a>";
-        echo "<a class = 'problemList' href = 'edit_tsume.php?id=".$row['id']."'><button>編集</button></a>"; //this is the edit button
+        echo "<a class = 'problemList' href = '/edit-tsume?id=".$row['id']."'><button>編集</button></a>"; //this is the edit button
         //see if the problem is published or not and make a 'publish' or 'unpublish' button
         if($row['published'] == '0'){
             echo "<a class = 'problemList' href = 'publish_tsume.php?id=".$row['id']."&pUp=1'><button>公開する</button></a><br>";
