@@ -1,55 +1,44 @@
 <?php
 
-require 'connect.php';
+require_once SHAREDPATH . 'database.php';
+require_once SHAREDPATH . 'template.php';
 
+if ($_POST["userColor"] == "blackplayer") {
+    $blackPlayer = $_COOKIE["current_user_cookie"];
+    $whitePlayer = $_POST["opponent"];
+} else {
+    $whitePlayer = $_COOKIE["current_user_cookie"];
+    $blackPlayer = $_POST["opponent"];
+}
+$publicPrivate = $_POST["publicPrivate"];
 
-if($_POST["userColor"] == "blackplayer"){
-        $blackPlayer = $_COOKIE["current_user_cookie"];
-        $whitePlayer = $_POST["opponent"];
-    }else{
-        $whitePlayer = $_COOKIE["current_user_cookie"];
-        $blackPlayer = $_POST["opponent"];
-    }
-    $publicPrivate = $_POST["publicPrivate"];
+$newChallenge = 'INSERT INTO gamerecord (private, moves, blackplayer, whiteplayer, status, creator)
+     VALUES (?, "", ?, ?, "1", ?);';
 
-    $newChallenge = 'INSERT INTO gamerecord (private, moves, blackplayer, whiteplayer, status, creator)
-     VALUES ('.$publicPrivate.', "", "' .$blackPlayer.'", "'.$whitePlayer.'", "1", "' .$_COOKIE["current_user_cookie"].'");';
+$getActiveGames = safe_sql_query("SELECT id FROM gamerecord WHERE (blackplayer = ? OR whiteplayer = ?) AND (status = 1 OR status = 2)", ['ss', getCurrentUser(), getCurrentUser()]);
 
-    $getActiveGames = mysqli_query($link, "SELECT id FROM gamerecord WHERE 
-    (blackplayer = '".$_COOKIE['current_user_cookie']."' OR whiteplayer = '".$_COOKIE['current_user_cookie']."')
-    AND (status = 1 OR status = 2)");
-
-    $activeGameCount = 0;
-   while($sqlArrayHolder = mysqli_fetch_array($getActiveGames)){//this loop goes though the user's active games and increments the counter for each
-       $activeGameCount ++; 
-   }
-   $getUserLevel = mysqli_query($link, "SELECT user_level FROM users WHERE username = '".$_COOKIE['current_user_cookie']."'");
+$activeGameCount = 0;
+while ($sqlArrayHolder = mysqli_fetch_array($getActiveGames)) { //this loop goes though the user's active games and increments the counter for each
+    $activeGameCount++;
+}
+$getUserLevel = safe_sql_query("SELECT user_level FROM users WHERE username = ?", ['s', getCurrentUser()]);
 $userLevel = mysqli_fetch_array($getUserLevel);
 
+begin_html_page('Slo Shogi Challenge');
+?>
 
-?> 
-<!DOCTYPE html>
-<head>
-    <title>Slo Shogi Challenge</title>
-    <link href="CSS/all_pages.css" rel="stylesheet">
-</head>
-<body>
-<a id = "backButton" href = "newGame.php">≪</a>
+<a id="backButton" href="/new-game">≪</a>
 <h1>
-<?php
-    if($activeGameCount < 5  || $userLevel['user_level'] > 0){
-
-    if(mysqli_query($link, $newChallenge)){
-        echo "Challenge Sent!";
-    } else{
-        echo "ERROR: Not able to execute $newChallenge. " . mysqli_error($link);
+    <?php
+    if ($activeGameCount < 5  || $userLevel['user_level'] > 0) {
+        if (safe_sql_query($newChallenge, ['isss', $publicPrivate, $blackPlayer, $whitePlayer, getCurrentUser()])) {
+            echo "Challenge Sent!";
+        }
+    } else {
+        echo "既に５つの対戦に参加しているため、新しい対戦を作ることはできません<br> You already have 5 active games/challenges. You cannot create a new challenge.";
     }
-}else{
-    echo "既に５つの対戦に参加しているため、新しい対戦を作ることはできません<br> You already have 5 active games/challenges. You cannot create a new challenge.";
-}
 
- ?>
- </h1>
+    ?>
+</h1>
 
-</body>
- </html>
+<?php end_html_page(); ?>
