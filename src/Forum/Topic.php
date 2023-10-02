@@ -1,95 +1,96 @@
 <?php
-//create_cat.php
-include '../connect.php';
-include 'header.php';
 
-$sql = "SELECT
-			topic_id,
-			topic_subject
-		FROM
-			forum_topics
-		WHERE
-			forum_topics.topic_id = " . mysqli_real_escape_string($link, $_GET['id']);
-			
-$result = mysqli_query($link, $sql);
+require_once SHAREDPATH . 'database.php';
+require_once SHAREDPATH . 'session.php';
+require_once 'templates/header.php';
 
-if(!$result)
-{
-	echo 'The topic could not be displayed, please try again later.';
-}
-else
-{
-	if(mysqli_num_rows($result) == 0)
-	{
-		echo 'This topic doesn&prime;t exist.';
-	}
-	else
-	{
-		while($row = mysqli_fetch_assoc($result))
-		{
-			//display post data
-			echo '<table class="topic" border="1">
+$sql = "SELECT topic_id, topic_subject FROM forum_topics WHERE forum_topics.topic_id = ?";
+$result = safe_sql_query($sql, ['s', mysqli_real_escape_string($link, $_GET['id'])]);
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Forum Topic</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+	<div class="container">
+
+		<?php if (!$result || mysqli_num_rows($result) == 0) { ?>
+
+			<h2>This topic doesn't exist.</h2>
+
+		<?php } else { ?>
+
+			<?php while ($row = mysqli_fetch_assoc($result)) { ?>
+
+				<h2><?php echo $row['topic_subject']; ?></h2>
+
+				<table class="topic" border="1">
+					<?php
+					$posts_sql = "SELECT
+                        post_topic,
+                        post_content,
+                        post_date,
+                        post_by
+                    FROM
+                        forum_posts
+                    WHERE
+                        post_topic = " . mysqli_real_escape_string($link, $_GET['id']);
+
+					$posts_result = mysqli_query($link, $posts_sql);
+
+					if (!$posts_result) {
+						echo '<tr><td>The posts could not be displayed, please try again later.</tr></td></table>';
+					} else {
+						while ($posts_row = mysqli_fetch_assoc($posts_result)) {
+					?>
+							<tr class="topic-post">
+								<td class="user-post">
+									<a style="font-size: 3vw" href="/view-friend?friendName=<?php echo $posts_row['post_by']; ?>"><?php echo $posts_row['post_by']; ?></a><br />
+									<?php echo date('d-m-Y H:i', strtotime($posts_row['post_date'])); ?>
+								</td>
+								<td class="post-content">
+									<?php echo htmlentities(stripslashes($posts_row['post_content'])); ?>
+								</td>
+							</tr>
+					<?php
+						}
+					}
+					?>
+
+					<!-- Reply Form -->
 					<tr>
-						<th colspan="2">' . $row['topic_subject'] . '</th>
-					</tr>';
-		
-			//fetch the posts from the database
-			/*$posts_sql = "SELECT
-						forum_posts.post_topic,
-						forum_posts.post_content,
-						forum_posts.post_date,
-						forum_posts.post_by,
-						users.username
-					FROM
-						forum_posts
-					LEFT JOIN
-						users
-					ON
-						forum_posts.post_by = users.username
-					WHERE
-						forum_posts.post_topic = " . mysqli_real_escape_string($link, $_GET['id']);
-				*/
-				$posts_sql = "SELECT
-						post_topic,
-						post_content,
-						post_date,
-						post_by
-					FROM
-						forum_posts
-					WHERE
-						post_topic = " . mysqli_real_escape_string($link, $_GET['id']);	
+						<td colspan="2">
+							<p id="reply">返事:</p>
+							<form method="post" action="/reply?id=<?php echo $row['topic_id']; ?>">
+								<textarea name="reply-content" required></textarea><br /><br />
+								<input type="submit" value="送信" />
+							</form>
+						</td>
+					</tr>
 
-			$posts_result = mysqli_query($link, $posts_sql);
-			
-			if(!$posts_result)
-			{
-				echo '<tr><td>The posts could not be displayed, please try again later.</tr></td></table>';
-			}
-			else
-			{
-			
-				while($posts_row = mysqli_fetch_assoc($posts_result))
-				{
-					echo '<tr class="topic-post">
-							<td class="user-post"><a style="font-size: 3vw" href="../view_friend.php?friendName='. $posts_row['post_by'].'">' . $posts_row['post_by'] . '</a><br/>' . date('d-m-Y H:i', strtotime($posts_row['post_date'])) . '</td>
-							<td class="post-content">' . htmlentities(stripslashes($posts_row['post_content'])) . '</td>
-						  </tr>';
-				}
-			}
-			
-				//show reply box
-				echo '<tr><td colspan="2"><p id="reply">返事:</p>
-					<form method="post" action="reply.php?id=' . $row['topic_id'] . '">
-						<textarea name="reply-content" required></textarea><br /><br />
-						<input type="submit" value="送信" />
-					</form></td></tr>';
-			
-			
-			//finish the table
-			echo '</table>';
-		}
-	}
-}
+				</table>
 
-include 'footer.php';
+			<?php } ?>
+
+		<?php } ?>
+
+	</div>
+
+</body>
+
+</html>
+
+<?php
+
+require_once 'templates/footer.php';
+
 ?>

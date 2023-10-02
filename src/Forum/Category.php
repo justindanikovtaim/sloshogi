@@ -1,85 +1,75 @@
 <?php
-//create_cat.php
-include '../connect.php';
-include 'header.php';
 
-//first select the category based on $_GET['cat_id']
-$sql = "SELECT
-            cat_id,
-            cat_name,
-            cat_description
-        FROM
-            forum_categories
-        WHERE
-            cat_id = '" . mysqli_real_escape_string($link, $_GET['id'])."'";
- 
-$result = mysqli_query($link, $sql);
- 
-if(!$result)
+require_once SHAREDPATH . 'database.php';
+require_once 'templates/header.php';
+
+function displayCategoryTopics($categoryId, $link)
 {
-    echo '1The category could not be displayed, please try again later.' . mysqli_error($link);
-}
-else
-{
-    if(mysqli_num_rows($result) == 0)
-    {
-        echo 'このカテゴリーは存在しない.';
+    $categoryQuery = "SELECT
+                        cat_name
+                    FROM
+                        forum_categories
+                    WHERE
+                        cat_id = '" . mysqli_real_escape_string($link, $categoryId) . "'";
+    $categoryResult = mysqli_query($link, $categoryQuery);
+
+    if (!$categoryResult || mysqli_num_rows($categoryResult) == 0) {
+        return;
     }
-    else
-    {
-        //display category data
-        while($row = mysqli_fetch_assoc($result))
-        {
-            echo '<h2>′' . $row['cat_name'] . '′ のトピックス</h2>';
-        }
-     
-        //do a query for the topics
-        $sql = "SELECT  
-                    topic_id,
-                    topic_subject,
-                    topic_date,
-                    topic_cat
-                FROM
-                    forum_topics
-                WHERE
-                    topic_cat = " . mysqli_real_escape_string($link, $_GET['id']);
-         
-        $result = mysqli_query($link, $sql);
-         
-        if(!$result)
-        {
-            echo '2The topics could not be displayed, please try again later.';
-        }
-        else
-        {
-            if(mysqli_num_rows($result) == 0)
-            {
-                echo 'このカテゴリーにはトピックスはまだ存在しない';
-            }
-            else
-            {
-                //prepare the table
-                echo '<table border="1">
-                      <tr>
-                        <th>トピック</th>
-                        <th>作成日時</th>
-                      </tr>'; 
-                     
-                while($row = mysqli_fetch_assoc($result))
-                {               
-                    echo '<tr>';
-                        echo '<td class="leftpart">';
-                            echo '<h3><a href="topic.php?id=' . $row['topic_id'] . '">' . $row['topic_subject'] . '</a><h3>';
-                        echo '</td>';
-                        echo '<td class="rightpart">';
-                            echo date('d-m-Y', strtotime($row['topic_date']));
-                        echo '</td>';
-                    echo '</tr>';
-                }
-            }
-        }
+
+    $categoryRow = mysqli_fetch_assoc($categoryResult);
+?>
+    <h2><?php echo $categoryRow['cat_name']; ?> Topics</h2>
+
+    <?php
+    $topicsQuery = "SELECT
+                        topic_id,
+                        topic_subject,
+                        topic_date
+                    FROM
+                        forum_topics
+                    WHERE
+                        topic_cat = " . mysqli_real_escape_string($link, $categoryId);
+    $topicsResult = mysqli_query($link, $topicsQuery);
+
+    if (!$topicsResult || mysqli_num_rows($topicsResult) == 0) {
+        return;
     }
+    ?>
+
+    <table border="1">
+        <tr>
+            <th>Topic</th>
+            <th>Created Date</th>
+        </tr>
+
+        <?php
+        while ($row = mysqli_fetch_assoc($topicsResult)) {
+        ?>
+            <tr>
+                <td class="leftpart">
+                    <h3><a href="topic.php?id=<?php echo $row['topic_id']; ?>"><?php echo $row['topic_subject']; ?></a></h3>
+                </td>
+                <td class="rightpart">
+                    <?php echo date('d-m-Y', strtotime($row['topic_date'])); ?>
+                </td>
+            </tr>
+        <?php
+        }
+        ?>
+
+    </table>
+<?php
 }
- 
-include 'footer.php';
+
+if (!isset($_GET['id'])) {
+?>
+    <h5>You must select a category first.</h5>
+<?php
+} else {
+    $categoryId = $_GET['id'];
+    displayCategoryTopics($categoryId, $link);
+}
+
+require_once 'templates/footer.php';
 ?>

@@ -1,52 +1,48 @@
 <?php
-//create_cat.php
-require '../connect.php';
-include 'header.php';
-         
-$sql = "SELECT
-            cat_id,
-            cat_name,
-            cat_description
-        FROM forum_categories";
- 
-$result = mysqli_query($link, $sql);
- 
-if(!$result)
-{
-    echo 'The categories could not be displayed, please try again later.'.mysqli_error($link);
-}
-else
-{
-    if(mysqli_num_rows($result) == 0)
-    {
+
+require_once SHAREDPATH . 'database.php';
+require_once 'templates/header.php';
+
+$sql = "SELECT cat_id, cat_name, cat_description FROM forum_categories";
+
+$result = safe_sql_query($sql);
+
+if (!$result) {
+    echo 'The categories could not be displayed, please try again later.' . mysqli_error($link);
+} else {
+    if (mysqli_num_rows($result) == 0) {
         echo 'No categories defined yet.';
-    }
-    else
-    {
-        //prepare the table
-        echo '<table border="1">
-              <tr>
+    } else {
+?>
+        <table border="1">
+            <tr>
                 <th>カテゴリー</th>
                 <th>最新トピック</th>
-              </tr>'; 
-             
-        while($row = mysqli_fetch_assoc($result))
-        {   
-            $mostRecentQuery = mysqli_query($link,"SELECT * FROM forum_topics WHERE topic_cat = '".$row['cat_id']. "' ORDER BY topic_id DESC LIMIT 1");
-            $mostRecent = mysqli_fetch_array($mostRecentQuery);
-            $recentTopic = $mostRecent['topic_subject'];
-            $recentDate = $mostRecent['topic_date'];
-            $recentId = $mostRecent['topic_id'];
-            echo '<tr>';
-                echo '<td class="leftpart">';
-                    echo '<h3><a href="category.php?id='.$row['cat_id'].'">' . $row['cat_name'] . '</a></h3>' . $row['cat_description'];
-                echo '</td>';
-                echo '<td class="rightpart">';
-                            echo '<a href="topic.php?id='.$recentId.'">'.$recentTopic.'</a> at '.$recentDate;
-                echo '</td>';
-            echo '</tr>';
-        }
+            </tr>
+            <?php
+            while ($row = mysqli_fetch_assoc($result)) {
+                $mostRecentQuery = safe_sql_query("SELECT * FROM forum_topics WHERE topic_cat = ? ORDER BY topic_id DESC LIMIT 1", ['s', $row['cat_id']]);
+                $mostRecent = mysqli_fetch_array($mostRecentQuery);
+                $recentTopic = $mostRecent['topic_subject'];
+                $recentDate = $mostRecent['topic_date'];
+                $recentId = $mostRecent['topic_id'];
+            ?>
+                <tr>
+                    <td class="leftpart">
+                        <h3><a href="/category?id=<?php echo $row['cat_id'] ?>"><?php echo $row['cat_name'] ?></a></h3><?php echo $row['cat_description'] ?>
+                    </td>
+                    <td class="rightpart">
+                        <a href="/topic?id=<?php echo $recentId ?>"><?php echo $recentTopic ?></a> at <?php echo $recentDate ?>
+                    </td>
+                </tr>
+            <?php
+            }
+            ?>
+        </table>
+<?php
     }
 }
-include 'footer.php';
+
+require_once 'template/footer.php';
+
 ?>
