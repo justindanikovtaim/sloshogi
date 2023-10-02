@@ -4,22 +4,8 @@ require_once SHAREDPATH . 'database.php';
 require_once SHAREDPATH . 'template.php';
 require_once SHAREDPATH . 'session.php';
 
-$enteredEmail = htmlspecialchars($_POST['email']);
-$emailOkay = filter_var($enteredEmail, FILTER_VALIDATE_EMAIL); //make sure email is in correct format
-
-begin_html_page("SLO Shogi Invite Friends");
-?>
-
-<a id="backButton" href="/friends">≪ <span style="font-size: 5vw">友達リストへ Back to Friends</span></a>
-<br>
-<br>
-<h3>友達へ招待リンクを送ります Send and invite link to a friend</h3>
-
-<?php
-if (!$emailOkay) {
-    echo "入力したアドレスに誤りがありました。もう一回入力してみてください There was an error in the email address you entered. PLease try again.";
-} else {
-    //send the email
+function sendInvitationEmail($email)
+{
     $message = "友達がSLO Shogiに招待してくれました！
     \n下記のリンクよりアカウント登録ができます。
     \nA friend has invited you to SLO Shogi!
@@ -32,12 +18,38 @@ if (!$emailOkay) {
 
     $message = wordwrap($message, 70);
 
-    if (mail($enteredEmail, "友達がSLO将棋へ招待してくれました　A Friend Invited You to SLO Shogi", $message)) {
+    return mail($email, "友達がSLO将棋へ招待してくれました　A Friend Invited You to SLO Shogi", $message);
+}
 
-        echo "Invitation email has been sent! Ask your friend to check their email<br>
+function displaySuccessMessage()
+{
+    echo "Invitation email has been sent! Ask your friend to check their email<br>
 招待メールは送信されました！友達にメールをチェックしてもらいましょう";
+}
+
+function displayErrorMessage()
+{
+    echo "問題がありました。少し待ってからもう一回送ってみて下さい There was a problem sending the email. Please try again after waiting for a short bit";
+}
+
+$enteredEmail = htmlspecialchars($_POST['email']);
+
+begin_html_page("SLO Shogi Invite Friends");
+?>
+
+<a id="backButton" href="/friends">≪ <span style="font-size: 5vw">友達リストへ Back to Friends</span></a>
+<br>
+<br>
+<h3>友達へ招待リンクを送ります Send and invite link to a friend</h3>
+
+<?php
+if (!isValidEmail($enteredEmail)) {
+    echo "入力したアドレスに誤りがありました。もう一回入力してみてください There was an error in the email address you entered. Please try again.";
+} else {
+    if (sendInvitationEmail($enteredEmail)) {
+        displaySuccessMessage();
     } else {
-        echo "問題がありました。少し待ってからもう一回送ってみて下さい There was a problem sending the email. Please try again after waiting for a short bit";
+        displayErrorMessage();
     }
 }
 ?>
