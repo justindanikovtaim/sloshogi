@@ -33,6 +33,7 @@ function load_route(string $route)
         '/gameboard' => ABSPATH . 'Gameboard/Gameboard.php',
         '/gameboard/move-reservation' => ABSPATH . 'Gameboard/MoveReservation.php',
         '/gameboard/kifu/write-kifu' => ABSPATH . 'Gameboard/WriteKifu.php',
+        '/gameboard/send-chat' => ABSPATH . 'Gameboard/SendChat.php',
         // New Game
         '/new-game' => ABSPATH . 'NewGame/NewGame.php',
         '/new-game/new-challenge' => ABSPATH . 'NewGame/NewChallenge.php',

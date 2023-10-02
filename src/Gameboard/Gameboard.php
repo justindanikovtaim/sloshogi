@@ -4,74 +4,99 @@ require_once SHAREDPATH . 'database.php';
 require_once SHAREDPATH . 'template.php';
 require_once SHAREDPATH . 'session.php';
 
-//for the turn into tsumeshogi function
-$gameID = $_GET['id'];
-$result = safe_sql_query("SELECT * FROM gamerecord WHERE id = ?", ['i', $gameID]);
-if ($result->num_rows == 0) {
-    //if a game id that doesn't exist is input
+function redirectToUserPage()
+{
     header('location: /user-page');
     die();
 }
 
-$temparray = array();
-$row = mysqli_fetch_array($result);
+function redirectToPrivateGame()
+{
+    header('Location: /private-game');
+    die();
+}
 
-if ($row['private'] != 0) {
-    if (getCurrentUser() != $row['blackplayer'] && getCurrentUser() != $row['whiteplayer']) {
-        header('Location: /private-game');
-        die();
+function fetchGameRecord($gameID)
+{
+    $result = safe_sql_query("SELECT * FROM gamerecord WHERE id = ?", ['i', $gameID]);
+    return mysqli_fetch_array($result);
+}
+
+function validateGameID($gameRecord)
+{
+    if ($gameRecord['private'] != 0 && getCurrentUser() != $gameRecord['blackplayer'] && getCurrentUser() != $gameRecord['whiteplayer']) {
+        redirectToPrivateGame();
     }
 }
 
+function determinePlayerColor($gameRecord)
+{
+    if ($gameRecord['blackplayer'] == getCurrentUser()) {
+        return "black";
+    } else {
+        return "white";
+    }
+}
 
-array_push(
-    $temparray,
-    $row["moves"],
-    $row["blackplayer"],
-    $row["whiteplayer"],
-    $row["reservation1"],
-    $row["reservation2"],
-    $row["reservation3"],
-    $row["status"],
-    $row["winner"],
-    getCurrentUser(),
-    $row['lastMoveTime']
-);
-$chatSeen = $row['chatseen'];
-
-if ($row['blackplayer'] == getCurrentUser()) {
-    //get the opponent's username
-    $opponentName = $row['whiteplayer'];
-    $playerColor = "black";
+function determineNewChatIcon($chatSeen)
+{
     if ($chatSeen == 1 || $chatSeen == 0) {
-        //if there's a chat that the black player hasn't seen yet
-        $newChatIcon = 1;
+        return 1;
     } else {
-        $newChatIcon = 0;
+        return 0;
     }
-
-    $chatSeenNum = 2; //this sets the number to be sent to DB indicating if there's a new msg or not (2 will indicate new msg for white)
-} else {
-    $opponentName = $row['blackplayer'];
-    $playerColor = "white";
-    if ($chatSeen == 2 || $chatSeen == 0) {
-        $newChatIcon = 1;
-    } else {
-        $newChatIcon = 0;
-    }
-    $chatSeenNum = 1;
 }
 
-$getUserInfo = safe_sql_query("SELECT rating, icon, username FROM users WHERE username = ?", ['s', $opponentName]);
-$opInfo = mysqli_fetch_array($getUserInfo);
+function fetchOpponentInfo($opponentName)
+{
+    $getUserInfo = safe_sql_query("SELECT rating, icon, username FROM users WHERE username = ?", ['s', $opponentName]);
+    return mysqli_fetch_array($getUserInfo);
+}
 
-$getUserInfo = safe_sql_query("SELECT rating, icon, username, komaSet FROM users WHERE username = ?", ['s', getCurrentUser()]);
-$userInfo = mysqli_fetch_array($getUserInfo);
+function fetchUserInfo($currentUser)
+{
+    $getUserInfo = safe_sql_query("SELECT rating, icon, username, komaSet FROM users WHERE username = ?", ['s', $currentUser]);
+    return mysqli_fetch_array($getUserInfo);
+}
 
-//get the chat history
-$getChat = safe_sql_query("SELECT chat FROM gamerecord WHERE id = ?", ['i', $gameID]);
-$chatArray = mysqli_fetch_array($getChat);
-$chatHistory = explode("%%", $chatArray['chat']);
+function fetchChatHistory($gameID)
+{
+    $getChat = safe_sql_query("SELECT chat FROM gamerecord WHERE id = ?", ['i', $gameID]);
+    $chatArray = mysqli_fetch_array($getChat);
+    return explode("%%", $chatArray['chat']);
+}
+
+$gameID = $_GET['id'];
+$gameRecord = fetchGameRecord($gameID);
+if (!$gameRecord) {
+    // If a game ID that doesn't exist is input
+    redirectToUserPage();
+}
+
+validateGameID($gameRecord);
+
+$temparray = [
+    $gameRecord["moves"],
+    $gameRecord["blackplayer"],
+    $gameRecord["whiteplayer"],
+    $gameRecord["reservation1"],
+    $gameRecord["reservation2"],
+    $gameRecord["reservation3"],
+    $gameRecord["status"],
+    $gameRecord["winner"],
+    getCurrentUser(),
+    $gameRecord['lastMoveTime']
+];
+
+$chatSeen = $gameRecord['chatseen'];
+$playerColor = determinePlayerColor($gameRecord);
+$newChatIcon = determineNewChatIcon($chatSeen);
+$chatSeenNum = ($playerColor == "black") ? 2 : 1;
+
+$opponentName = ($playerColor == "black") ? $gameRecord['whiteplayer'] : $gameRecord['blackplayer'];
+$opInfo = fetchOpponentInfo($opponentName);
+$userInfo = fetchUserInfo(getCurrentUser());
+$chatHistory = fetchChatHistory($gameID);
 
 begin_html_page('Slo Shogi - Gameboard', ['Gameboard_style_sheet.css'], ['track_gameboard_time.js'], true);
 ?>
@@ -277,7 +302,7 @@ begin_html_page('Slo Shogi - Gameboard', ['Gameboard_style_sheet.css'], ['track_
                 }
 
             }
-            ajax.open("POST", 'send_chat.php', true); //asyncronous
+            ajax.open("POST", '/send-chat', true); //asyncronous
             ajax.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
             //make this send a json file
             ajax.send(msgToSend);
@@ -322,9 +347,9 @@ begin_html_page('Slo Shogi - Gameboard', ['Gameboard_style_sheet.css'], ['track_
         document.getElementById("popupChat").classList.toggle("chatShow");
     }
 </script>
-<script src="scripts/track_gameboard_time.js"></script>
-<script src="scripts/slo_shogi_script.js"></script>
-<script src="scripts/game_prompt.js"></script>
+<script src="/public/js/track_gameboard_time.js"></script>
+<script src="/public/js/slo_shogi_script.js"></script>
+<script src="/public/js/game_prompt.js"></script>
 
 <?php
 end_html_page();
