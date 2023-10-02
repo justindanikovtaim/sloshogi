@@ -3,23 +3,30 @@
 require_once 'database.php';
 require_once 'session.php';
 
-$enteredPW = htmlspecialchars($_POST['pw']);
-$currentUser = htmlspecialchars($_POST['userData']);
+// function authenticateUser($enteredPassword, $currentUser)
+// {
+//   $verifyPWQuery = safe_sql_query("SELECT pass FROM users WHERE BINARY username = ?", ['s', $currentUser]);
+//   $verifyPW = mysqli_fetch_array($verifyPWQuery, MYSQLI_NUM);
 
-die($enteredPW . " " . $currentUser);
+//   if (!password_verify($enteredPassword, $verifyPW[0]) && $enteredPassword != $verifyPW[0]) {
+//     return false;
+//   }
 
-// $verifyPWQuery = mysqli_query($link, "SELECT pass FROM users WHERE BINARY username = '".$currentUser ."'");
+//   $getUserIcon = safe_sql_query("SELECT icon FROM users WHERE username = ?", ['s', $currentUser]);
+//   $icon = mysqli_fetch_array($getUserIcon);
 
-// $verifyPW = mysqli_fetch_array($verifyPWQuery, MYSQLI_NUM); //make numeric array
+//   setcookie('current_user_cookie', $currentUser, time() + (86400 * 365), "/"); // 86400 = 1 day
+//   setcookie('icon', $icon['icon'], time() + (86400 * 365), "/");
 
-// if(!password_verify($enteredPW, $verifyPW[0]) && $enteredPW != $verifyPW[0]){
-//     header('Location: /login_error.html');
-//     die("couldn't be found");
-// }else{
-//     $getUserIcon = mysqli_query($link, "SELECT icon FROM users WHERE username = '".$currentUser ."'");//get the set icon
-//     $icon = mysqli_fetch_array($getUserIcon);
-//     setcookie('current_user_cookie', $currentUser, time() + (86400 * 365), "/"); // 86400 = 1 day
-//     setcookie('icon', $icon['icon'], time() + (86400 * 365), "/");
+//   return true;
+// }
 
-//     header('Location: user_page.php');
+// $enteredPW = htmlspecialchars($_POST['pw']);
+// $currentUser = htmlspecialchars($_POST['userData']);
+
+// if (authenticateUser($enteredPW, $currentUser)) {
+//   header('Location: user_page.php');
+// } else {
+//   header('Location: /login_error.html');
+//   exit();
 // }
