@@ -1,7 +1,9 @@
 <?php
+
 require_once SHAREDPATH . 'template.php';
 
 begin_html_page('What is Slo Shogi', ['index.css']);
+
 ?>
 
 <a id="backButton" href="/">≪<span style="font-size: 6vw;color: grey;">トップへ戻る</span></a><br><br>

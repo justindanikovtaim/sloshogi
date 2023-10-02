@@ -1,18 +1,21 @@
 <?php
-require_once SHAREDPATH . 'template.php';
 
-if (isset($_COOKIE['current_user_cookie'])) {
-    header('Location: user_page.php');
+require_once SHAREDPATH . 'template.php';
+require_once SHAREDPATH . 'session.php';
+
+if (isUserLoggedIn()) {
+    header('Location: /user-page');
     die();
 }
 
 begin_html_page('Slo Shogi', ['index.css']);
+
 ?>
 
 <div id="userLogin"><a href="/login" id="userLoginText">ログイン Login</a></div>
 
 <h2>SLO SHOGIへようこそ</h2>
-<img id="screenshot" src="/public/images/screenshot.jpg">
+<img id="screenshot" src="/public/images/screenshot.JPG">
 <p>まずは簡単アカウント登録から：</p>
 <a href="/new-account" id='buttonRow'>アカウント登録</a>
 <br>

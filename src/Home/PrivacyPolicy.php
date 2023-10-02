@@ -1,11 +1,9 @@
 <?php
-/**
- * Privacy Policy Page
- */
 
 require_once SHAREDPATH . 'template.php';
 
 begin_html_page('Slo Shogi Privacy Policy');
+
 ?>
 
 <style>
