@@ -8,6 +8,8 @@
 
 function load_route(string $route)
 {
+    $_route = strtok($route, '?');
+
     $routes = array(
         // Home
         '/' => ABSPATH . 'Home/Home.php',
@@ -86,8 +88,8 @@ function load_route(string $route)
         }
     }
 
-    if (routeExist($route, $routes) && file_exists($routes[$route])) {
-        require_once $routes[$route];
+    if (routeExist($_route, $routes) && file_exists($routes[$_route])) {
+        require_once $routes[$_route];
     } else {
         // send 404
         header("HTTP/1.0 404 Not Found");
