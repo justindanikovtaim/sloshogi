@@ -38,7 +38,10 @@ function load_route(string $route)
         '/new-game' => ABSPATH . 'NewGame/NewGame.php',
         '/new-game/new-challenge' => ABSPATH . 'NewGame/NewChallenge.php',
         '/new-game/create-open-game' => ABSPATH . 'NewGame/CreateOpenGame.php',
+        '/new-game/new-open-game' => ABSPATH . 'NewGame/NewOpenGame.php',
         '/new-game/join-game' => ABSPATH . 'NewGame/JoinGame.php',
+        '/decline-challenge' => ABSPATH . 'NewGame/DeclineChallenge.php',
+        '/accept-challenge' => ABSPATH . 'NewGame/AcceptChallenge.php',
         '/private-game' => ABSPATH . 'NewGame/PrivateGame.php',
         // Friends
         '/friends' => ABSPATH . 'Friends/Friends.php',
