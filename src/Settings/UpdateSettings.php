@@ -1,9 +1,10 @@
 <?php
-require 'connect.php';
+require_once SHAREDPATH . 'database.php';
+require_once SHAREDPATH . 'session.php';
 
 $newHitokoto = $_POST['hitokoto'];
 
- mysqli_query($link, 'UPDATE users SET hitokoto = "'.$newHitokoto.'" WHERE username = "'.$_COOKIE['current_user_cookie'].'"');
+ safe_sql_query("UPDATE users SET hitokoto = ? WHERE username = ?", ['ss', $newHitokoto, getCurrentUser()]);
 
- header('location: user_page.php');
+ header('location: /user-page');
 ?>

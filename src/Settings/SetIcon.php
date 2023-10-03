@@ -1,9 +1,9 @@
 <?php
 $newIcon = $_GET['newIcon'];
 
-require 'connect.php';
+require_once SHAREDPATH . 'database.php';
+require_once SHAREDPATH . 'session.php';
 
 setcookie('icon', $newIcon, time() + (86400 * 365), "/");
-mysqli_query($link, 'UPDATE users SET icon = "'.$newIcon.'" WHERE username = "'.$_COOKIE['current_user_cookie'].'"');
-header("Location: settings.php");
- ?>
+safe_sql_query("UPDATE users SET icon = ? WHERE username = ?", ['ss', $newIcon, getCurrentUser()]);
+header("Location: /settings");

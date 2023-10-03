@@ -4,8 +4,8 @@ require_once ABSPATH . 'template.php';
 begin_html_page('SLO Shogi Koma Design Comp', ['index.css']);
 ?>
 
-<a id="backButton" href="index.php">≪<span style="font-size: 6vw;color: grey;">トップへ戻る</span></a><br><br><br><br>
-<img src="images/komaCompBanner.jpg">
+<a id="backButton" href="/">≪<span style="font-size: 6vw;color: grey;">トップへ戻る</span></a><br><br><br><br>
+<img src="/public/images/komaCompBanner.jpg">
 <br>
 <h1>コンペ概要</h1>
 
@@ -21,7 +21,7 @@ begin_html_page('SLO Shogi Koma Design Comp', ['index.css']);
     <span style="color:black">テンプレート:</span><br><br>
     以下のテンプレートをご使用ください（右クリックして画像を保存してください）。
 </p>
-<img src="images/koma_comp_template.png" href="koma_comp_template.html" stlye="width:10vw;">
+<img src="/public/images/koma_comp_template.png" href="/koma-comp-template" stlye="width:10vw;">
 <p class='paragraphText'>
     <span style="color:black">駒デザインの規格:</span><br><br>
     ・ファイル形式:PNG<br>
@@ -64,7 +64,7 @@ begin_html_page('SLO Shogi Koma Design Comp', ['index.css']);
 
 <div id="compForm">
     <h2>デザインをアップロード：</h2>
-    <form action="comp_submit.php" method="post">
+    <form action="/settings/submit-comp" method="post">
         <label for="uploadFile" required>自作デザインの画像ファイル（.png）を選択</label>
         <input type="file" id="uploadFile" name="uploadFile">
         <br><br>
@@ -77,7 +77,7 @@ begin_html_page('SLO Shogi Koma Design Comp', ['index.css']);
         <input type="submit" value="提出">
     </form>
 </div>
-<h1><a href="feedback_form.php?src=index&id=na" id="feedback">バグ報告・Report a bug</a></h1>
+<h1><a href="/feedback-form" id="feedback">バグ報告・Report a bug</a></h1>
 
 <?php
 end_html_page();

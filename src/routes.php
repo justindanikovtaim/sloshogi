@@ -22,13 +22,17 @@ function load_route(string $route)
         '/new-account' => ABSPATH . 'Auth/NewAccount.php',
         '/verify-creation' => ABSPATH . 'Auth/VerifyCreation.php',
         '/account-setup' => ABSPATH . 'Auth/AccountSetup.php',
+        '/reset-password' => ABSPATH . 'Auth/ResetPassword.php',
         '/finalize-account' => ABSPATH . 'Auth/FinalizeAccount.php',
         '/logout' => ABSPATH . 'Auth/Logout.php',
         '/user-page' => ABSPATH . 'User/UserPage.php',
         // Settings
         '/settings' => ABSPATH . 'Settings/Settings.php',
         '/settings/update-icon' => ABSPATH . 'Settings/UpdateIcon.php',
+        '/settings/set-icon' => ABSPATH . 'Settings/UpdateIcon.php',
         '/settings/change-koma-set' => ABSPATH . 'Settings/ChangeKomaSet.php',
+        '/settings/preview-koma-set' => ABSPATH . 'Settings/PreviewKomaSet.php',
+        '/settings/submit-comp' => ABSPATH . 'Settings/PreviewKomaSet.php', // missing file
         // Gameboard
         '/gameboard' => ABSPATH . 'Gameboard/Gameboard.php',
         '/gameboard/move-reservation' => ABSPATH . 'Gameboard/MoveReservation.php',
@@ -69,7 +73,8 @@ function load_route(string $route)
         '/send-feedback' => ABSPATH . 'Feedback/SendFeedback.php',
     );
 
-    function routeExist(string $route, array $routes) {
+    function routeExist(string $route, array $routes)
+    {
         foreach ($routes as $key => $value) {
             if ($route == $key) {
                 return true;

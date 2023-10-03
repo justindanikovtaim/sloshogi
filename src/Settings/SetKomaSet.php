@@ -1,8 +1,8 @@
 <?php
 $newKomaSet = $_GET['newKomaSet'];
 
-require 'connect.php';
+require_once SHAREDPATH . 'database.php';
+require_once SHAREDPATH . 'session.php';
 
-mysqli_query($link, 'UPDATE users SET komaSet = "'.$newKomaSet.'" WHERE username = "'.$_COOKIE['current_user_cookie'].'"');
-header("Location: settings.php");
- ?>
+safe_sql_query("UPDATE users SET komaSet = ? WHERE username = ?", ['ss', $newKomaSet, getCurrentUser()]);
+header("Location: /settings");

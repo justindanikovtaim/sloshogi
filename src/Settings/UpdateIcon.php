@@ -1,23 +1,15 @@
 <?php
-$allIcons = glob("images/icons/*.png"); //https://www.tutorialspoint.com/get-all-the-images-from-a-folder-in-php
+
+require_once SHAREDPATH . 'template.php';
+$allIcons = glob("/public/images/icons/*.png");
+
+begin_html_page('', ['icon_select.css']);
 ?>
 
-<!DOCTYPE HTML>
-<head>
+<h1>アイコンを選択してください<br> Please choose your icon</h1>
+<?php foreach ($allIcons as $icon) : ?>
+    <a href="/settings/set-icon?newIcon='.substr($icon, 13, (strlen($icon) - 22 )).'">
+        <img src="<?php echo $icon ?>" class="iconSelect" id="<?php echo $icon ?>"></a> <br>
+<?php endforeach ?>
 
-    <link href="CSS/all_pages.css" rel="stylesheet">
-    <link href="CSS/icon_select.css" rel="stylesheet">
-
- </head>
- <body>
-     <h1>アイコンを選択してください<br> Please choose your icon</h1>
-     <?php
-     
-     foreach($allIcons as $icon){
-         //isolate only the name of the icon without the _icon.php at the end
-         echo '<a href = "set_icon.php?newIcon='.substr($icon, 13, (strlen($icon) - 22 )).'"> 
-         <img src="'.$icon.'" class = "iconSelect" id = "'.$icon.'"></a> <br>';
-     }
-     ?>
-
- </body>
+<?php end_html_page() ?>
