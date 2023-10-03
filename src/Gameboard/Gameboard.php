@@ -103,8 +103,8 @@ begin_html_page('Slo Shogi - Gameboard', ['Gameboard_style_sheet.css'], ['track_
 
 <div id="wholeBoard">
     <div id="pNoP">
-        <img src="/public/images/koma/<?= $userInfo['komaSet'] ?>/BGYOKU.png" id="promote">
-        <img src="/public/images/koma/<?= $userInfo['komaSet'] ?>/BNHI.png" id="dontPromote">
+        <img src="/public/images/koma/<?php echo $userInfo['komaSet'] ?>/BGYOKU.png" id="promote">
+        <img src="/public/images/koma/<?php echo $userInfo['komaSet'] ?>/BNHI.png" id="dontPromote">
     </div>
 
     <div id="boardColor">
@@ -112,12 +112,12 @@ begin_html_page('Slo Shogi - Gameboard', ['Gameboard_style_sheet.css'], ['track_
         <a href="/user-page" id="backButton">≪</a>
 
         <div id="opInfo">
-            <a href="/friends/view-friend?friendName=<?= $opInfo['username'] ?>">
+            <a href="/friends/view-friend?friendName=<?php echo $opInfo['username'] ?>">
                 <div id="opIconBox">
-                    <img src="/public/images/icons/<?= $opInfo['icon'] ?>_icon.png" id="opIcon">
+                    <img src="/public/images/icons/<?php echo $opInfo['icon'] ?>_icon.png" id="opIcon">
                 </div>
                 <div id="opNameBox">
-                    <h4 id="opName"><?= $opponentName ?></h4>
+                    <h4 id="opName"><?php echo $opponentName ?></h4>
                 </div>
             </a>
         </div>
@@ -164,10 +164,10 @@ begin_html_page('Slo Shogi - Gameboard', ['Gameboard_style_sheet.css'], ['track_
 
     <div id="userInfo">
         <div id="userIconBox">
-            <img src="/public/images/icons/<?= $userInfo['icon'] ?>_icon.png" id="userIcon">
+            <img src="/public/images/icons/<?php echo $userInfo['icon'] ?>_icon.png" id="userIcon">
         </div>
         <div id="userNameBox">
-            <h4 id="userName"><?= getCurrentUser() ?></h4>
+            <h4 id="userName"><?php echo getCurrentUser() ?></h4>
         </div>
     </div>
 
@@ -180,9 +180,9 @@ begin_html_page('Slo Shogi - Gameboard', ['Gameboard_style_sheet.css'], ['track_
         <a href="#" onClick="toggleChat()">チャット表示・View Chat</a>
         <img class="msgIcon" src="/public/images/new_message_icon.png" id="newMessageInMenu">
         <a href="#" id="resignButton" onClick="resign()">投了・Resign</a>
-        <a href="/gameboard/kifu/write-kifu?id=<?= $gameID ?>">棋譜をダウンロード・Download Kifu</a>
+        <a href="/gameboard/kifu/write-kifu?id=<?php echo $gameID ?>">棋譜をダウンロード・Download Kifu</a>
         <a href="#" onClick="sendForTsume()">この局面を詰将棋にする</a>
-        <a href="/feedback-form?src=gameboard&id=<?= $gameID ?>">バグ報告・Report a bug</a>
+        <a href="/feedback-form?src=gameboard&id=<?php echo $gameID ?>">バグ報告・Report a bug</a>
     </div>
 
     <div class="popupChat" id="popupChat">
@@ -218,13 +218,13 @@ begin_html_page('Slo Shogi - Gameboard', ['Gameboard_style_sheet.css'], ['track_
         </div>
         <!--
     <div id = "resBox1">
-<a href="move_reservation.php?id=<?= $gameID ?>&komaSet=<?= $userInfo['komaSet'] ?>&resBox=1" ><img src = /public/images/reservation/res_1_grey.png id = "resButton1"></a>
+<a href="move_reservation.php?id=<?php echo $gameID ?>&komaSet=<?php echo $userInfo['komaSet'] ?>&resBox=1" ><img src = /public/images/reservation/res_1_grey.png id = "resButton1"></a>
 </div>
 <div id="resBox2">
-<a href="move_reservation.php?id=<?= $gameID ?>&komaSet=<?= $userInfo['komaSet'] ?>&resBox=2" ><img src = /public/images/reservation/res_2_grey.png id = "resButton2"></a>
+<a href="move_reservation.php?id=<?php echo $gameID ?>&komaSet=<?php echo $userInfo['komaSet'] ?>&resBox=2" ><img src = /public/images/reservation/res_2_grey.png id = "resButton2"></a>
 </div>
 <div id="resBox3">
-<a href="move_reservation.php?id=<?= $gameID ?>&komaSet=<?= $userInfo['komaSet'] ?>&resBox=3" ><img src = /public/images/reservation/res_3_grey.png id = "resButton3"></a>
+<a href="move_reservation.php?id=<?php echo $gameID ?>&komaSet=<?php echo $userInfo['komaSet'] ?>&resBox=3" ><img src = /public/images/reservation/res_3_grey.png id = "resButton3"></a>
 </div>
 -->
     </div>
@@ -237,23 +237,23 @@ begin_html_page('Slo Shogi - Gameboard', ['Gameboard_style_sheet.css'], ['track_
 </form>
 
 <script>
-    var currentGameID = <?= $gameID ?>;
+    var currentGameID = <?php echo $gameID ?>;
     var gameHistory = <?php echo json_encode($temparray); ?>;
-    var phpColor = "<?= getCurrentUser() ?>";
-    let colorForTime = "<?= $playerColor ?>";
-    var chatNoChange = <?= $chatSeen ?>;
-    var newMsgIcon = <?= $newChatIcon ?>;
-    var chatSeenNum = <?= $chatSeenNum ?>;
+    var phpColor = "<?php echo getCurrentUser() ?>";
+    let colorForTime = "<?php echo $playerColor ?>";
+    var chatNoChange = <?php echo $chatSeen ?>;
+    var newMsgIcon = <?php echo $newChatIcon ?>;
+    var chatSeenNum = <?php echo $chatSeenNum ?>;
     var msgSent = false;
     var seenNotSent = false;
-    var komaSet = <?= $userInfo['komaSet'] ?>;
+    var komaSet = <?php echo $userInfo['komaSet'] ?>;
 
     if (newMsgIcon == 0) { //if there are no new messages (0 = false)
         document.getElementById("newMessage").style.visibility = "hidden";
         document.getElementById("newMessageInMenu").style.visibility = "hidden";
     }
     //write the chat contents to the hidden chat screen
-    let chatHistory = <?= json_encode($chatHistory) ?>;
+    let chatHistory = <?php echo json_encode($chatHistory) ?>;
     let chatContents = [];
     let counter = 1;
     for (i = 0; i < chatHistory.length; i += 2) {
@@ -286,7 +286,7 @@ begin_html_page('Slo Shogi - Gameboard', ['Gameboard_style_sheet.css'], ['track_
             var ajax = new XMLHttpRequest();
             let msgToSend = JSON.stringify({
                 "textToSend": document.getElementById("popupChatInput").value,
-                "gameId": <?= $gameID ?>,
+                "gameId": <?php echo $gameID ?>,
                 "chatSeenNum": chatSeenNum
             });
             console.log(msgToSend);
@@ -310,7 +310,7 @@ begin_html_page('Slo Shogi - Gameboard', ['Gameboard_style_sheet.css'], ['track_
             let userName = document.createElement("H3");
             userName.setAttribute("class", "chatNameHeader");
             userName.style = "text-align: right";
-            userName.innerHTML = "<?= getCurrentUser() ?>";
+            userName.innerHTML = "<?php echo getCurrentUser() ?>";
 
             let newMsg = document.createElement("p");
             newMsg.setAttribute("class", "chatEntryRight");

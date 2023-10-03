@@ -15,7 +15,7 @@ begin_html_page("SLO Shogi Feedback");
 ?>
 
 <h2>
-    <a id="backButton" href="<?= $sourcePage ?>">≪</a>
+    <a id="backButton" href="<?php echo $sourcePage ?>">≪</a>
     <br><br>
     <?php if ($query) : ?>
         フィードバックが配信されました！ありがとうございます。Feedback Sent! Thank you

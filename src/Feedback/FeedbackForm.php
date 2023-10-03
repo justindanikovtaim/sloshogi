@@ -8,7 +8,7 @@ $sourcePage = htmlspecialchars($_GET['src']) . ".php?id=" . htmlspecialchars($_G
 begin_html_page("SLO Shogi Feedback", ['form.css']);
 ?>
 
-<a id="backButton" href="<?= $sourcePage ?>">≪</a>
+<a id="backButton" href="<?php echo $sourcePage ?>">≪</a>
 
 <form action="/send-feedback" name="feedbackData" method="post">
     <h5>フィードバックの種類・Feedback Type:</h5>
@@ -20,7 +20,7 @@ begin_html_page("SLO Shogi Feedback", ['form.css']);
     <label for="other" class="radioText">その他・Other</label><br><br>
     <label for="comment" class="radioText">詳細・Details</label><br>
     <textarea id="comment" name="comment" required></textarea>
-    <input type="hidden" name="src" value="<?= $sourcePage ?>">
+    <input type="hidden" name="src" value="<?php echo $sourcePage ?>">
     <input type="submit" value="送信・Send">
 </form>
 

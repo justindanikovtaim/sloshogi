@@ -34,7 +34,7 @@ if ($activeGameCount < 5 || $userLevel['user_level'] > 0) {
 begin_html_page('Slo Shogi Challenge');
 ?>
 
-<a id="backButton" href="/view-challenge?id=<?= $_GET['id'] ?>">≪</a>
+<a id="backButton" href="/view-challenge?id=<?php echo $_GET['id'] ?>">≪</a>
 
 <?php
 end_html_page();

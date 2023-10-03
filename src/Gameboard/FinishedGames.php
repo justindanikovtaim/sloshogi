@@ -49,13 +49,13 @@ begin_html_page("SLO Shogi User Page", ['user_page.css']);
 
 <div id="all">
     <div id="nameIconRating">
-        <h1 id="userName"><?= $user ?></h1>
+        <h1 id="userName"><?php echo $user ?></h1>
         <h2 id="rating">段級: ?</h2>
-        <h2 id="record"><?= $userInfoArray['record'] ?>&nbsp;&nbsp; </h2>
-        <p id="hitokotoInput">"<?= $userInfoArray['hitokoto'] ?>"</p>
+        <h2 id="record"><?php echo $userInfoArray['record'] ?>&nbsp;&nbsp; </h2>
+        <p id="hitokotoInput">"<?php echo $userInfoArray['hitokoto'] ?>"</p>
         <a href="/settings" id="settings">設定 Settings</a>
         <div id="iconBox">
-            <img src="/public/images/icons/<?= $_COOKIE['icon'] ?>_icon.png" id="userIcon">
+            <img src="/public/images/icons/<?php echo $_COOKIE['icon'] ?>_icon.png" id="userIcon">
         </div>
     </div>
 

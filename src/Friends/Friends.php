@@ -43,8 +43,8 @@ begin_html_page("SLO Shogi Friends", ['friends_page.css']);
     <?php foreach ($findFriends as $i) : ?>
 
         friendLinks[counter] = document.createElement("a");
-        friendLinks[counter].innerHTML = "<?= $i ?>";
-        friendLinks[counter].setAttribute("href", "/friends/view-friend?friendName=<?= $i ?>");
+        friendLinks[counter].innerHTML = "<?php echo $i ?>";
+        friendLinks[counter].setAttribute("href", "/friends/view-friend?friendName=<?php echo $i ?>");
         document.getElementById("drawFriends").appendChild(friendLinks[counter]);
         document.getElementById("drawFriends").innerHTML += "<br>";
         counter++

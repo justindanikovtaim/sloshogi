@@ -46,7 +46,7 @@ begin_html_page('Slo Tsumeshogi', ['Gameboard_style_sheet.css', 'create_tsume.cs
     </div>
 
     <div class="popupMenu" id="popupMenuId">
-        <a href="/feedback-form?src=gameboard&id=<?= $gameID ?>">バッグ報告・Report a bug</a>
+        <a href="/feedback-form?src=gameboard&id=<?php echo $gameID ?>">バッグ報告・Report a bug</a>
     </div>
 
     <div id="promptBox">

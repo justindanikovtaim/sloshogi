@@ -15,7 +15,7 @@ $query = safe_sql_query("UPDATE users SET friends = CONCAT(friends, ?) WHERE id 
 begin_html_page("SLO Shogi Add Friends", ['friends_page.css']);
 ?>
 
-<a id="backButton" href="/fiends/view-friend?friendName=<?= $friendName ?>">≪</a>
+<a id="backButton" href="/fiends/view-friend?friendName=<?php echo $friendName ?>">≪</a>
 <br><br>
 <h3>
     <?php

@@ -41,12 +41,12 @@ begin_html_page("SLO Shogi Friends", ['user_page.css']);
 <br>
 <div id="all">
     <div id="nameIconRating">
-        <h1 id="userName"><?= $username ?></h1>
-        <h2 id="rating">段級: <?= $userInfoArray['rating'] ?></h1>
-            <h2 id="record">勝敗レコード: <?= $userInfoArray['record'] ?> </h1>
-                <p id="hitokotoInput">"<?= $userInfoArray['hitokoto'] ?>"</p>
+        <h1 id="userName"><?php echo $username ?></h1>
+        <h2 id="rating">段級: <?php echo $userInfoArray['rating'] ?></h1>
+            <h2 id="record">勝敗レコード: <?php echo $userInfoArray['record'] ?> </h1>
+                <p id="hitokotoInput">"<?php echo $userInfoArray['hitokoto'] ?>"</p>
                 <div id="iconBox">
-                    <img src="/public/images/icons/<?= $userInfoArray['icon'] ?>_icon.png" id="userIcon">
+                    <img src="/public/images/icons/<?php echo $userInfoArray['icon'] ?>_icon.png" id="userIcon">
                 </div>
     </div>
 </div>

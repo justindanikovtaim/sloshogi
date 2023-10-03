@@ -23,7 +23,7 @@ begin_html_page('Slo Shogi - Reserve', ['reservation.css'], [], true);
     <div id="blackMochigoma"></div>
 </div>
 <h3 id="playerPrompt"></h3>
-<a href="/gameboard?id=<?= $_GET['id'] ?>"> <img src="/public/images/return.png" id="toUserPage"> </a>
+<a href="/gameboard?id=<?php echo $_GET['id'] ?>"> <img src="/public/images/return.png" id="toUserPage"> </a>
 <img src="/public/images/submit.PNG" id="submitButton" onClick="sendMoveData()">
 
 <?php
@@ -34,10 +34,10 @@ array_push($temparray, $row["moves"], $row["blackplayer"], $row["whiteplayer"]);
 
 <script>
     var currentGameID = <?php echo $gameID; ?>;
-    var reservationSlot = "<?= $reservationSlot ?>";
+    var reservationSlot = "<?php echo $reservationSlot ?>";
     var gameHistory = <?php echo json_encode($temparray); ?>;
     var phpColor = "<?php echo $_COOKIE['current_user_cookie']; ?>";
-    var komaSet = <?= $komaSet ?>;
+    var komaSet = <?php echo $komaSet ?>;
 </script>
 
 <script src="scripts/move-reservation.js"></script>
