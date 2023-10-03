@@ -13,4 +13,4 @@ $_SESSION['boardConfig'] = $row['boardSetup'];
 $_SESSION['mgConfig'] = $row['mochigomaSetup'];
 $_SESSION['problemName'] = $row['problemName'];
 $_SESSION['problemId'] = $problemToFind;
-header('location: /initialize-tsume');
+header('location: /slotsumeshogi/initialize-tsume');

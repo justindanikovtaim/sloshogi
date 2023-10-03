@@ -29,7 +29,7 @@ begin_html_page('Slo Tsumeshogi', ['Gameboard_style_sheet.css', 'create_tsume.cs
 
 <div id="wholeBoard">
     <div id="boardColor">
-        <a href="/slo-tsumeshogi" id="backButton">≪</a>
+        <a href="/slotsumeshogi" id="backButton">≪</a>
 
 
         <div id="whiteMochigoma"></div>
@@ -94,5 +94,7 @@ begin_html_page('Slo Tsumeshogi', ['Gameboard_style_sheet.css', 'create_tsume.cs
     }
     ?>
 </script>
-<script src="scripts/tsume_shared.js"></script>
-<script src="scripts/create_tsume_script.js"></script>
+<script src="/public/js/tsume_shared.js"></script>
+<script src="/public/js/create_tsume_script.js"></script>
+
+<?php end_html_page() ?>

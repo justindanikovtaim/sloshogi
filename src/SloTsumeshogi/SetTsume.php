@@ -1,8 +1,8 @@
 <?php
 
 require_once SHAREDPATH . 'template.php';
+require_once SHAREDPATH . 'session.php';
 
-session_start();
 $_SESSION['boardConfig'] = $_POST['boardConfig'];
 $_SESSION['mgConfig'] = $_POST['mochigomaConfig'];
 
@@ -36,9 +36,9 @@ begin_html_page('Setup Slo tsumeshogi', ['tsume_style_sheet.css', 'create_tsume.
     </div>
     <!--if the problem name session variable is set, it means the problem is be re-edited, so the save url is different-->
     <form id="tsumeData" method="post" action="<?php if (isset($_SESSION['problemName'])) {
-                                                    echo '/slotsumeshogi/save_tsume?reSave=' . $_SESSION['problemId'];
+                                                    echo '/slotsumeshogi/save-tsume?reSave=' . $_SESSION['problemId'];
                                                 } else {
-                                                    echo '/slotsumeshogi/save_tsume';
+                                                    echo '/slotsumeshogi/save-tsume';
                                                 } ?>">
         <label for="problemName">問題の名前を入力してください</label>
         <input type="text" name="problemName" id="problemName" <?php if (isset($_SESSION['problemName'])) {
@@ -48,15 +48,15 @@ begin_html_page('Setup Slo tsumeshogi', ['tsume_style_sheet.css', 'create_tsume.
         <label for="timelimit">タイマー（秒単位)</label>
         <input type="number" name="timeLimit" id="timeLimit">）
         <input type="submit" value="問題を保存">
-        <input type="hidden" name="boardConfig" id="boardConfig" value="<?= $_SESSION['boardConfig'] ?>">
-        <input type="hidden" name="mochigomaConfig" id="mochigomaConfig" value="<?= $_SESSION['mgConfig'] ?>">
+        <input type="hidden" name="boardConfig" id="boardConfig" value="<?php echo $_SESSION['boardConfig'] ?>">
+        <input type="hidden" name="mochigomaConfig" id="mochigomaConfig" value="<?php echo $_SESSION['mgConfig'] ?>">
         <input type="hidden" name="moveSequence" id="moveSequence">
     </form>
 
     <script>
-        let tempstring = "<?= $_POST['boardConfig'] ?>";
+        let tempstring = "<?php echo $_POST['boardConfig'] ?>";
         var gameState = tempstring.split(",");
-        tempstring = "<?= $_POST['mochigomaConfig'] ?>";
+        tempstring = "<?php echo $_POST['mochigomaConfig'] ?>";
         var mochiGomaArray = tempstring.split(",");
 
         function showMenu() {

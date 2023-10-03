@@ -1,29 +1,29 @@
 <?php
-require 'connect.php';
+require_once SHAREDPATH . 'database.php';
+require_once SHAREDPATH . 'session.php';
+
 $in = file_get_contents('php://input');
 $decoded = json_decode($in, true);
 $problemTofind = $decoded['problemId'];
-$user = $_COOKIE['current_user_cookie'];
+$user = getCurrentUser();
 $solveTime = $decoded['scoreBoard'];
 $resetTime = $decoded['startingTime'];
 
-//update the completed list 
+//update the completed list
 //turn the current completed list string into an array
-$getCompletedList = mysqli_query($link, "SELECT completed FROM tsumeshogi WHERE id = '".$problemTofind."'");
+$getCompletedList = safe_sql_query("SELECT completed FROM tsumeshogi WHERE id = ?", ['i', $problemTofind]);
 $getCompletedArray = mysqli_fetch_array($getCompletedList);
 $completedArray = explode(";", $getCompletedArray['completed']);
 //check if the user's name is already in it
 if(!in_array($user, $completedArray)){
 //if not, add it to the end of string in the database
 echo "user not in winner array!";
-mysqli_query($link, "UPDATE tsumeshogi SET completed = CONCAT(completed, '".$user.";') WHERE id = '".$problemTofind."'");
+safe_sql_query("UPDATE tsumeshogi SET completed = CONCAT(completed, '".$user.";') WHERE id = ?", ['s', $problemTofind]);
 
 //next, test to see if updating the scoreBoard
 if($solveTime>0){
-
-
     $insertArray = [$user.";", $solveTime.";"];
-    $getStandings = mysqli_query($link, "SELECT scoreBoard FROM tsumeshogi WHERE id = '".$problemTofind."'");
+    $getStandings = safe_sql_query("SELECT scoreBoard FROM tsumeshogi WHERE id = ?", ['s', $problemTofind]);
     $getStandingsArray = mysqli_fetch_array($getStandings);
     $standingsArray = explode(";", $getStandingsArray['scoreBoard']);
     echo 'solve time:'.$solveTime.'standings array';
@@ -39,9 +39,9 @@ if($solveTime>0){
             if($inserted == false && $solveTime < $standingsArray[$i+1]){
                 $updatedStandings.= $insertArray[0] . $insertArray[1];
                 $inserted = true;
-                $updatedStandings.= $standingsArray[$i].";".$standingsArray[$i+1].";";  
+                $updatedStandings.= $standingsArray[$i].";".$standingsArray[$i+1].";";
             }else{
-            $updatedStandings.= $standingsArray[$i].";".$standingsArray[$i+1].";";  
+            $updatedStandings.= $standingsArray[$i].";".$standingsArray[$i+1].";";
             }
         }
         if($inserted == false){
@@ -49,12 +49,9 @@ if($solveTime>0){
             $updatedStandings.= $insertArray[0] . $insertArray[1];
         }
     }
-    $query = "UPDATE tsumeshogi SET scoreBoard = '".$updatedStandings."' WHERE id = '".$problemTofind."'";
-    echo $query;
-    mysqli_query($link, $query);
+    $query = "UPDATE tsumeshogi SET scoreBoard = ? WHERE id = ?";
+    safe_sql_query($query, ['ss', $updatedStandings, $problemTofind]);
     }
 }
 //reset the cookie
 setcookie($problemTofind.'timeLimit', $resetTime, time() + (86400 * 365), "/");
-
-?>

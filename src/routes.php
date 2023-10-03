@@ -62,12 +62,16 @@ function load_route(string $route)
         '/forum/topic' => ABSPATH . 'Forum/Topic.php',
         // SloTsumeshogi
         '/slotsumeshogi' => ABSPATH . 'SloTsumeshogi/SloTsumeshogi.php',
+        '/slotsumeshogi/publish-tsume' => ABSPATH . 'SloTsumeshogi/PublishTsume.php',
+        '/slotsumeshogi/tsume' => ABSPATH . 'SloTsumeshogi/Tsume.php',
+        '/slotsumeshogi/make-account-tsume' => ABSPATH . 'SloTsumeshogi/MakeAccountTsume.php',
         '/slotsumeshogi/set-tsume' => ABSPATH . 'SloTsumeshogi/SetTsume.php',
         '/slotsumeshogi/all-tsume' => ABSPATH . 'SloTsumeshogi/AllTsume.php',
         '/slotsumeshogi/all-tsume/tsume' => ABSPATH . 'SloTsumeshogi/Tsume.php',
         '/slotsumeshogi/pro-tsume' => ABSPATH . 'SloTsumeshogi/ProTsume.php',
         '/slotsumeshogi/my-tsume' => ABSPATH . 'SloTsumeshogi/MyTsume.php',
         '/slotsumeshogi/initialize-tsume' => ABSPATH . 'SloTsumeshogi/InitializeTsume.php',
+        '/slotsumeshogi/edit-tsume' => ABSPATH . 'SloTsumeshogi/EditTsume.php',
         // Feedback
         '/feedback-form' => ABSPATH . 'Feedback/FeedbackForm.php',
         '/send-feedback' => ABSPATH . 'Feedback/SendFeedback.php',

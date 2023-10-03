@@ -2,12 +2,15 @@
 
 require_once SHAREDPATH . 'database.php';
 require_once SHAREDPATH . 'template.php';
+require_once SHAREDPATH . 'session.php';
+
+$currentUser = getCurrentUser();
 
 if ($_POST["userColor"] == "blackplayer") {
-    $blackPlayer = $_COOKIE["current_user_cookie"];
+    $blackPlayer = $currentUser;
     $whitePlayer = $_POST["opponent"];
 } else {
-    $whitePlayer = $_COOKIE["current_user_cookie"];
+    $whitePlayer = $currentUser;
     $blackPlayer = $_POST["opponent"];
 }
 $publicPrivate = $_POST["publicPrivate"];

@@ -16,5 +16,5 @@ begin_html_page('Slo Tsumeshogi List');
 </h4>
 <h3>詰将棋</h3>
 <?php while ($row = mysqli_fetch_array($result)) : ?>
-    <a class='problemList' href='/tsume?id=<?php $row[' id'] ?>'>🐱<?php $row['problemName'] ?></a> by <a style='color: blue; font-size: 4vw' href='https://twitter.com/kayanokoithi' target='_blank' rel='noopener noreferrer'> @kayanokoithi</a>
+    <a class='problemList' href='/slotsumeshogi/tsume?id=<?php $row[' id'] ?>'>🐱<?php $row['problemName'] ?></a> by <a style='color: blue; font-size: 4vw' href='https://twitter.com/kayanokoithi' target='_blank' rel='noopener noreferrer'> @kayanokoithi</a>
 <?php endwhile; ?>
