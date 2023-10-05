@@ -17,6 +17,7 @@ how each of these were addressed for a better code structure and formatting.
 -   Depending on filenames for URL paths.
 -   Not writing self-explanatory code.
 -   Not having a style-guide for code formatting.
+-   Use of PHP short open tags.
 
 ### How issues were addressed
 
@@ -81,3 +82,6 @@ While comments are greath for a bad code, not commenting at all is way better, c
 #### Not having a style-guide for code formatting.
 
 And a final part for a great code is to maintain a consistent style across files, for this use any code formatter like prettier or PHP Intelliphense or PHPTaqwim. Tools used for this project were prettier, editorconfig, and PHPTaqwim.
+
+#### Use of PHP short open tags
+Simply not all servers have these enabled, always use `<?php ?>` instead.
