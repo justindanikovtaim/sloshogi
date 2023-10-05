@@ -9,11 +9,11 @@ function analyzeSelf() {
 
     //go through each square on the board and try out every move for each white pieces
     for (x = 0; x < 81; x++) {
-        if (gameState[x].charAt(0) === 'W') {
+        if (gameState[x].charAt(0) === "W") {
             let pieceType = gameState[x];
             let movedFrom = x;
             //get all possible(legal) moves for the piece and add them to an array
-            let theMoves = showMove(movedFrom, pieceType, 'W');
+            let theMoves = showMove(movedFrom, pieceType, "W");
             let movesArray = [];
             for (i = 0; i < theMoves.length; i++) {
                 movesArray[i] = Array(3);
@@ -59,7 +59,7 @@ function decideBestMove() {
     } else if (firstMovesArray.length === 0) {
         bestMove = [0];
     } else {
-        console.log('first Moves Array: ' + firstMovesArray);
+        console.log("first Moves Array: " + firstMovesArray);
         let moveAnalyzeArray = [];
         //then, count the number of possible responses from the player that would check the computer for each move
 
@@ -68,7 +68,7 @@ function decideBestMove() {
 
             //try out the move
             gameState[firstMovesArray[xray][1]] = firstMovesArray[xray][2];
-            gameState[firstMovesArray[xray][0]] = 'empty';
+            gameState[firstMovesArray[xray][0]] = "empty";
             drawBoard(); //remove
             //set the move analyze array corresponding to the move to the number of possible checking moves that the player can make in response
             moveAnalyzeArray[xray] = countCheckingMoves();
@@ -81,7 +81,7 @@ function decideBestMove() {
             //if the move would make it so the gyoku can't be checked, break the loop and use that move
             if (moveAnalyzeArray[xray] === 0) {
                 bestMove = firstMovesArray[xray];
-                setMessage('間違えました。Try Again');
+                setMessage("間違えました。Try Again");
                 break;
             }
         }
@@ -113,19 +113,19 @@ function countCheckingMoves() {
     //go through all squares on the board
     for (n = 0; n < 80; n++) {
         //if it's a black piece, get all its possible moves
-        if (gameState[n].charAt(0) === 'B') {
-            let tempCounterArray = showMove(n, gameState[n], 'B');
+        if (gameState[n].charAt(0) === "B") {
+            let tempCounterArray = showMove(n, gameState[n], "B");
             let length = tempCounterArray.length;
 
             let promotable;
             //check if it's actually a promotable piece
             switch (gameState[n]) {
-                case 'BF':
-                case 'BKEI':
-                case 'BKO':
-                case 'BHI':
-                case 'BKAKU':
-                case 'BGIN':
+                case "BF":
+                case "BKEI":
+                case "BKO":
+                case "BHI":
+                case "BKAKU":
+                case "BGIN":
                     promotable = true;
                     break;
                 default:
@@ -133,7 +133,7 @@ function countCheckingMoves() {
                     break;
             }
             //if the piece hasn't promoted yet
-            if (gameState[n].charAt(1) != 'N' && promotable) {
+            if (gameState[n].charAt(1) != "N" && promotable) {
                 //if the piece is starting in the promotion zone
                 if (n < 27) {
                     for (g = 0; g < length; g++) {
@@ -157,25 +157,25 @@ function countCheckingMoves() {
                     gameState[n],
                     n,
                     tempCounterArray[z],
-                    gameState[n],
+                    gameState[n]
                 );
-                if (tryTheMove === 'check') {
+                if (tryTheMove === "check") {
                     numberOfCheckingMoves++;
-                } else if (tryTheMove === 'mate') {
+                } else if (tryTheMove === "mate") {
                     numberOfCheckingMoves += 1000; //add 1,000 for a checkmate so that we know not to move there
                 }
             }
             //all spots in the array that were added on beyond the initial length are for the promoted version of the move
             for (z = length; z < tempCounterArray.length; z++) {
                 let tryTheMove = tryMove(
-                    'BN' + gameState[n].substr(1),
+                    "BN" + gameState[n].substr(1),
                     n,
                     tempCounterArray[z],
-                    gameState[n],
+                    gameState[n]
                 );
-                if (tryTheMove === 'check') {
+                if (tryTheMove === "check") {
                     numberOfCheckingMoves++;
-                } else if (tryTheMove === 'mate') {
+                } else if (tryTheMove === "mate") {
                     numberOfCheckingMoves += 1000; //add 1,000 for a checkmate so that we know not to move there
                 }
             }
@@ -190,7 +190,7 @@ function countCheckingMoves() {
             turn--;
             let newMoves = [];
             ///need to narrow down possible places to play (just the squares surrounding the gyoku, for instance)
-            let whiteGyokuPos = gameState.indexOf('WGYOKU');
+            let whiteGyokuPos = gameState.indexOf("WGYOKU");
             //this is an array of squares surrounding the gyoku
             let surroundingSquares = [
                 whiteGyokuPos - 1,
@@ -214,11 +214,11 @@ function countCheckingMoves() {
                     mochiGomaOrder[bboy].substr(1),
                     81,
                     newMoves[y],
-                    mochiGomaOrder[bboy].substr(1),
+                    mochiGomaOrder[bboy].substr(1)
                 );
-                if (tryTheMove === 'check') {
+                if (tryTheMove === "check") {
                     numberOfCheckingMoves++;
-                } else if (tryTheMove === 'mate') {
+                } else if (tryTheMove === "mate") {
                     numberOfCheckingMoves += 1000; //add 1,000 for a checkmate so that we know not to move there
                 }
             }
@@ -234,20 +234,20 @@ function tryMove(pieceType, from, to, realPiece) {
 
     //try out the move
     gameState[to] = pieceType;
-    gameState[from] = 'empty';
+    gameState[from] = "empty";
 
     //REMOVE
     drawBoard();
-    console.log('trying move with TryMove() ');
+    console.log("trying move with TryMove() ");
     //if it causes check, check for mate and return "mate" or just "check"; otherwise, return false
-    if (checkForCheck('W')) {
-        if (checkForMate('W')) {
-            returnVal = 'mate';
+    if (checkForCheck("W")) {
+        if (checkForMate("W")) {
+            returnVal = "mate";
         } else {
-            returnVal = 'check';
+            returnVal = "check";
         }
     } else {
-        returnVal = 'ok';
+        returnVal = "ok";
     }
 
     //revert to the way the board was before trying it out

@@ -29,4 +29,5 @@ while ($row = mysqli_fetch_array($result)) :
         </a>
         <br>
     <?php endif; ?>
-<?php endwhile; end_html_page(); ?>
+<?php endwhile;
+end_html_page(); ?>

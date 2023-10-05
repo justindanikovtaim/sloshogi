@@ -5,31 +5,31 @@ let startTime = Math.floor(Date.now() / 1000); //seconds since epoch
 let timeNow;
 let secondsOn;
 //https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_eve
-document.addEventListener('visibilitychange', function logTime() {
-    if (document.visibilityState === 'hidden') {
+document.addEventListener("visibilitychange", function logTime() {
+    if (document.visibilityState === "hidden") {
         timeNow = Math.floor(Date.now() / 1000);
         secondsOn = timeNow - startTime; //get the total seconds spent on the page
         console.log(
-            'startTime: ' +
+            "startTime: " +
                 startTime +
-                ' timeNow: ' +
+                " timeNow: " +
                 timeNow +
-                ' secondsOn: ' +
-                secondsOn,
+                " secondsOn: " +
+                secondsOn
         );
         $data = JSON.stringify({
             id: currentGameID,
             seconds: secondsOn,
             color: colorForTime,
         });
-        navigator.sendBeacon('/sloshogi/test.php', $data);
+        navigator.sendBeacon("/sloshogi/test.php", $data);
     } else {
         startTime = Math.floor(Date.now() / 1000);
         console.log(
-            'visible again startTime: ' +
+            "visible again startTime: " +
                 startTime +
-                ' colorForTime: ' +
-                colorForTime,
+                " colorForTime: " +
+                colorForTime
         );
     }
 });

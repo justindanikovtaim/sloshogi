@@ -1,16 +1,16 @@
 #wholeBoard {
     display: block;
     width: 98vw;
-    height: 100 vh; /* 135vw; */
+    height: 100 vh;
+    /* 135vw; */
     max-height: 100vh;
     right: 1vw;
     position: absolute;
-    background-color: rgba(
-        238,
-        166,
-        32,
-        0.514
-    ); /* rgba(206, 141, 29, 0.979);
+    background-color: rgba(238,
+            166,
+            32,
+            0.514);
+    /* rgba(206, 141, 29, 0.979);
     /*background-image: url("..//public/images/wood1.jpg"); */
     background-size: inherit;
     overflow: auto;

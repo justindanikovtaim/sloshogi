@@ -1,4 +1,5 @@
 # sloslogi
+
 web-based shogi application
 This is a shogi server that I designed and coded while learning HTML, CSS, Javascript, php, and sql.
 You can try it out at sloshogi.com

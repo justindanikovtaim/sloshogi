@@ -1,11 +1,13 @@
 body {
     background-color: #4e4e4e;
-    text-align: center; /* make sure IE centers the page too */
+    text-align: center;
+    /* make sure IE centers the page too */
 }
 
 #wrapper {
     width: 900px;
-    margin: 0 auto; /* center the page */
+    margin: 0 auto;
+    /* center the page */
 }
 
 #content {
@@ -14,14 +16,17 @@ body {
     float: left;
     padding: 3vw 30px;
     text-align: left;
-    width: 100%; /* fill up the entire div */
+    width: 100%;
+    /* fill up the entire div */
 }
 
 #menu {
     float: left;
     border: 1px solid #000;
-    border-bottom: none; /* avoid a double border */
-    clear: both; /* clear:both makes sure the content div doesn't float next to this one but stays under it */
+    border-bottom: none;
+    /* avoid a double border */
+    clear: both;
+    /* clear:both makes sure the content div doesn't float next to this one but stays under it */
     width: 100%;
     height: 20px;
     padding: 3vw 30px;
@@ -104,6 +109,7 @@ h3 {
     font-size: 75%;
     color: #373737;
 }
+
 #footer {
     font-size: 65%;
     padding: 3px 0 0 0;
@@ -131,6 +137,7 @@ a {
 .user-post {
     font-size: 2vw;
 }
+
 form {
     font-size: 4vw;
     background-color: rgb(238, 166, 32);
@@ -140,9 +147,11 @@ form {
     width: 25%;
     font-size: 4vw;
 }
+
 textarea {
     font-size: 16px;
 }
+
 #reply {
     background-color: rgb(238, 166, 32);
     font-size: 4vw;

@@ -1,5 +1,5 @@
 function setMessage(msgText) {
-    document.getElementById('playerPrompt').innerHTML = msgText;
+    document.getElementById("playerPrompt").innerHTML = msgText;
 }
 function showMove(square, komaType, checkingOnly) {
     //this array represents the possible movements the pieces can do
@@ -12,73 +12,73 @@ function showMove(square, komaType, checkingOnly) {
     let moveFormulas = [-9, -10, -1, 8, 9, 10, 1, -8, 19, 17]; //the position of the move relative to where the piece is
     //the knight's is adjusted by the negative or positive number in the moveDirections array
     let turnColor;
-    if (typeof checkingOnly !== 'undefined') {
+    if (typeof checkingOnly !== "undefined") {
         turnColor = checkingOnly;
     } else {
         if (turn % 2 === 0) {
-            turnColor = 'W';
+            turnColor = "W";
         } else {
-            turnColor = 'B';
+            turnColor = "B";
         }
     }
 
     switch (komaType) {
-        case 'BF':
+        case "BF":
             moveDirections[0] = 1;
             break;
-        case 'WF':
+        case "WF":
             moveDirections[4] = 1;
             break;
-        case 'BKEI':
+        case "BKEI":
             moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, -1, -1]; //negative will make it go backwards
             break;
-        case 'WKEI':
+        case "WKEI":
             moveDirections = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1]; //positive will make it go forward
             break;
-        case 'BKO':
+        case "BKO":
             moveDirections[0] = 2;
             break;
-        case 'WKO':
+        case "WKO":
             moveDirections[4] = 2;
             break;
-        case 'BHI':
-        case 'WHI':
+        case "BHI":
+        case "WHI":
             moveDirections = [2, 0, 2, 0, 2, 0, 2, 0, 0, 0];
             break;
-        case 'BKAKU':
-        case 'WKAKU':
+        case "BKAKU":
+        case "WKAKU":
             moveDirections = [0, 2, 0, 2, 0, 2, 0, 2, 0, 0];
             break;
-        case 'BGIN':
+        case "BGIN":
             moveDirections = [1, 1, 0, 1, 0, 1, 0, 1, 0, 0];
             break;
-        case 'WGIN':
+        case "WGIN":
             moveDirections = [0, 1, 0, 1, 1, 1, 0, 1, 0, 0];
             break;
-        case 'BKIN':
-        case 'BNGIN':
-        case 'BNKEI':
-        case 'BNKO':
-        case 'BNF':
+        case "BKIN":
+        case "BNGIN":
+        case "BNKEI":
+        case "BNKO":
+        case "BNF":
             moveDirections = [1, 1, 1, 0, 1, 0, 1, 1, 0, 0];
             break;
-        case 'WKIN':
-        case 'WNGIN':
-        case 'WNKEI':
-        case 'WNKO':
-        case 'WNF':
+        case "WKIN":
+        case "WNGIN":
+        case "WNKEI":
+        case "WNKO":
+        case "WNF":
             moveDirections = [1, 0, 1, 1, 1, 1, 1, 0, 0, 0];
             break;
-        case 'BNHI':
-        case 'WNHI':
+        case "BNHI":
+        case "WNHI":
             moveDirections = [2, 1, 2, 1, 2, 1, 2, 1, 0, 0];
             break;
-        case 'BNKAKU':
-        case 'WNKAKU':
+        case "BNKAKU":
+        case "WNKAKU":
             moveDirections = [1, 2, 1, 2, 1, 2, 1, 2, 0, 0];
             break;
-        case 'BGYOKU':
-        case 'WGYOKU':
+        case "BGYOKU":
+        case "WGYOKU":
             moveDirections = [1, 1, 1, 1, 1, 1, 1, 1, 0, 0];
             break;
     }
@@ -134,13 +134,13 @@ function showMove(square, komaType, checkingOnly) {
                     while (!isBlocked) {
                         //if the space is empty
                         if (
-                            gameState[moveSquare + moveFormulas[i]] === 'empty'
+                            gameState[moveSquare + moveFormulas[i]] === "empty"
                         ) {
                             move.push(moveSquare + moveFormulas[i]);
                             //if the space has an enemy piece
                         } else if (
                             gameState[moveSquare + moveFormulas[i]].charAt(
-                                0,
+                                0
                             ) !== turnColor
                         ) {
                             //add it to the move array
@@ -157,7 +157,7 @@ function showMove(square, komaType, checkingOnly) {
                             case -9: //up
                                 if (
                                     boardTopEdge.includes(
-                                        moveSquare + moveFormulas[i],
+                                        moveSquare + moveFormulas[i]
                                     )
                                 ) {
                                     isBlocked = true;
@@ -167,10 +167,10 @@ function showMove(square, komaType, checkingOnly) {
                             case -10: //up/right
                                 if (
                                     boardTopEdge.includes(
-                                        moveSquare + moveFormulas[i],
+                                        moveSquare + moveFormulas[i]
                                     ) ||
                                     board1Row.includes(
-                                        moveSquare + moveFormulas[i],
+                                        moveSquare + moveFormulas[i]
                                     )
                                 ) {
                                     isBlocked = true;
@@ -180,7 +180,7 @@ function showMove(square, komaType, checkingOnly) {
                             case -1: //right
                                 if (
                                     board1Row.includes(
-                                        moveSquare + moveFormulas[i],
+                                        moveSquare + moveFormulas[i]
                                     )
                                 ) {
                                     isBlocked = true;
@@ -190,10 +190,10 @@ function showMove(square, komaType, checkingOnly) {
                             case 8: //down/right
                                 if (
                                     boardBottomEdge.includes(
-                                        moveSquare + moveFormulas[i],
+                                        moveSquare + moveFormulas[i]
                                     ) ||
                                     board1Row.includes(
-                                        moveSquare + moveFormulas[i],
+                                        moveSquare + moveFormulas[i]
                                     )
                                 ) {
                                     isBlocked = true;
@@ -203,7 +203,7 @@ function showMove(square, komaType, checkingOnly) {
                             case 9: //down
                                 if (
                                     boardBottomEdge.includes(
-                                        moveSquare + moveFormulas[i],
+                                        moveSquare + moveFormulas[i]
                                     )
                                 ) {
                                     isBlocked = true;
@@ -213,10 +213,10 @@ function showMove(square, komaType, checkingOnly) {
                             case 10: //down/left
                                 if (
                                     boardBottomEdge.includes(
-                                        moveSquare + moveFormulas[i],
+                                        moveSquare + moveFormulas[i]
                                     ) ||
                                     board9Row.includes(
-                                        moveSquare + moveFormulas[i],
+                                        moveSquare + moveFormulas[i]
                                     )
                                 ) {
                                     isBlocked = true;
@@ -226,7 +226,7 @@ function showMove(square, komaType, checkingOnly) {
                             case 1: //left
                                 if (
                                     board9Row.includes(
-                                        moveSquare + moveFormulas[i],
+                                        moveSquare + moveFormulas[i]
                                     )
                                 ) {
                                     isBlocked = true;
@@ -236,10 +236,10 @@ function showMove(square, komaType, checkingOnly) {
                             case -8: //up/left
                                 if (
                                     boardTopEdge.includes(
-                                        moveSquare + moveFormulas[i],
+                                        moveSquare + moveFormulas[i]
                                     ) ||
                                     board9Row.includes(
-                                        moveSquare + moveFormulas[i],
+                                        moveSquare + moveFormulas[i]
                                     )
                                 ) {
                                     isBlocked = true;
@@ -247,7 +247,7 @@ function showMove(square, komaType, checkingOnly) {
                                 break;
                             default:
                                 alert(
-                                    "there's an error in the switch statement",
+                                    "there's an error in the switch statement"
                                 );
                                 isBlocked = true;
                                 break;
@@ -286,7 +286,7 @@ function showMove(square, komaType, checkingOnly) {
                 //if the space is empty
                 if (
                     gameState[square + moveFormulas[i] * moveDirections[i]] ===
-                    'empty'
+                    "empty"
                 ) {
                     move.push(square + moveFormulas[i] * moveDirections[i]);
                     //if the space has an enemy piece
@@ -311,52 +311,52 @@ function showMove(square, komaType, checkingOnly) {
 }
 function promotePiece(id) {
     if (
-        gameState[selectedPiece].charAt(1) !== 'N' && //if the piece is not promoted yet
-        gameState[selectedPiece].substr(1, 3) !== 'KIN' &&
-        gameState[selectedPiece].substr(1, 5) !== 'GYOKU'
+        gameState[selectedPiece].charAt(1) !== "N" && //if the piece is not promoted yet
+        gameState[selectedPiece].substr(1, 3) !== "KIN" &&
+        gameState[selectedPiece].substr(1, 5) !== "GYOKU"
     ) {
         //and not a kin or Gyoku
         //if it's a kei and in the top two rows, or a kyosha or fu in the top row, automatically promote
         let yesNo;
         switch (gameState[selectedPiece]) {
-            case 'BKEI':
+            case "BKEI":
                 if (id < 18) {
                     yesNo = true;
                 } else {
-                    yesNo = confirm('Promote?');
+                    yesNo = confirm("Promote?");
                 }
                 break;
-            case 'BKO':
-            case 'BF':
+            case "BKO":
+            case "BF":
                 if (id < 9) {
                     yesNo = true;
                 } else {
-                    yesNo = confirm('Promote?');
+                    yesNo = confirm("Promote?");
                 }
                 break;
-            case 'WKEI':
+            case "WKEI":
                 if (id > 62) {
                     yesNo = true;
                 } else {
-                    yesNo = confirm('Promote?');
+                    yesNo = confirm("Promote?");
                 }
                 break;
-            case 'WKO':
-            case 'WF':
+            case "WKO":
+            case "WF":
                 if (id > 71) {
                     yesNo = true;
                 } else {
-                    yesNo = confirm('Promote?');
+                    yesNo = confirm("Promote?");
                 }
                 break;
             default:
-                yesNo = confirm('Promote?');
+                yesNo = confirm("Promote?");
                 break;
         }
         if (yesNo) {
             gameState[selectedPiece] =
                 gameState[selectedPiece].substr(0, 1) +
-                'N' +
+                "N" +
                 gameState[selectedPiece].substr(1, 4); // add an N for nari after the first character
             newlyPromoted = true;
         }

@@ -22,12 +22,15 @@ h1 {
 h2 {
     font-size: 6vw;
 }
+
 h3 {
     font-size: 8vw;
 }
+
 a {
     font-size: 10vw;
 }
+
 .logoutButton {
     font-size: 6vw;
     color: grey;
@@ -56,6 +59,7 @@ input {
     font-size: 8vw;
     font-family: '8Bit';
 }
+
 button {
     font-size: 5vw;
     font-family: '8Bit';

@@ -14,6 +14,6 @@ if (safe_sql_query("DELETE FROM gamerecord WHERE id = ?", ['s', $id])) {
 begin_html_page('Slo Shogi Challenge');
 
 ?>
-    <a id="backButton" href="/view-challenge?id=<?php echo $id ?>">≪</a>
+<a id="backButton" href="/view-challenge?id=<?php echo $id ?>">≪</a>
 
 <?php end_html_page(); ?>

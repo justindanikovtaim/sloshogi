@@ -8,10 +8,12 @@
     background-color: rgb(238, 166, 32);
     border: 4px solid black;
 }
+
 .pieceSelectionShowLow {
     display: block;
     top: 50%;
 }
+
 .pieceSelectionShowHigh {
     display: block;
     top: 25%;
@@ -22,10 +24,12 @@
     width: 45vw;
     right: 5vw;
 }
+
 #reset {
     position: absolute;
     left: 5vw;
 }
+
 #resetNextButons {
     position: relative;
     float: right;
@@ -35,6 +39,7 @@
     max-height: 11vw;
     margin-top: 0.5vh;
 }
+
 #tsumeData {
     display: none;
     position: absolute;

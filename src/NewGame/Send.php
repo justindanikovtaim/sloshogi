@@ -25,7 +25,7 @@ function processGameMove($decoded)
 
     if ($lastTurn != $turn) {
         $deleteCommand = generateDeleteCommand($deleteRule);
-        $updateCommand = 'UPDATE gamerecord SET moves = CONCAT(moves, "'.$decoded['newmoves'].'"),' . $deleteCommand . ' turn = "'.$turn.'", chatseen = "'.$chatSeen.'",
+        $updateCommand = 'UPDATE gamerecord SET moves = CONCAT(moves, "' . $decoded['newmoves'] . '"),' . $deleteCommand . ' turn = "' . $turn . '", chatseen = "' . $chatSeen . '",
         lastMoveTime = ' . $playerTime . ' - moveTimestamp' . $playerColor . ',
         moveTimestamp' . $opColor . ' = ' . $opTime . ', moveTimestamp' . $playerColor . ' = ' . $playerTime . '  WHERE id = ?';
 

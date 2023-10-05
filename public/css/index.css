@@ -7,6 +7,7 @@
     background-color: rgb(238, 166, 32);
     border: 0.5vw solid black;
 }
+
 #userLoginText {
     position: absolute;
     margin: 3%;
@@ -14,6 +15,7 @@
     font-size: 3vw;
     text-align: center;
 }
+
 p {
     font-size: 6vw;
 }
@@ -29,6 +31,7 @@ p {
 .paragraphText {
     color: rgb(61, 58, 53);
 }
+
 #buttonRow {
     color: blue;
     display: flex;

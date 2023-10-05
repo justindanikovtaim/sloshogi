@@ -12,6 +12,7 @@
     left: 83vw;
     z-index: 1;
 }
+
 #userInfo {
     position: absolute;
     width: 16vw;
@@ -31,6 +32,7 @@
     margin: 0px;
     left: 22.5%;
 }
+
 #opIcon,
 #userIcon {
     position: absolute;
@@ -39,6 +41,7 @@
     object-fit: fill;
     z-index: inherit;
 }
+
 #opNameBox,
 #userNameBox {
     position: absolute;
@@ -48,6 +51,7 @@
     top: 80%;
     margin: 0px;
 }
+
 #opName,
 #userName {
     font-size: 2.5vw;
@@ -75,6 +79,7 @@
     border-style: double;
     background-color: rgb(238, 166, 32);
 }
+
 #board {
     position: relative;
     height: 90.2vw;
@@ -106,6 +111,7 @@
     border-style: solid;
     z-index: 1;
 }
+
 #playerPrompt {
     position: relative;
     height: 100%;
@@ -125,6 +131,7 @@
     background-color: red;
     z-index: 2;
 }
+
 #undoImg {
     position: absolute;
     height: 100%;
@@ -139,24 +146,29 @@
     width: 7vw;
     left: 91vw;
 }
+
 .turnRed {
     background-color: yellow;
     border: 1vw solid black;
 }
+
 #menuButton {
     position: absolute;
     height: 100%;
     width: 100%;
     object-fit: fill;
 }
+
 .msgIcon {
     position: absolute;
     z-index: 1;
 }
+
 #newMessage {
     height: 30%;
     width: 30%;
 }
+
 #newMessageInMenu {
     top: 0%;
     height: 2%;
@@ -174,6 +186,7 @@
     border: 2vw solid rgb(70, 70, 70);
     z-index: 2;
 }
+
 .popupMenu a {
     display: block;
     font-size: 5vw;
@@ -182,9 +195,11 @@
     border: 1vw solid black;
     background-color: #cccc99;
 }
+
 .menuShow {
     display: block;
 }
+
 .popupChat {
     display: none;
     position: absolute;
@@ -196,6 +211,7 @@
     border: 2vw solid rgb(70, 70, 70);
     z-index: 2;
 }
+
 .chatShow {
     display: block;
 }
@@ -206,10 +222,12 @@
     height: 70%;
     width: 100%;
 }
+
 .chatNameHeader {
     font-size: 6vw;
     margin-bottom: 0vw;
 }
+
 .chatEntryRight {
     position: relative;
     font-size: 4vw;
@@ -218,6 +236,7 @@
     width: 90%;
     right: -10%;
 }
+
 .chatEntryLeft {
     position: relative;
     font-size: 4vw;
@@ -225,6 +244,7 @@
     margin: 0vw;
     width: 90%;
 }
+
 #popupChatInput {
     position: absolute;
     width: 80%;
@@ -233,6 +253,7 @@
     right: 15%;
     font-size: 4vw;
 }
+
 #chatSend {
     position: absolute;
     width: 15%;
@@ -241,6 +262,7 @@
     right: 0%;
     font-size: 3vw;
 }
+
 #waitingMsg {
     display: none;
     position: absolute;
@@ -253,6 +275,7 @@
     border: 2vw solid white;
     z-index: 2;
 }
+
 #resButtons {
     position: relative;
     top: 0vw;
@@ -262,29 +285,34 @@
     border-style: double;
     margin-top: 0.5vh;
 }
+
 #resTextBox {
     position: absolute;
     width: 100%;
     height: 30%;
     background-color: rgb(238, 166, 32);
 }
+
 #resText {
     position: absolute;
     font-size: 2.5vw;
     top: -90%;
 }
+
 #resBox1 {
     position: absolute;
     height: 70%;
     width: 33%;
     top: 30%;
 }
+
 #resButton1 {
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: fill;
 }
+
 #resBox2 {
     position: absolute;
     height: 70%;
@@ -292,12 +320,14 @@
     left: 33%;
     top: 30%;
 }
+
 #resButton2 {
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: fill;
 }
+
 #resBox3 {
     position: absolute;
     height: 70%;
@@ -305,12 +335,14 @@
     right: 0%;
     top: 30%;
 }
+
 #resButton3 {
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: fill;
 }
+
 #timer {
     position: relative;
     float: left;
@@ -338,20 +370,25 @@
     background-color: rgb(238, 166, 32);
     height: 100%;
 }
+
 #fullback {
     left: 0%;
     width: 75%;
 }
+
 #oneBack {
     left: 25%;
 }
+
 #oneForward {
     left: 50%;
 }
+
 #fullForward {
     right: 0%;
     width: 25%;
 }
+
 .boardNum {
     position: absolute;
     top: 10.5vw;
@@ -359,62 +396,81 @@
     display: inline-block;
     z-index: 1;
 }
+
 #topNumber1 {
     margin-left: 9vw;
 }
+
 #topNumber2 {
     margin-left: 19vw;
 }
+
 #topNumber3 {
     margin-left: 29vw;
 }
+
 #topNumber4 {
     margin-left: 39vw;
 }
+
 #topNumber5 {
     margin-left: 49vw;
 }
+
 #topNumber6 {
     margin-left: 59vw;
 }
+
 #topNumber7 {
     margin-left: 69vw;
 }
+
 #topNumber8 {
     margin-left: 79vw;
 }
+
 #topNumber9 {
     margin-left: 89vw;
 }
+
 .boardKanji {
     position: absolute;
     left: 96vw;
     font-size: 2.5vw;
 }
+
 #kanji9 {
     top: 18vw;
 }
+
 #kanji8 {
     top: 28vw;
 }
+
 #kanji7 {
     top: 38vw;
 }
+
 #kanji6 {
     top: 48vw;
 }
+
 #kanji5 {
     top: 58vw;
 }
+
 #kanji4 {
     top: 68vw;
 }
+
 #kanji3 {
     top: 78vw;
 }
+
 #kanji2 {
     top: 88vw;
 }
+
 #kanji1 {
     top: 98vw;
 }
