@@ -4,7 +4,7 @@ let boardSquare = [];
 let sC = 0; //square counter
 let rowCounter = 0;
 let columnCounter = 0;
-let mochiGomaArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //array for black mochi goma 
+let mochiGomaArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //array for black mochi goma
 let mochiGoma = [];
 let selectionGoma = [];
 let mochiGomaAmmount = [];
@@ -22,7 +22,7 @@ setMessage("将棋盤にタップして駒を選択してください");
 for (i = 0; i < 9; i++) {
     for (x = 0; x < 9; x++) {
         boardSquare[sC] = document.createElement("img"); //create each of the 81 squares as an image in the document
-        boardSquare[sC].src = "images/koma/1/empty.png"; //temporarily set image source 
+        boardSquare[sC].src = "/public/images/koma/1/empty.png"; //temporarily set image source
         boardSquare[sC].style.width = "10vw"; //scale to fit board
         boardSquare[sC].style.position = "absolute";
         boardSquare[sC].style.right = columnCounter + "vw"; //set the distance from the right side of the board
@@ -43,7 +43,7 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
     for (x = 0; x < 7; x++) {
         if (jupiter === 0) { //if it's the first time through, we are drawing the white mochigoma
             mochiGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
-            mochiGoma[x].src = "images/koma/1/" + mochiGomaOrder[x] + ".png";
+            mochiGoma[x].src = "/public/images/koma/1/" + mochiGomaOrder[x] + ".png";
             mochiGoma[x].setAttribute("id", mochiGomaOrder[x]);
             mochiGoma[x].setAttribute("onClick", "mochiGomaIncrement(this.id)");
             mochiGoma[x].style.width = "9vw";
@@ -52,7 +52,7 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
             mochiGoma[x].style.top = "0vw";
             document.getElementById("whiteMochigoma").appendChild(mochiGoma[x]);
             mochiGomaAmmount[x] = document.createElement("img");
-            mochiGomaAmmount[x].src = "images/mochiGomaNum2.png";
+            mochiGomaAmmount[x].src = "/public/images/mochiGomaNum2.png";
             mochiGomaAmmount[x].style.width = "3vw";
             mochiGomaAmmount[x].style.position = "absolute";
             mochiGomaAmmount[x].style.right = spacer + "vw"; //offset it from the piece
@@ -61,7 +61,7 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
             document.getElementById("whiteMochigoma").appendChild(mochiGomaAmmount[x]);
         } else {//otherwise it's the second time through, so we are drawing the black mochigoma
             mochiGoma[x + 7] = document.createElement("img");//create a new img element for each mochigoma type
-            mochiGoma[x + 7].src = "images/koma/1/" + mochiGomaOrder[x + 7] + ".png";
+            mochiGoma[x + 7].src = "/public/images/koma/1/" + mochiGomaOrder[x + 7] + ".png";
             mochiGoma[x + 7].setAttribute("id", mochiGomaOrder[x + 7]);
             mochiGoma[x + 7].setAttribute("onClick", "mochiGomaIncrement(this.id)");
             mochiGoma[x + 7].style.width = "9vw";
@@ -71,7 +71,7 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
             mochiGoma[x + 7].style.opacity = "0.5";
             document.getElementById("blackMochigoma").appendChild(mochiGoma[x + 7]);
             mochiGomaAmmount[x + 7] = document.createElement("img");
-            mochiGomaAmmount[x + 7].src = "images/mochiGomaNum2.png";
+            mochiGomaAmmount[x + 7].src = "/public/images/mochiGomaNum2.png";
             mochiGomaAmmount[x + 7].style.width = "3vw";
             mochiGomaAmmount[x + 7].style.position = "absolute";
             mochiGomaAmmount[x + 7].style.right = spacer + "vw"; //offset it from the piece
@@ -87,11 +87,11 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
 
 //create the pieces that go inside the popup selection box
 spacer = 70.5;
-for (jupiter = 0; jupiter < 4; jupiter++) { 
+for (jupiter = 0; jupiter < 4; jupiter++) {
     for (x = 0; x < 8; x++) {
         if (jupiter === 0) { //if it's the first time through, we are drawing the white pieces
             selectionGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
-            selectionGoma[x].src = "images/koma/1/" + selectionGomaOrder[x] + ".png";
+            selectionGoma[x].src = "/public/images/koma/1/" + selectionGomaOrder[x] + ".png";
             selectionGoma[x].setAttribute("id", selectionGomaOrder[x]);
             selectionGoma[x].setAttribute("onClick", "addPiece(this.id)");
             selectionGoma[x].setAttribute("class", "selectionGoma");
@@ -103,7 +103,7 @@ for (jupiter = 0; jupiter < 4; jupiter++) {
 
         }else if(jupiter == 1){//drawing the white narigoma
             selectionGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
-            selectionGoma[x].src = "images/koma/1/" + selectionGomaOrder[x+8] + ".png";
+            selectionGoma[x].src = "/public/images/koma/1/" + selectionGomaOrder[x+8] + ".png";
             selectionGoma[x].setAttribute("id", selectionGomaOrder[x+8]);
             selectionGoma[x].setAttribute("onClick", "addPiece(this.id)");
             selectionGoma[x].setAttribute("class", "selectionGoma");
@@ -115,7 +115,7 @@ for (jupiter = 0; jupiter < 4; jupiter++) {
 
         }else if(jupiter == 2){//drawing the black narigoma
             selectionGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
-            selectionGoma[x].src = "images/koma/1/" + selectionGomaOrder[x+16] + ".png";
+            selectionGoma[x].src = "/public/images/koma/1/" + selectionGomaOrder[x+16] + ".png";
             selectionGoma[x].setAttribute("id", selectionGomaOrder[x+16]);
             selectionGoma[x].setAttribute("onClick", "addPiece(this.id)");
             selectionGoma[x].setAttribute("class", "selectionGoma");
@@ -127,7 +127,7 @@ for (jupiter = 0; jupiter < 4; jupiter++) {
 
         }else {//otherwise it's the last time through, so we are drawing the black pieces
             selectionGoma[x + 9] = document.createElement("img");//create a new img element for each mochigoma type
-            selectionGoma[x + 9].src = "images/koma/1/" + selectionGomaOrder[x + 24] + ".png";
+            selectionGoma[x + 9].src = "/public/images/koma/1/" + selectionGomaOrder[x + 24] + ".png";
             selectionGoma[x + 9].setAttribute("id",  selectionGomaOrder[x + 24]);
             selectionGoma[x + 9].setAttribute("onClick", "addPiece(this.id)");
             selectionGoma[x + 9].setAttribute("class", "selectionGoma");
@@ -154,7 +154,7 @@ function pieceClick(id){
     selectedSquare = id;
 }
 function mochiGomaIncrement(id){
-    //increment the mochigoma count 
+    //increment the mochigoma count
     let komaToIncrement = document.getElementById(id);
     let ammount = mochiGomaConfiguration[mochiGomaOrder.indexOf(id)];
 
@@ -174,27 +174,27 @@ function mochiGomaIncrement(id){
    mochiGomaConfiguration[mochiGomaOrder.indexOf(id)] = ammount;
    if(ammount>1){
     document.getElementById(id+"Counter").style.visibility = "visible";
-   document.getElementById(id+"Counter").src = "images/mochiGomaNum"+ammount+".png";
+   document.getElementById(id+"Counter").src = "/public/images/mochiGomaNum"+ammount+".png";
    } else {
     document.getElementById(id+"Counter").style.visibility = "hidden";
    }
 }
 
 function addPiece(id){
-    //place the piece into the gameboard 
+    //place the piece into the gameboard
     boardConfiguration[selectedSquare] = id;
-    boardSquare[selectedSquare].src = "images/koma/1/"+id+".png"; 
+    boardSquare[selectedSquare].src = "/public/images/koma/1/"+id+".png";
     if(selectedSquare<44){
         document.getElementById("choosePieceId").classList.toggle("pieceSelectionShowLow");
     }else{
-        document.getElementById("choosePieceId").classList.toggle("pieceSelectionShowHigh"); 
+        document.getElementById("choosePieceId").classList.toggle("pieceSelectionShowHigh");
     }
 }
 
 function drawBoard(){
     //draw pieces on the board
     for(x=0; x < boardConfiguration.length; x++){
-        boardSquare[x].src = "images/koma/1/"+boardConfiguration[x]+".png";
+        boardSquare[x].src = "/public/images/koma/1/"+boardConfiguration[x]+".png";
     }
 
     //draw mochigoma
@@ -204,8 +204,8 @@ function drawBoard(){
                 mochiGoma[x + i].style.opacity = "1";
                 if(mochiGomaConfiguration[x + i] > 1){
                     mochiGomaAmmount[x + i].style.visibility = "visible";
-                    mochiGomaAmmount[x + i].src = ("images/mochiGomaNum" + mochiGomaConfiguration[x + i] + ".png"); //make it display the correct number 
-    
+                    mochiGomaAmmount[x + i].src = ("/public/images/mochiGomaNum" + mochiGomaConfiguration[x + i] + ".png"); //make it display the correct number
+
                 }
                 } else if (mochiGomaConfiguration[x + i] == 1) {
                 mochiGoma[x + i].style.visibility = "visible"; //show the piece
@@ -226,7 +226,7 @@ function toCreatePage(){
     //send form
     document.getElementById('configData').submit();
 
-   
+
 }
 function reset(){
     document.getElementById("resetTsume").submit();

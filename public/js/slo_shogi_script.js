@@ -1,7 +1,7 @@
 //Slow Shogi by Christopher DeLong
 //copyright 2021
 //This is an image-based shogi program
-let selectedPiece = null; //the currently highlighted piece 
+let selectedPiece = null; //the currently highlighted piece
 let possibleMoves = []; //the possible moves for the currently selected piece
 let turn = 1; //odd turns = black, even turns = white
 let realTurn;
@@ -19,7 +19,7 @@ let board9Row = [8, 17, 26, 35, 44, 53, 62, 71, 80]; //all of the squares that a
 let allBoardRows = [board1Row, board2Row, board3Row, board4Row, board5Row, board6Row, board7Row, board8Row, board9Row];
 let boardTopEdge = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 let boardBottomEdge = [72, 73, 74, 75, 76, 77, 78, 79, 80];
-let mochiGomaArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //array for black mochi goma 
+let mochiGomaArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //array for black mochi goma
 //(Wfu, WKo, Wkei, Wgin, Wkin, Wkaku, Whi, Bfu, BKo, Bkei, Bgin, Bkin, Bkaku, Bhi)
 let mochiGomaAlreadySelected = false;
 let isCheck = null; //keep track of if it is check or not
@@ -51,7 +51,7 @@ if (playerColor == "W") {
 }
 let movesHistory;
 if (gameHistory[0] != "") {
-    movesHistory = gameHistory[0].split(","); //break the moves into an array 
+    movesHistory = gameHistory[0].split(","); //break the moves into an array
 }
 
 let rowCounter = 0;
@@ -59,7 +59,7 @@ let columnCounter = 0;
 for (i = 0; i < 9; i++) {
     for (x = 0; x < 9; x++) {
         boardSquare[sC] = document.createElement("img"); //create each of the 81 squares as an image in the document
-        boardSquare[sC].src = "images/koma/"+komaSet+"/empty.png"; //temporarily set image source 
+        boardSquare[sC].src = "/public/images/koma/"+komaSet+"/empty.png"; //temporarily set image source
         boardSquare[sC].style.width = "10vw"; //scale to fit board
         boardSquare[sC].style.position = "absolute";
         boardSquare[sC].style.right = columnCounter + "vw"; //set the distance from the right side of the board
@@ -87,7 +87,7 @@ if (playerColor == "B") {
         for (x = 0; x < 7; x++) {
             if (jupiter === 0) { //if it's the first time through, we are drawing the white mochigoma
                 mochiGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
-                mochiGoma[x].src = "images/koma/" + komaSet+"/"+ mochiGomaOrder[x] + ".png";
+                mochiGoma[x].src = "/public/images/koma/" + komaSet+"/"+ mochiGomaOrder[x] + ".png";
                 mochiGoma[x].setAttribute("id", mochiGomaOrder[x]);
                 mochiGoma[x].setAttribute("onClick", "placePiece(this.id)");
                 mochiGoma[x].style.width = "9vw";
@@ -96,7 +96,7 @@ if (playerColor == "B") {
                 mochiGoma[x].style.top = "0vw";
                 document.getElementById("whiteMochigoma").appendChild(mochiGoma[x]);
                 mochiGomaAmmount[x] = document.createElement("img");
-                mochiGomaAmmount[x].src = "images/mochiGomaNum2.png";
+                mochiGomaAmmount[x].src = "/public/images/mochiGomaNum2.png";
                 mochiGomaAmmount[x].style.width = "3vw";
                 mochiGomaAmmount[x].style.position = "absolute";
                 mochiGomaAmmount[x].style.right = spacer + "vw"; //offset it from the piece
@@ -104,7 +104,7 @@ if (playerColor == "B") {
                 document.getElementById("whiteMochigoma").appendChild(mochiGomaAmmount[x]);
             } else {//otherwise it's the second time through, so we are drawing the black mochigoma
                 mochiGoma[x + 7] = document.createElement("img");//create a new img element for each mochigoma type
-                mochiGoma[x + 7].src = "images/koma/" + komaSet+"/" + mochiGomaOrder[x + 7] + ".png";
+                mochiGoma[x + 7].src = "/public/images/koma/" + komaSet+"/" + mochiGomaOrder[x + 7] + ".png";
                 mochiGoma[x + 7].setAttribute("id", mochiGomaOrder[x + 7]);
                 mochiGoma[x + 7].setAttribute("onClick", "placePiece(this.id)");
                 mochiGoma[x + 7].style.width = "9vw";
@@ -113,7 +113,7 @@ if (playerColor == "B") {
                 mochiGoma[x + 7].style.top = "0vw";
                 document.getElementById("blackMochigoma").appendChild(mochiGoma[x + 7]);
                 mochiGomaAmmount[x + 7] = document.createElement("img");
-                mochiGomaAmmount[x + 7].src = "images/mochiGomaNum2.png";
+                mochiGomaAmmount[x + 7].src = "/public/images/mochiGomaNum2.png";
                 mochiGomaAmmount[x + 7].style.width = "3vw";
                 mochiGomaAmmount[x + 7].style.position = "absolute";
                 mochiGomaAmmount[x + 7].style.right = spacer + "vw"; //offset it from the piece
@@ -130,7 +130,7 @@ if (playerColor == "B") {
         for (x = 0; x < 7; x++) {
             if (jupiter === 0) { //if it's the first time through, we are drawing the white mochigoma
                 mochiGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
-                mochiGoma[x].src = "images/koma/" + komaSet+"/" + mochiGomaOrder[x + 7] + ".png";
+                mochiGoma[x].src = "/public/images/koma/" + komaSet+"/" + mochiGomaOrder[x + 7] + ".png";
                 mochiGoma[x].setAttribute("id", mochiGomaOrder[x]);
                 mochiGoma[x].setAttribute("onClick", "placePiece(this.id)");
                 mochiGoma[x].style.width = "9vw";
@@ -139,7 +139,7 @@ if (playerColor == "B") {
                 mochiGoma[x].style.top = "0vw"; //draw them at the bottom since the white player is playing
                 document.getElementById("blackMochigoma").appendChild(mochiGoma[x]);
                 mochiGomaAmmount[x] = document.createElement("img");
-                mochiGomaAmmount[x].src = "images/mochiGomaNum2.png";
+                mochiGomaAmmount[x].src = "/public/images/mochiGomaNum2.png";
                 mochiGomaAmmount[x].style.width = "3vw";
                 mochiGomaAmmount[x].style.position = "absolute";
                 mochiGomaAmmount[x].style.right = spacer + "vw"; //offset it from the piece
@@ -147,7 +147,7 @@ if (playerColor == "B") {
                 document.getElementById("blackMochigoma").appendChild(mochiGomaAmmount[x]);
             } else {//otherwise it's the second time through, so we are drawing the black mochigoma
                 mochiGoma[x + 7] = document.createElement("img");//create a new img element for each mochigoma type
-                mochiGoma[x + 7].src = "images/koma/" + komaSet+"/" + mochiGomaOrder[x] + ".png";
+                mochiGoma[x + 7].src = "/public/images/koma/" + komaSet+"/" + mochiGomaOrder[x] + ".png";
                 mochiGoma[x + 7].setAttribute("id", mochiGomaOrder[x + 7]);
                 mochiGoma[x + 7].setAttribute("onClick", "placePiece(this.id)");
                 mochiGoma[x + 7].style.width = "9vw";
@@ -156,7 +156,7 @@ if (playerColor == "B") {
                 mochiGoma[x + 7].style.top = "0vw";//draw them at the top since the white player is playing
                 document.getElementById("whiteMochigoma").appendChild(mochiGoma[x + 7]);
                 mochiGomaAmmount[x + 7] = document.createElement("img");
-                mochiGomaAmmount[x + 7].src = "images/mochiGomaNum2.png";
+                mochiGomaAmmount[x + 7].src = "/public/images/mochiGomaNum2.png";
                 mochiGomaAmmount[x + 7].style.width = "3vw";
                 mochiGomaAmmount[x + 7].style.position = "absolute";
                 mochiGomaAmmount[x + 7].style.right = spacer + "vw"; //offset it from the piece
@@ -199,23 +199,23 @@ if(gameHistory[6] !="3"){
         document.getElementById("resButtons").style.visibility = "visible";
         if (gameHistory[3].length > 1) {
             //if there is a reservation in the first reservation slot
-            document.getElementById("resButton1").src = "images/reservation/res_1_green.png";
+            document.getElementById("resButton1").src = "/public/images/reservation/res_1_green.png";
             //make the button green instead of grey
         }
         if (gameHistory[4].length > 1) {
             //if there is a reservation in the second reservation slot
-            document.getElementById("resButton2").src = "images/reservation/res_2_green.png";
+            document.getElementById("resButton2").src = "/public/images/reservation/res_2_green.png";
             //make the button green instead of grey
         }
         if (gameHistory[5].length > 1) {
             //if there is a reservation in the third reservation slot
-            document.getElementById("resButton3").src = "images/reservation/res_3_green.png";
+            document.getElementById("resButton3").src = "/public/images/reservation/res_3_green.png";
             //make the button green instead of grey
         }
-    
+
     }
     if ((gameHistory[6] == "4" && gameHistory[7] != gameHistory[8]) || (gameHistory[6] == "5" && gameHistory[7] == gameHistory[8])) {
-        //if the game is status 4 (someone was checkmated) and the person who lost is viewing it 
+        //if the game is status 4 (someone was checkmated) and the person who lost is viewing it
         //or if the game status is 5 (someone resigned) and the winner is viewing it
         showGameOver();
     } else {
@@ -356,7 +356,7 @@ function sendMoveData(thingsToDelete) {
         if (seenNotSent) {
             tempObject['chatSeen'] = 3;//everyone has seen
         } else {
-            tempObject['chatSeen'] = chatNoChange; // leave it the way it was 
+            tempObject['chatSeen'] = chatNoChange; // leave it the way it was
         }
     }
     sendToDatabase = JSON.stringify(tempObject); // and convert it back to a string
@@ -449,16 +449,16 @@ function drawBoard() {
         if (playerColor == "W") {
             if (gameState[i].charAt(0) == "B") {
                 //switch the B with a W for display purposes
-                boardSquare[i].src = "images/koma/"+komaSet+"/W" + gameState[i].substr(1, gameState[i].length) + ".png";
+                boardSquare[i].src = "/public/images/koma/"+komaSet+"/W" + gameState[i].substr(1, gameState[i].length) + ".png";
             } else if (gameState[i].charAt(0) == "W") {
                 //switch the W with B for display purposes
-                boardSquare[i].src = "images/koma/"+komaSet+"/B" + gameState[i].substr(1, gameState[i].length) + ".png";
+                boardSquare[i].src = "/public/images/koma/"+komaSet+"/B" + gameState[i].substr(1, gameState[i].length) + ".png";
             } else {
-                boardSquare[i].src = "images/koma/"+komaSet+"/" + gameState[i] + ".png"; //empty square
+                boardSquare[i].src = "/public/images/koma/"+komaSet+"/" + gameState[i] + ".png"; //empty square
             }
         } else {
 
-            boardSquare[i].src = "images/koma/"+komaSet+"/" + gameState[i] + ".png"; //set each of the urls to match the image
+            boardSquare[i].src = "/public/images/koma/"+komaSet+"/" + gameState[i] + ".png"; //set each of the urls to match the image
         }
     }
 }
@@ -473,7 +473,7 @@ function addToMochiGoma(gamePiece) {
     } else {
         gamePieceColor = 7; //if it's a white piece, start at the 7th array spot
     }
-    switch (gamePiece.substr(1, gamePiece.length)) { // return the piece name minus thethe color 
+    switch (gamePiece.substr(1, gamePiece.length)) { // return the piece name minus thethe color
 
         case "F":
             mochiGomaArray[0 + gamePieceColor] += 1; //add a fu to the fu place
@@ -516,7 +516,7 @@ function drawMochigoma() {
             if (mochiGomaArray[x + i] > 1) {//if there is/are mochigoma of that type
                 mochiGoma[x + i].style.visibility = "visible";
                 mochiGomaAmmount[x + i].style.visibility = "visible";
-                mochiGomaAmmount[x + i].src = ("images/mochiGomaNum" + mochiGomaArray[x + i] + ".png"); //make it display the correct number 
+                mochiGomaAmmount[x + i].src = ("/public/images/mochiGomaNum" + mochiGomaArray[x + i] + ".png"); //make it display the correct number
             } else if (mochiGomaArray[x + i] === 1) {
                 mochiGoma[x + i].style.visibility = "visible"; //show the piece
                 mochiGomaAmmount[x + i].style.visibility = "hidden";//but no number
@@ -593,7 +593,7 @@ function showMove(square, komaType, placeCalled) {
             turnColor = "B"
         }*/
     }
-    
+
 
     switch (komaType) {
         case "BF":
@@ -679,13 +679,13 @@ function showMove(square, komaType, placeCalled) {
     for (i = 0; i < 8; i++) {
         //if it's possible to move in that direction
         if (moveDirections[i] > 0) {
-            //check if the player's own piece is not in the square 
+            //check if the player's own piece is not in the square
             if (gameState[square + moveFormulas[i]].charAt(0) !== turnColor) {
                 //if not, add the first square to the move array
                 move.push(square + moveFormulas[i]);
                 //check if the piece can move just one or multiple squares
                 if (moveDirections[i] == 2) {
-                    //if it can move multiple squares, continue checking the squares and adding any that are empty 
+                    //if it can move multiple squares, continue checking the squares and adding any that are empty
                     //or have an opponent's piece until the edge of the board is reached
                     isBlocked = false;
                     moveSquare = square;
@@ -921,7 +921,7 @@ function confirmMove(moveFromSend, moveToSend, tempMoveForGameHistory, currentPl
     turn++; //increase the turn counter
 
     gameHistory[0] += tempMoveForGameHistory; //for forward and back buttons
-    movesHistory = gameHistory[0].split(","); //break the moves into an array 
+    movesHistory = gameHistory[0].split(","); //break the moves into an array
 
     if (turn > 1) {
 
@@ -992,7 +992,7 @@ function disableAll() {
 }
 
 function promotePiece(from, id) {
-   
+
 
         document.getElementById("pNoP").style.left = "" + boardSquare[id].offsetLeft + "px";
         document.getElementById("pNoP").style.top = "" + boardSquare[id].offsetTop + "px";
@@ -1002,23 +1002,23 @@ function promotePiece(from, id) {
             case "KEI":
             case "F": if (id < 9) { doPromote(from, id) } else {
                 document.getElementById("pNoP").style.visibility = "visible";
-                document.getElementById("promote").setAttribute("src", "images/koma/"+komaSet+"/BN" + gameState[from].substr(1, gameState[from].length) + ".png");
-                document.getElementById("dontPromote").setAttribute("src", "images/koma/"+komaSet+"/B" + gameState[from].substr(1, gameState[from].length) + ".png");
+                document.getElementById("promote").setAttribute("src", "/public/images/koma/"+komaSet+"/BN" + gameState[from].substr(1, gameState[from].length) + ".png");
+                document.getElementById("dontPromote").setAttribute("src", "/public/images/koma/"+komaSet+"/B" + gameState[from].substr(1, gameState[from].length) + ".png");
                 document.getElementById("promote").setAttribute("onclick", "doPromote(" + from + "," + id + ")");
                 document.getElementById("dontPromote").setAttribute("onclick", "dontPromote(" + from + "," + id + ")");
 
                 disableAll();
             } break;
             default: document.getElementById("pNoP").style.visibility = "visible";
-                document.getElementById("promote").setAttribute("src", "images/koma/"+komaSet+"/BN" + gameState[from].substr(1, gameState[from].length) + ".png");
-                document.getElementById("dontPromote").setAttribute("src", "images/koma/"+komaSet+"/B" + gameState[from].substr(1, gameState[from].length) + ".png");
+                document.getElementById("promote").setAttribute("src", "/public/images/koma/"+komaSet+"/BN" + gameState[from].substr(1, gameState[from].length) + ".png");
+                document.getElementById("dontPromote").setAttribute("src", "/public/images/koma/"+komaSet+"/B" + gameState[from].substr(1, gameState[from].length) + ".png");
                 document.getElementById("promote").setAttribute("onclick", "doPromote(" + from + "," + id + ")");
                 document.getElementById("dontPromote").setAttribute("onclick", "dontPromote(" + from + "," + id + ")");
                 disableAll();
                 break;
         }
 
-    
+
     return;
 }
 function doPromote(from, id) {
@@ -1068,7 +1068,7 @@ function placePiece(piece) {
 
         if (justChecking === false) {
             let mochigomaPlace = mochiGomaOrder.indexOf("M" + gameState[selectedPiece]); //find the place where it is
-            mochiGoma[mochigomaPlace].style.filter = "brightness(1.5)"; //highlight the selected piece 
+            mochiGoma[mochigomaPlace].style.filter = "brightness(1.5)"; //highlight the selected piece
         }
 
         switch (piece.substr(2, piece.length)) {//fu have special rules about place ment
@@ -1154,7 +1154,7 @@ function removeMG(gamePiece) {
     } else {
         gamePieceColor = 7; //if it's a white piece, start at the 7th array spot
     }
-    switch (gamePiece.substr(1, gamePiece.length)) { // return the piece name minus thethe color 
+    switch (gamePiece.substr(1, gamePiece.length)) { // return the piece name minus thethe color
 
         case "F":
             mochiGomaArray[0 + gamePieceColor] -= 1; //add a fu to the fu place
@@ -1190,7 +1190,7 @@ function removeMG(gamePiece) {
     }
 }
 
-// 15   8    9     
+// 15   8    9
 //   7  0  1
 // 14 6 玉 2 10    check each potential checking square / angle in this order and return an array of all checking pieces' squares
 //    5 4  3
@@ -1295,7 +1295,7 @@ function checkForCheck(gyokuColor) {
             case "KEI":
             case "HI":
             case "mpty":
-                checkingPieces[1] = 0; //none of these pieces can check the gyoku fron the side 
+                checkingPieces[1] = 0; //none of these pieces can check the gyoku fron the side
                 break;
             default:
                 checkingPieces[1] = gyokuPosition + (gyokuForward * 10);
@@ -1317,7 +1317,7 @@ function checkForCheck(gyokuColor) {
             case "KAKU":
             case "KEI":
             case "mpty":
-                checkingPieces[2] = 0; //none of these pieces can check the gyoku fron the side 
+                checkingPieces[2] = 0; //none of these pieces can check the gyoku fron the side
                 break;
             default:
                 checkingPieces[2] = gyokuPosition + (gyokuForward * 1);
@@ -1414,7 +1414,7 @@ function checkForCheck(gyokuColor) {
             case "KAKU":
             case "KEI":
             case "mpty":
-                checkingPieces[6] = 0; //none of these pieces can check the gyoku fron the side 
+                checkingPieces[6] = 0; //none of these pieces can check the gyoku fron the side
                 break;
             default:
                 checkingPieces[6] = gyokuPosition + (gyokuForward * -1);
@@ -1436,7 +1436,7 @@ function checkForCheck(gyokuColor) {
             case "KEI":
             case "HI":
             case "mpty":
-                checkingPieces[7] = 0; //none of these pieces can check the gyoku fron the side 
+                checkingPieces[7] = 0; //none of these pieces can check the gyoku fron the side
                 break;
             default:
                 checkingPieces[7] = gyokuPosition + (gyokuForward * 8);
@@ -1469,7 +1469,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[8] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[8] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1511,7 +1511,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[9] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[9] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1561,7 +1561,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[10] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[10] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1612,7 +1612,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[11] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[11] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1654,7 +1654,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[12] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[12] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1696,7 +1696,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[13] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[13] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1746,7 +1746,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[14] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[14] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1796,7 +1796,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[15] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[15] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1967,7 +1967,7 @@ function skipForward() {
 function stepBack() {
     //if it's not the first move and it's not displaying the first move
     if (turn > 1 && viewTurn > 1) {
-        viewTurn--; //go back one turn 
+        viewTurn--; //go back one turn
         movesHistory = gameHistory[0].split(",");
         movesHistory.splice(3 * viewTurn, movesHistory.length - (3 * viewTurn));
         resetGameState();

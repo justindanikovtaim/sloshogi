@@ -8,15 +8,15 @@
     right: 1vw;
     position: absolute;
     background-color: rgba(238, 166, 32, 0.514); /* rgba(206, 141, 29, 0.979);
-    /*background-image: url("../images/wood1.jpg"); */
+    /*background-image: url("..//public/images/wood1.jpg"); */
     background-size:inherit;
     overflow: auto;
     }
-    
+
     #board, #whiteMochigoma, #blackMochigoma{
         display: inherit;
     }
-    
+
     #whiteMochigoma{
         margin-left: 13vw;
         margin-top: 2vw;
@@ -25,7 +25,7 @@
         width: 70vw;
         border-style: double;
     }
-    
+
     #blackMochigoma{
         margin-left: 13vw;
         margin-top: 1vw;
@@ -34,7 +34,7 @@
         width: 70vw;
         border-style: double;
     }
-    
+
     #board{
         height: 90.2vw;
         width: 90.2vw;
@@ -42,14 +42,14 @@
         border-color: rgba(255, 228, 181, 0.589);
         margin-left: 2.4vw;
     }
-    
+
     #toUserPage{
         position: absolute;
         top: 124vw;
         left: 5vw;
         width: 20vw;
     }
-    
+
     #playerPrompt{
         position: absolute;
         top: 112vw;
@@ -62,5 +62,3 @@
         right: 5vw;
         width: 20vw;
     }
-
-   

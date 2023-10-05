@@ -9,9 +9,9 @@ for(i = 0; i < currentGameIdArray.length; i ++){
     currentGameLink[i] = document.createElement("a");
     if(currentGameOpponentArray[a+1] == 1){
         currentGameLink[i].style.color = "grey";
-        currentGameLink[i].innerHTML = "SLO" + currentGameIdArray[i] + " | " + currentGameOpponentArray[a] + " to play"; 
+        currentGameLink[i].innerHTML = "SLO" + currentGameIdArray[i] + " | " + currentGameOpponentArray[a] + " to play";
     }else{
-        currentGameLink[i].innerHTML = "SLO" + currentGameIdArray[i] +" vs. " + currentGameOpponentArray[a] + " | Your turn"; 
+        currentGameLink[i].innerHTML = "SLO" + currentGameIdArray[i] +" vs. " + currentGameOpponentArray[a] + " | Your turn";
         sendNotification = true;
     }
     currentGameLink[i].setAttribute("class", "gameURL");
@@ -38,11 +38,11 @@ if(Notification.permission == 'granted'){//only run this if the user has granted
 
 if(sendNotification){
     //send a notification that it's the players turn
-    var img = 'images/BGYOKU.png';
+    var img = '/public/images/BGYOKU.png';
     var text = 'Your move in SLO Shogi';
     var notification = new Notification('SLO Shogi', { body: text, icon: img });
 }else{
     //otherwise, keep refreshing the page every 30 seconds
-    setTimeout("location.reload();",5000); 
+    setTimeout("location.reload();",5000);
 }
 }

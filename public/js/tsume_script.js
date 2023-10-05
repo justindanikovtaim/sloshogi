@@ -1,5 +1,5 @@
 
-//next steps: 
+//next steps:
 
 
 
@@ -7,7 +7,7 @@
 //Slow Shogi by Christopher DeLong
 //copyright 2021
 //This is an image-based shogi program
-let selectedPiece = null; //the currently highlighted piece 
+let selectedPiece = null; //the currently highlighted piece
 let possibleMoves = []; //the possible moves for the currently selected piece
 let turn = 1; //odd turns = black, even turns = white
 let realTurn;
@@ -44,7 +44,7 @@ let columnCounter = 0;
 for (i = 0; i < 9; i++) {
     for (x = 0; x < 9; x++) {
         boardSquare[sC] = document.createElement("img"); //create each of the 81 squares as an image in the document
-        boardSquare[sC].src = "images/koma/1/empty.png"; //temporarily set image source 
+        boardSquare[sC].src = "/public/images/koma/1/empty.png"; //temporarily set image source
         boardSquare[sC].style.width = "10vw"; //scale to fit board
         boardSquare[sC].style.position = "absolute";
         boardSquare[sC].style.right = columnCounter + "vw"; //set the distance from the right side of the board
@@ -72,7 +72,7 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
     for (x = 0; x < 7; x++) {
         if (jupiter === 0) { //if it's the first time through, we are drawing the white mochigoma
             mochiGoma[x] = document.createElement("img");//create a new img element for each mochigoma type
-            mochiGoma[x].src = "images/koma/1/" + mochiGomaOrder[x] + ".png";
+            mochiGoma[x].src = "/public/images/koma/1/" + mochiGomaOrder[x] + ".png";
             mochiGoma[x].setAttribute("id", mochiGomaOrder[x]);
            // mochiGoma[x].setAttribute("onClick", "placePiece(this.id)");
             mochiGoma[x].style.width = "9vw";
@@ -81,7 +81,7 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
             mochiGoma[x].style.top = "0vw";
             document.getElementById("whiteMochigoma").appendChild(mochiGoma[x]);
             mochiGomaAmmount[x] = document.createElement("img");
-            mochiGomaAmmount[x].src = "images/mochiGomaNum2.png";
+            mochiGomaAmmount[x].src = "/public/images/mochiGomaNum2.png";
             mochiGomaAmmount[x].style.width = "3vw";
             mochiGomaAmmount[x].style.position = "absolute";
             mochiGomaAmmount[x].style.right = spacer + "vw"; //offset it from the piece
@@ -89,7 +89,7 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
             document.getElementById("whiteMochigoma").appendChild(mochiGomaAmmount[x]);
         } else {//otherwise it's the second time through, so we are drawing the black mochigoma
             mochiGoma[x + 7] = document.createElement("img");//create a new img element for each mochigoma type
-            mochiGoma[x + 7].src = "images/koma/1/" + mochiGomaOrder[x + 7] + ".png";
+            mochiGoma[x + 7].src = "/public/images/koma/1/" + mochiGomaOrder[x + 7] + ".png";
             mochiGoma[x + 7].setAttribute("id", mochiGomaOrder[x + 7]);
             mochiGoma[x + 7].setAttribute("onClick", "placePiece(this.id)");
             mochiGoma[x + 7].style.width = "9vw";
@@ -98,7 +98,7 @@ for (jupiter = 0; jupiter < 2; jupiter++) { // initialize the mochigoma on the b
             mochiGoma[x + 7].style.top = "0vw";
             document.getElementById("blackMochigoma").appendChild(mochiGoma[x + 7]);
             mochiGomaAmmount[x + 7] = document.createElement("img");
-            mochiGomaAmmount[x + 7].src = "images/mochiGomaNum2.png";
+            mochiGomaAmmount[x + 7].src = "/public/images/mochiGomaNum2.png";
             mochiGomaAmmount[x + 7].style.width = "3vw";
             mochiGomaAmmount[x + 7].style.position = "absolute";
             mochiGomaAmmount[x + 7].style.right = spacer + "vw"; //offset it from the piece
@@ -120,7 +120,7 @@ drawBoard();
 //Starting formation
 function drawBoard() {
     for (i = 0; i < 81; i++) {
-        boardSquare[i].src = "images/koma/1/" + gameState[i] + ".png"; //set each of the urls to match the image
+        boardSquare[i].src = "/public/images/koma/1/" + gameState[i] + ".png"; //set each of the urls to match the image
     }
     //draw the correct mochigoma
     for(i = 0; i<14; i++){
@@ -132,7 +132,7 @@ function drawBoard() {
         //if there is more than one of that mochigoma type, draw the number as well
         if(mochiGomaArray[i] > 1){
             mochiGomaAmmount[i].style.visibility = "visible";
-            mochiGomaAmmount[i].src = "images/mochiGomaNum"+mochiGomaArray[i]+".png";
+            mochiGomaAmmount[i].src = "/public/images/mochiGomaNum"+mochiGomaArray[i]+".png";
         }else{
             mochiGomaAmmount[i].style.visibility = "hidden";
         }
@@ -149,7 +149,7 @@ function addToMochiGoma(gamePiece) {
     } else {
         gamePieceColor = 7; //if it's a white piece, start at the 7th array spot
     }
-    switch (gamePiece.substr(1, gamePiece.length)) { // return the piece name minus thethe color 
+    switch (gamePiece.substr(1, gamePiece.length)) { // return the piece name minus thethe color
 
         case "F":
             mochiGomaArray[0 + gamePieceColor] += 1; //add a fu to the fu place
@@ -201,7 +201,7 @@ function pieceClick(id, justChecking) {
         }
         if (!justChecking && boardSquare[id].style.background.substr(0, 7) == "rgb(230") { //need to sample just this part of the string, becasue different browsers write it differently
             //if the clicked square is highlighted as a possible move
-                movePiece(id, selectedPiece);    
+                movePiece(id, selectedPiece);
         } else if (!justChecking && selectedPiece !== null && (id === selectedPiece ||
             id !== selectedPiece && boardSquare[id].style.background.substr(0, 7) != "rgb(230")) {
             //if the same piece is clicked again or another unrelated place is clicked
@@ -277,7 +277,7 @@ function movePiece(id, piece) {
     if (piece < 81) { //if it's other than the mochigoma
         //see if piece can promote
         let promoteZone = false;
-        if(turn % 2 == 0){  
+        if(turn % 2 == 0){
             if (id > 53 || piece > 53){
                 promoteZone = true;
             }
@@ -342,8 +342,8 @@ function movePiece(id, piece) {
         deselectAll();
         if(playerMoveSequence.length > 3){
             setTimeout(function(){aiMove();drawBoard();}, 500);
-    
-            
+
+
         }
     }else{
         gameState[id] = gameState[piece]; //move the piece to the new square
@@ -387,7 +387,7 @@ function tsumeSolved(){
 
     setMessage("正解！Correct! " + solvedTime+"で溶けた");
     disableAll();
-        
+
     if(isGuest){//if the player is a guest
         setTimeout(function(){
         if(confirm("アカウント登録してスコアを残しますか？")){
@@ -483,7 +483,7 @@ function placePiece(piece) {
 
         if (justChecking === false) {
             let mochigomaPlace = mochiGomaOrder.indexOf("M" + gameState[selectedPiece]); //find the place where it is
-            mochiGoma[mochigomaPlace].style.filter = "brightness(1.5)"; //highlight the selected piece 
+            mochiGoma[mochigomaPlace].style.filter = "brightness(1.5)"; //highlight the selected piece
         }
 
         switch (piece.substr(2, piece.length)) {//fu have special rules about place ment
@@ -581,7 +581,7 @@ function removeMG(gamePiece) {
     } else {
         gamePieceColor = 7; //if it's a white piece, start at the 7th array spot
     }
-    switch (gamePiece.substr(1, gamePiece.length)) { // return the piece name minus thethe color 
+    switch (gamePiece.substr(1, gamePiece.length)) { // return the piece name minus thethe color
 
         case "F":
             mochiGomaArray[0 + gamePieceColor] -= 1; //add a fu to the fu place
@@ -617,7 +617,7 @@ function removeMG(gamePiece) {
     }
 }
 
-// 15   8    9     
+// 15   8    9
 //   7  0  1
 // 14 6 玉 2 10    check each potential checking square / angle in this order and return an array of all checking pieces' squares
 //    5 4  3
@@ -631,7 +631,7 @@ function checkForCheck(gyokuColor) {
     let gyokuOnRightColumn;
     let gyokuOnLeftColumn;
 
-    if (gyokuColor == "B") {//JUST UPDATED 
+    if (gyokuColor == "B") {//JUST UPDATED
         gyokuForward = -1; //black ou moves negatively to go forward
         //this will check to see if the gyoku is on any of the edges of the board and set the corresponding spot
         //in the checkingPieces array to 2, which will prevent it from being checked in the next part
@@ -722,7 +722,7 @@ function checkForCheck(gyokuColor) {
             case "KEI":
             case "HI":
             case "mpty":
-                checkingPieces[1] = 0; //none of these pieces can check the gyoku fron the side 
+                checkingPieces[1] = 0; //none of these pieces can check the gyoku fron the side
                 break;
             default:
                 checkingPieces[1] = gyokuPosition + (gyokuForward * 10);
@@ -744,7 +744,7 @@ function checkForCheck(gyokuColor) {
             case "KAKU":
             case "KEI":
             case "mpty":
-                checkingPieces[2] = 0; //none of these pieces can check the gyoku fron the side 
+                checkingPieces[2] = 0; //none of these pieces can check the gyoku fron the side
                 break;
             default:
                 checkingPieces[2] = gyokuPosition + (gyokuForward * 1);
@@ -841,7 +841,7 @@ function checkForCheck(gyokuColor) {
             case "KAKU":
             case "KEI":
             case "mpty":
-                checkingPieces[6] = 0; //none of these pieces can check the gyoku fron the side 
+                checkingPieces[6] = 0; //none of these pieces can check the gyoku fron the side
                 break;
             default:
                 checkingPieces[6] = gyokuPosition + (gyokuForward * -1);
@@ -863,7 +863,7 @@ function checkForCheck(gyokuColor) {
             case "KEI":
             case "HI":
             case "mpty":
-                checkingPieces[7] = 0; //none of these pieces can check the gyoku fron the side 
+                checkingPieces[7] = 0; //none of these pieces can check the gyoku fron the side
                 break;
             default:
                 checkingPieces[7] = gyokuPosition + (gyokuForward * 8);
@@ -896,7 +896,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[8] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[8] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -938,7 +938,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[9] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[9] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -988,7 +988,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[10] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[10] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1039,7 +1039,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[11] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[11] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1081,7 +1081,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[12] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[12] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1123,7 +1123,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[13] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[13] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1173,7 +1173,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[14] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[14] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1223,7 +1223,7 @@ function checkForCheck(gyokuColor) {
                         pieceBlocking = false;
                         break;
                     default:
-                        checkingPieces[15] = 0; //none of the other pieces can check the gyoku from a distance 
+                        checkingPieces[15] = 0; //none of the other pieces can check the gyoku from a distance
                         pieceBlocking = true;
                         break;
                 }
@@ -1341,7 +1341,7 @@ function resetTsume(originalTime){
     }
     navigator.sendBeacon("/sloshogi/tsume_time.php", $data);
     setTimeout(function(){window.location.reload();},100);
-    
+
 }
 function makeNewAccount(solvedTime){
     document.getElementById("solvedTimeNewAccount").value = solvedTime;
