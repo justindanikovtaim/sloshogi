@@ -1,6 +1,6 @@
 @font-face {
 font-family: "8Bit";
-src: url("../fonts/PixelMplus10-Regular.ttf");
+src: url("/public/fonts/PixelMplus10-Regular.ttf");
 }
 
 button{
@@ -39,9 +39,9 @@ body{
 
 .user{
   position: relative;
-  width:100%; 
-  margin:2% 0px; 
-  padding:0px 2%; 
+  width:100%;
+  margin:2% 0px;
+  padding:0px 2%;
   border:.5vw solid black;
   background-color: rgba(184, 175, 159, 0.644);
 }
@@ -59,7 +59,7 @@ input{
 }
 button{
   font-size: 5vw;
-  font-family: "8Bit"; 
+  font-family: "8Bit";
 }
 
 form{
