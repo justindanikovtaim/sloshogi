@@ -63,7 +63,7 @@ begin_html_page('Slo Tsumeshogi', ['tsume_style_sheet.css']);
     <div class="popupMenu" id="popupMenuId">
         <a href="#" id="leaderBoard" onClick="toggleLeaderBoard()">トップスコア・Top Scores</a>
         <a href="#" onClick="toggleChat()">チャット表示・View Chat</a>
-        <a href="feedback_form.php?src=gameboard&id=<?php echo $gameID ?>">バグ報告・Report a bug</a>
+        <a href="/feedback-form?src=gameboard&id=<?php echo $gameID ?>">バグ報告・Report a bug</a>
     </div>
     <div class="popupChat" id="popupChat">
         <button onclick="closeChat()" style="font-size: 6vw; background-color: lightgrey">✕</button>

@@ -3,7 +3,11 @@
 require_once SHAREDPATH . 'database.php';
 require_once SHAREDPATH . 'template.php';
 
-$sourcePage = htmlspecialchars($_GET['src']) . ".php?id=" . htmlspecialchars($_GET['id']);
+/**
+ * Use HTTP REFERER to return to previous page instead of passing URL params,
+ * if referer is not defined or unsupported then use javascript to go back in history.
+ */
+$sourcePage = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'javascript:history.go(-1)';
 
 begin_html_page("SLO Shogi Feedback", ['form.css']);
 ?>

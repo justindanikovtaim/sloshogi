@@ -40,7 +40,7 @@ array_push($temparray, $row["moves"], $row["blackplayer"], $row["whiteplayer"]);
     var komaSet = <?php echo $komaSet ?>;
 </script>
 
-<script src="scripts/move-reservation.js"></script>
+<script src="/public/js/move-reservation.js"></script>
 
 <?php
 end_html_page();

@@ -42,7 +42,7 @@ if ($activeGameCount < 5 || $userLevel > 0) {
     if (createNewGame($userColor)) {
         $message = "Open game created";
     } else {
-        $message = "ERROR: Not able to create a new game. " . mysqli_error($link);
+        $message = "ERROR: Not able to create a new game. ";
     }
 } else {
     $message = "既に５つの対戦に参加しているため、新しい対戦を作ることはできません<br> You already have 5 active games/challenges. You cannot create a new game.";

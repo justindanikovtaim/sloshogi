@@ -9,7 +9,7 @@ $feedbackType = htmlspecialchars($_POST['fBType']);
 $comment = htmlspecialchars($_POST['comment']);
 
 $query = safe_sql_query("INSERT INTO feedback (fbtype, user, source, comment)
-    values (?, ?, ?, ?)", ['ssss', $feedbackType, getCurrentUser(), $sourcePage, $comment]);
+    VALUES (?, ?, ?, ?)", ['ssss', $feedbackType, getCurrentUser(), $sourcePage, $comment]);
 
 begin_html_page("SLO Shogi Feedback");
 ?>

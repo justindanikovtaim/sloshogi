@@ -58,7 +58,7 @@ $OTP = htmlspecialchars($_POST['OTP']);
 
 $result = safe_sql_query("SELECT * FROM newaccounts WHERE OTP = ?", ['i', $OTP]);
 
-if ($enteredPass1 != $enteredPass2 || !$result) {
+if ($enteredPass1 !== $enteredPass2 || !$result) {
 ?>
     パスワードが異なる　Passwords do not match <br>
     <a href="/account-setup?OTP=<?php echo $OTP ?>">戻る　Go Back</a>

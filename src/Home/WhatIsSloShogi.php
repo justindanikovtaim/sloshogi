@@ -22,7 +22,7 @@ begin_html_page('What is Slo Shogi', ['index.css']);
 
 <h2><a href="/new-account">アカウント作成</a></h2>
 
-<h1><a href="/feedback-form?src=index&id=na" id="feedback">バグ報告・Report a bug</a></h1>
+<h3><a href="/feedback-form?src=index&id=na" id="feedback">バグ報告・Report a bug</a></h3>
 
 <?php
 end_html_page();

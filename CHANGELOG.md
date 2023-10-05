@@ -18,3 +18,4 @@ how each of these were addressed for a better code structure and formatting.
 - Not having a style-guide for code formatting.
 
 ### How issues were addressed
+

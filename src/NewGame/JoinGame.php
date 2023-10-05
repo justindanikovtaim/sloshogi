@@ -30,7 +30,7 @@ begin_html_page('');
 
     for (i = 0; i < getOpenGamesArray.length; i++) {
         openGamesArray[i] = document.createElement("a");
-        openGamesArray[i].href = "join_open_game.php?id=" + getOpenGamesArray[i];
+        openGamesArray[i].href = "/new-game/join-open-game?id=" + getOpenGamesArray[i];
         openGamesArray[i].innerHTML = "SLO" + getOpenGamesArray[i] + " vs. " + currentGameOpponentArray[i];
         document.getElementById("drawOpenGames").appendChild(openGamesArray[i]);
         let lineBreak = document.createElement("br");

@@ -12,8 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
     <?php
 } else {
-    // Check for sign in status
-
     // A real user posted a real reply
     $sql = "INSERT INTO forum_posts(post_content, post_date, post_topic, post_by) VALUES (?, NOW(), ?, TRIM(?))";
 
@@ -22,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     if (!$result) {
     ?>
 
-        <p>Your reply has not been saved, please try again later. <?php echo mysqli_error($link); ?></p>
+        <p>Your reply has not been saved, please try again later.</p>
 
     <?php
     } else {

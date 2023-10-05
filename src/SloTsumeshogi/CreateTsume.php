@@ -32,7 +32,6 @@ begin_html_page('Slo Tsumeshogi', ['Gameboard_style_sheet.css'], [], true);
 
     </div>
 
-
     <div id="menuBox" onclick="showMenu()">
         <img src="/public/images/menu_button.png" id="menuButton">
         <img class="msgIcon" src="/public/images/new_message_icon.png" id="newMessage">
@@ -51,7 +50,6 @@ begin_html_page('Slo Tsumeshogi', ['Gameboard_style_sheet.css'], [], true);
             < </button>
                 <button class="skipButton" id="oneForward" onClick="stepForward()"> > </button>
                 <button class="skipButton" id="fullForward" onClick="skipForward()">≫</button>
-
     </div>
 </div>
 

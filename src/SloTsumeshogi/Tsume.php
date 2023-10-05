@@ -266,7 +266,7 @@ begin_html_page('Slo Tsumeshogi', ['tsume_style_sheet.css'], [], true);
     }
 
     function copyToClipboard(id) {
-        navigator.clipboard.writeText("https://www.sloshogi.com/slo_tsume.php?id=" + id);
+        navigator.clipboard.writeText("https://www.sloshogi.com/slotsumeshogi/slo-tsume?id=" + id);
         alert("クリップボードにコピーされた (注意！他人は非公開の詰将棋が見れないので、共有する前に公開されていることをチェックしましょう！");
     }
 </script>

@@ -25,7 +25,7 @@ for (i = 0; i < currentGameIdArray.length; i++) {
         sendNotification = true;
     }
     currentGameLink[i].setAttribute('class', 'gameURL');
-    currentGameLink[i].href = 'gameboard.php?id=' + currentGameIdArray[i];
+    currentGameLink[i].href = '/gameboard?id=' + currentGameIdArray[i];
     //a since every other array place is filled with 0 or 1 to show if it's the player's turn
     a += 2; //add two to a
     document.getElementById('allGames').appendChild(currentGameLink[i]);
@@ -38,7 +38,7 @@ for (i = 0; i < newChallengesArray.length; i++) {
     challengesGameLink[i] = document.createElement('a');
     challengesGameLink[i].setAttribute('class', 'gameURL');
     challengesGameLink[i].href =
-        'view_challenge.php?id=' + newChallengesArray[i];
+        '/view-challenge?id=' + newChallengesArray[i];
     challengesGameLink[i].innerHTML = 'From ' + challengesOpponentArray[i];
     document.getElementById('newChallenges').appendChild(challengesGameLink[i]);
     let lineBreak = document.createElement('br');

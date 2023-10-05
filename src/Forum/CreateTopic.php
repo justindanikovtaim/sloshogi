@@ -9,10 +9,10 @@ require_once 'templates/header.php';
 
 <?php
 
-function displayTopicForm($link)
+function displayTopicForm()
 {
     $sql = "SELECT cat_id, cat_name FROM forum_categories";
-    $result = mysqli_query($link, $sql);
+    $result = safe_sql_query($sql);
 
     if (!$result) {
 ?>
@@ -45,59 +45,51 @@ function displayTopicForm($link)
     <?php
 }
 
-function saveTopic($link)
+function saveTopic()
 {
     // Insert topic into topics table
-    $sql = "INSERT INTO forum_topics(topic_subject, topic_date, topic_cat, topic_by)
-            VALUES('" . mysqli_real_escape_string($link, $_POST['topic_subject']) . "',
-                   NOW(),
-                   " . mysqli_real_escape_string($link, $_POST['topic_cat']) . ",
-                   TRIM('" . $_COOKIE['current_user_cookie'] . "'))";
-    $result = mysqli_query($link, $sql);
+    $sql = "INSERT INTO forum_topics(topic_subject, topic_date, topic_cat, topic_by) VALUES(?, NOW(), ?, TRIM(?))";
+    $result = safe_sql_query($sql, ['ss', $_POST['topic_subject'], $_POST['topic_cat'], getCurrentUser()]);
 
     if (!$result) {
     ?>
 
-        <p>An error occurred while inserting your data. Please try again later. <?php echo mysqli_error($link); ?></p>
+        <p>An error occurred while inserting your data. Please try again later.</p>
 
     <?php
         return false;
     }
 
-    $topicId = mysqli_insert_id($link);
+    // you can specify the auto_increment value in the database
+    // $topicId = mysqli_insert_id($link);
 
     // Insert post into posts table
-    $sql = "INSERT INTO forum_posts(post_content, post_date, post_topic, post_by)
-            VALUES('" . mysqli_real_escape_string($link, $_POST['post_content']) . "',
-                   NOW(),
-                   $topicId,
-                   '" . $_COOKIE['current_user_cookie'] . "')";
-    $result = mysqli_query($link, $sql);
+    $sql = "INSERT INTO forum_posts(post_content, post_date, post_topic, post_by) VALUES(?, NOW(), ?)";
+    $result = safe_sql_query($sql, ['sss', $_POST['post_content'], getCurrentUser()]);
 
     if (!$result) {
     ?>
 
-        <p>An error occurred while inserting your post. Please try again later. <?php echo mysqli_error($link); ?></p>
+        <p>An error occurred while inserting your post. Please try again later.</p>
 
     <?php
         return false;
     }
 
-    mysqli_commit($link);
-    return $topicId;
+    // return $result['id'];
 }
 
-if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     // Display the form
-    displayTopicForm($link);
+    displayTopicForm();
 } else {
     // Handle form submission
-    $topicId = saveTopic($link);
+    $topicId = saveTopic();
 
     if ($topicId) {
     ?>
 
-        <p><a href="topic.php?id=<?php echo $topicId; ?>">あなたの新しいトピック</a>が追加されました</p>
+        <p><a href="/forum/topic?id=<?php echo $topicId; ?>">あなたの新しいトピック</a>が追加されました</p>
 
 <?php
     }

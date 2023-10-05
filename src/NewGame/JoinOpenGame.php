@@ -31,7 +31,7 @@ begin_html_page('');
             echo "<script>location.href='/gameboard?id=" . $_GET['id'] . "';</script>";
         } else {
             //otherwise, redirect to the previous page
-            echo "ERROR: Not able to execute $joinGameCommand. " . mysqli_error($link);
+            echo "ERROR: Not able to execute $joinGameCommand. ";
             echo "<script>location.href='/new-game/join-game';</script>";
         }
     } else {

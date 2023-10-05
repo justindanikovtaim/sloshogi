@@ -14,18 +14,17 @@ function displayForm()
 <?php
 }
 
-function addCategory($link)
+function addCategory()
 {
-    $catName = mysqli_real_escape_string($link, $_POST['cat_name']);
-    $catDescription = mysqli_real_escape_string($link, $_POST['cat_description']);
+    $catName = $_POST['cat_name'];
+    $catDescription = $_POST['cat_description'];
 
-    $sql = "INSERT INTO forum_categories(cat_name, cat_description)
-            VALUES('$catName', '$catDescription')";
+    $sql = "INSERT INTO forum_categories(cat_name, cat_description) VALUES(?, ?)";
 
-    $result = safe_sql_query($sql);
+    $result = safe_sql_query($sql, ['ss', $catName, $catDescription]);
 
     if (!$result) {
-        echo 'エラー: ' . mysqli_error($link);
+        echo 'エラー: ';
     } else {
         echo '新カテゴリー追加成功.';
     }
@@ -36,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     displayForm();
 } else {
     // Handle form submission
-    addCategory($link);
+    addCategory();
 }
 
 require_once 'templates/footer.php';

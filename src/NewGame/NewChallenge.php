@@ -49,7 +49,6 @@ begin_html_page('');
 
 </form>
 
-</body>
 <script>
     /*function fillInName(opponent){
     document.getElementById("opponentField").value = opponent;

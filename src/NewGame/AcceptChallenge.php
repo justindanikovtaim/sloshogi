@@ -19,9 +19,6 @@ $getUserLevel = safe_sql_query("SELECT user_level FROM users WHERE username = ?"
 $userLevel = mysqli_fetch_array($getUserLevel);
 
 if ($activeGameCount < 5 || $userLevel['user_level'] > 0) {
-
-
-
     if (safe_sql_query("UPDATE gamerecord SET status = 2, dateStarted = CURRENT_DATE() WHERE id = ?", ['i', $_GET['id']])) {
         header('Location: /gameboard?id=' . $_GET['id']);
     } else {

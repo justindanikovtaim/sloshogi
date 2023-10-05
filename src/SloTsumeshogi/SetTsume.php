@@ -35,15 +35,9 @@ begin_html_page('Setup Slo tsumeshogi', ['tsume_style_sheet.css', 'create_tsume.
 
     </div>
     <!--if the problem name session variable is set, it means the problem is be re-edited, so the save url is different-->
-    <form id="tsumeData" method="post" action="<?php if (isset($_SESSION['problemName'])) {
-                                                    echo '/slotsumeshogi/save-tsume?reSave=' . $_SESSION['problemId'];
-                                                } else {
-                                                    echo '/slotsumeshogi/save-tsume';
-                                                } ?>">
+    <form id="tsumeData" method="post" action="<?php isset($_SESSION['problemName']) ? '/slotsumeshogi/save-tsume?reSave=' . $_SESSION['problemId'] : '/slotsumeshogi/save-tsume' ?>">
         <label for="problemName">問題の名前を入力してください</label>
-        <input type="text" name="problemName" id="problemName" <?php if (isset($_SESSION['problemName'])) {
-                                                                    echo "value = '" . $_SESSION['problemName'] . "'";
-                                                                } ?>>
+        <input type="text" name="problemName" id="problemName" value="<?php isset($_SESSION['problemName']) && $_SESSION['problemName'] ?>">
         <br>
         <label for="timelimit">タイマー（秒単位)</label>
         <input type="number" name="timeLimit" id="timeLimit">）

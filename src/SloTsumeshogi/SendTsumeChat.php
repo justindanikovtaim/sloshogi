@@ -9,6 +9,6 @@ $gametofind = $decoded['gameId'];
 
 $textToAdd = "%%" . getCurrentUser() . "%%" . $decoded['textToSend'];
 
-$updatecommand = 'UPDATE tsumeshogi SET chat = CONCAT(chat, "' . $textToAdd . '") WHERE id = ?';
+$updatecommand = 'UPDATE tsumeshogi SET chat = CONCAT(chat, ?) WHERE id = ?';
 
-safe_sql_query($updatecommand, ['i', $gametofind]);
+safe_sql_query($updatecommand, ['i', $textToAdd, $gametofind]);

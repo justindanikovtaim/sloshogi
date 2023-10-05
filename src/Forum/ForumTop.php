@@ -8,7 +8,7 @@ $sql = "SELECT cat_id, cat_name, cat_description FROM forum_categories";
 $result = safe_sql_query($sql);
 
 if (!$result) {
-    echo 'The categories could not be displayed, please try again later.' . mysqli_error($link);
+    echo 'The categories could not be displayed, please try again later.';
 } else {
     if (mysqli_num_rows($result) == 0) {
         echo 'No categories defined yet.';

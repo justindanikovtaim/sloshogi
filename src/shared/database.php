@@ -9,7 +9,7 @@
 /**
  * Connects to the database.
  *
- * @return mysqli The database connection
+ * @return mysqli The database connection.
  */
 function connect_to_db()
 {
@@ -26,7 +26,8 @@ function connect_to_db()
 /**
  * Closes the database connection.
  *
- * @param mysqli $connection The database connection
+ * @param mysqli $connection The database connection.
+ * @return void
  */
 function close_db_connection($connection)
 {
@@ -36,11 +37,10 @@ function close_db_connection($connection)
 /**
  * Executes a query on the database.
  *
- * @param string $query The query to execute
- * @param array $params The parameters to bind to the query
- * @return mysqli_result|bool The result of the query
+ * @param string $query The query to execute.
+ * @param array $params The parameters to bind to the query.
+ * @return mysqli_result|bool The result of the query.
  */
-
 function safe_sql_query(string $query, array $params = [])
 {
     $connection = connect_to_db();

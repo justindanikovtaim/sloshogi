@@ -3,7 +3,7 @@
 /**
  * Loads the route specified by the URL.
  *
- * @param string $route The URL route
+ * @param string $route The URL route.
  */
 
 function load_route(string $route)
@@ -34,7 +34,7 @@ function load_route(string $route)
         '/settings/set-icon' => ABSPATH . 'Settings/UpdateIcon.php',
         '/settings/change-koma-set' => ABSPATH . 'Settings/ChangeKomaSet.php',
         '/settings/preview-koma-set' => ABSPATH . 'Settings/PreviewKomaSet.php',
-        '/settings/submit-comp' => ABSPATH . 'Settings/PreviewKomaSet.php', // missing file
+        '/settings/submit-comp' => ABSPATH . 'Settings/SubmitComp.php',
         // Gameboard
         '/gameboard' => ABSPATH . 'Gameboard/Gameboard.php',
         '/gameboard/move-reservation' => ABSPATH . 'Gameboard/MoveReservation.php',
@@ -48,6 +48,7 @@ function load_route(string $route)
         '/new-game/join-game' => ABSPATH . 'NewGame/JoinGame.php',
         '/decline-challenge' => ABSPATH . 'NewGame/DeclineChallenge.php',
         '/accept-challenge' => ABSPATH . 'NewGame/AcceptChallenge.php',
+        '/view-challenge' => ABSPATH . 'NewGame/ViewChallenge.php',
         '/private-game' => ABSPATH . 'NewGame/PrivateGame.php',
         // Friends
         '/friends' => ABSPATH . 'Friends/Friends.php',
@@ -79,16 +80,12 @@ function load_route(string $route)
         '/send-feedback' => ABSPATH . 'Feedback/SendFeedback.php',
     );
 
-    function routeExist(string $route, array $routes)
+    function routeExists(string $route, array $routes): bool
     {
-        foreach ($routes as $key => $value) {
-            if ($route == $key) {
-                return true;
-            }
-        }
+        return array_key_exists($route, $routes);
     }
 
-    if (routeExist($_route, $routes) && file_exists($routes[$_route])) {
+    if (routeExists($_route, $routes) && file_exists($routes[$_route])) {
         require_once $routes[$_route];
     } else {
         // send 404

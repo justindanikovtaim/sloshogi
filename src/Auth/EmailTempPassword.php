@@ -3,12 +3,10 @@ require_once SHAREDPATH . 'database.php';
 require_once SHAREDPATH . 'template.php';
 require_once SHAREDPATH . 'utils.php';
 
-// Initialize variables
 $enteredEmail = htmlspecialchars($_POST['email']);
 $emailOkay = false;
 $usernameToAddressTo = '';
 
-// Validate email format and retrieve the username
 if (isValidEmail($enteredEmail)) {
     $usernameToAddressTo = getEmailByUsername($enteredEmail);
 
@@ -29,15 +27,12 @@ begin_html_page('Slo Shogi Forgot Password');
 if (!$emailOkay) {
     echo "<br><br>入力したアドレスに誤りがありました。もう一回入力してみてください There was an error in the email address you entered. Please try again.";
 } else {
-    // Generate a temporary password
     $tempPass = generateRandomPassword();
 
-    // Send the email
     if (sendPasswordResetEmail($enteredEmail, $usernameToAddressTo, $tempPass)) {
         echo "<br><br><h3>A temporary password has been sent to your email address<br>
 仮パスワードがメールアドレスに送信されました</h3>";
 
-        // Update the user's password with the temporary password
         $hashedPassword = password_hash($tempPass, PASSWORD_DEFAULT);
         safe_sql_query("UPDATE users SET pass = ? WHERE username = ?", ['ss', $hashedPassword, $usernameToAddressTo]);
     } else {

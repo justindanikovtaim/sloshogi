@@ -5,7 +5,7 @@ let pastGameLink = [];
 for (i = 0; i < pastGameIdArray.length; i++) {
     pastGameLink[i] = document.createElement('a');
     pastGameLink[i].setAttribute('class', 'gameURL');
-    pastGameLink[i].href = 'gameboard.php?id=' + pastGameIdArray[i];
+    pastGameLink[i].href = '/gameboard?id=' + pastGameIdArray[i];
     pastGameLink[i].innerHTML =
         'SLO' + pastGameIdArray[i] + ' vs. ' + pastGameOpponentArray[i];
     document.getElementById('finishedGames').appendChild(pastGameLink[i]);

@@ -4,7 +4,7 @@ require_once SHAREDPATH . 'template.php';
 begin_html_page('Slo Shogi Login Error');
 ?>
 
-<a id="backButton" href="user_login.html">≪</a>
+<a id="backButton" href="/login">≪</a>
 <h2>
     <br><br>
     ユーザー名またはパスワードが違います。再度ログインしてください
