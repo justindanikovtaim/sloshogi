@@ -1,8 +1,7 @@
-
-#boardPhoto{
+#boardPhoto {
     width: 90vw;
-  }
-#accept{
+}
+#accept {
     position: inherit;
     top: 50vh;
     left: 50vw;

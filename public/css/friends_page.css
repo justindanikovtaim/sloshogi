@@ -1,8 +1,7 @@
-.buttonBorder{
-background-color:rgb(238, 166, 32);
-border: .5vw solid black;
-
+.buttonBorder {
+    background-color: rgb(238, 166, 32);
+    border: 0.5vw solid black;
 }
-.noUnderline{
+.noUnderline {
     text-decoration: none;
 }

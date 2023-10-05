@@ -1,102 +1,101 @@
 @font-face {
-font-family: "8Bit";
-src: url("/public/fonts/PixelMplus10-Regular.ttf");
+    font-family: '8Bit';
+    src: url('/public/fonts/PixelMplus10-Regular.ttf');
 }
 
-button{
-  font-family: "8Bit";
-  font-size: 15px;
-  padding: 10px 20px;
-  color: black;
+button {
+    font-family: '8Bit';
+    font-size: 15px;
+    padding: 10px 20px;
+    color: black;
 }
 
-html{
-    font-family: "8Bit";
+html {
+    font-family: '8Bit';
 }
 
 h1 {
-  text-align: center;
-  font-size:10vw;
+    text-align: center;
+    font-size: 10vw;
 }
 
-h2{
-  font-size: 6vw;
+h2 {
+    font-size: 6vw;
 }
-h3{
-  font-size: 8vw;
+h3 {
+    font-size: 8vw;
 }
-a{
-  font-size: 10vw;
+a {
+    font-size: 10vw;
 }
-.logoutButton{
-  font-size: 6vw;
-  color:grey;
-}
-
-body{
-  background-color:#CCCC99;
+.logoutButton {
+    font-size: 6vw;
+    color: grey;
 }
 
-.user{
-  position: relative;
-  width:100%;
-  margin:2% 0px;
-  padding:0px 2%;
-  border:.5vw solid black;
-  background-color: rgba(184, 175, 159, 0.644);
+body {
+    background-color: #cccc99;
 }
 
-input[type=radio] {
-  border: 0px;
-  width: 8vw;
-  height: 8vw;
+.user {
+    position: relative;
+    width: 100%;
+    margin: 2% 0px;
+    padding: 0px 2%;
+    border: 0.5vw solid black;
+    background-color: rgba(184, 175, 159, 0.644);
 }
 
-input{
-  font-size: 8vw;
-  font-family: "8Bit";
-
-}
-button{
-  font-size: 5vw;
-  font-family: "8Bit";
+input[type='radio'] {
+    border: 0px;
+    width: 8vw;
+    height: 8vw;
 }
 
-form{
-  font-size: 8vw;
+input {
+    font-size: 8vw;
+    font-family: '8Bit';
+}
+button {
+    font-size: 5vw;
+    font-family: '8Bit';
 }
 
-#backButton{
-  position:absolute;
-  font-size: 10vw;
-  top: 0vh;
-  margin: 0;
-  text-decoration: none;
-  z-index: 1;
+form {
+    font-size: 8vw;
+}
+
+#backButton {
+    position: absolute;
+    font-size: 10vw;
+    top: 0vh;
+    margin: 0;
+    text-decoration: none;
+    z-index: 1;
 }
 
 a:link {
-  color: black;
+    color: black;
 }
 
 a:visited {
-  color: black;
+    color: black;
 }
 
-#screenshot{
-  width: 90vw;
+#screenshot {
+    width: 90vw;
 }
 
-.centered{
-  text-align: center;
+.centered {
+    text-align: center;
 }
 
-.inputBox{
-  border: 2px solid black;
-  font-size: 8vw;
-  font-family: "8Bit";
+.inputBox {
+    border: 2px solid black;
+    font-size: 8vw;
+    font-family: '8Bit';
 }
 
-.problemList{
-  font-size: 6vw;
+.problemList {
+    font-size: 6vw;
 }

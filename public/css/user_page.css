@@ -1,21 +1,21 @@
-#all{
-margin: auto;
-width: 98vw;
-height: 98vh;
+#all {
+    margin: auto;
+    width: 98vw;
+    height: 98vh;
 }
 
-.gameURL{
+.gameURL {
     font-size: 6vw;
     margin: 0px;
     padding: 0%;
 }
 
-#nameIconRating{
+#nameIconRating {
     position: relative;
     height: 15%;
     width: 100%;
 }
-#iconBox{
+#iconBox {
     position: absolute;
     height: 70%;
     width: 20%;
@@ -24,33 +24,32 @@ height: 98vh;
     border: 2px solid;
 }
 
-#userIcon{
+#userIcon {
     width: 100%;
     height: 100%;
     object-fit: fill;
 }
 
-#userName{
+#userName {
     width: 100%;
     text-align: center;
     font-size: 5vw;
-    position:absolute;
+    position: absolute;
     margin: 0px;
-    top:0%;
+    top: 0%;
 }
-#rating{
+#rating {
     font-size: 5vw;
     position: absolute;
-    top: 10%
+    top: 10%;
 }
-#record{
+#record {
     font-size: 5vw;
     position: absolute;
-    top: 50%
+    top: 50%;
 }
 
-
-#hitokotoInput{
+#hitokotoInput {
     position: absolute;
     width: 50%;
     top: 30%;
@@ -58,42 +57,42 @@ height: 98vh;
     font-size: 4vw;
     margin-top: 0%;
 }
-#settings{
-    position:absolute;
+#settings {
+    position: absolute;
     right: 0%;
-    top:80%;
-    width:20%;
+    top: 80%;
+    width: 20%;
     text-align: center;
     font-size: 4vw;
 }
 
-#passForm{
-    visibility:collapse;
+#passForm {
+    visibility: collapse;
 }
 
-#resetPassLink{
+#resetPassLink {
     padding: auto;
     margin-top: 5vw;
 }
-.formLabel{
+.formLabel {
     font-size: 4vw;
 }
 
-.centered{
+.centered {
     margin: auto;
 }
 
-.bigMenuButton{
+.bigMenuButton {
     font-size: 100%;
     background-color: rgb(238, 166, 32);
 }
-.medMenuButton{
+.medMenuButton {
     font-size: 80%;
-    background-color:lightslategrey;
+    background-color: lightslategrey;
 }
-.buttonRow{
+.buttonRow {
     display: flex;
     justify-content: center;
     align-items: center;
-    height:8%;
+    height: 8%;
 }

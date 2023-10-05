@@ -1,43 +1,43 @@
-#userLogin{
+#userLogin {
     position: absolute;
     width: 20vw;
     height: 7.5vw;
     right: 1vw;
     top: 0px;
     background-color: rgb(238, 166, 32);
-    border: .5vw solid black;
+    border: 0.5vw solid black;
 }
-#userLoginText{
-    position:absolute;
+#userLoginText {
+    position: absolute;
     margin: 3%;
     width: 100%;
     font-size: 3vw;
     text-align: center;
 }
-p{
+p {
     font-size: 6vw;
 }
 
-#twitterContact{
+#twitterContact {
     color: blue;
 }
 
-#feedback{
+#feedback {
     font-size: 5vw;
 }
 
-.paragraphText{
-    color:rgb(61, 58, 53);
+.paragraphText {
+    color: rgb(61, 58, 53);
 }
-#buttonRow{
-    color:blue;
+#buttonRow {
+    color: blue;
     display: flex;
     justify-content: center;
     align-items: center;
-    height:8%;
+    height: 8%;
 }
 
-#compForm{
+#compForm {
     width: 100%;
     font-size: 6vw;
     border: 2px solid black;

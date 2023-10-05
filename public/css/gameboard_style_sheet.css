@@ -1,53 +1,55 @@
-
-#wholeBoard{
+#wholeBoard {
     display: block;
     width: 98vw;
     right: 1vw;
-    }
+}
 
-    #opInfo{
-        position: absolute;
-        width: 16vw;
-        height: 9vw;
-        margin-top: 0px;
-        left: 83vw;
-        z-index: 1;
-    }
-    #userInfo{
-        position: absolute;
-        width: 16vw;
-        height: 9vw;
-        top: 106vw;
-        left: 3vw;
-        z-index: 1;
-    }
+#opInfo {
+    position: absolute;
+    width: 16vw;
+    height: 9vw;
+    margin-top: 0px;
+    left: 83vw;
+    z-index: 1;
+}
+#userInfo {
+    position: absolute;
+    width: 16vw;
+    height: 9vw;
+    top: 106vw;
+    left: 3vw;
+    z-index: 1;
+}
 
-    #opIconBox, #userIconBox{
-        position: absolute;
-        width: 55%;
-        height: 80%;
-        z-index: inherit;
-        border: 2px solid black;
-        margin: 0px;
-        left: 22.5%;
-    }
-#opIcon, #userIcon{
+#opIconBox,
+#userIconBox {
+    position: absolute;
+    width: 55%;
+    height: 80%;
+    z-index: inherit;
+    border: 2px solid black;
+    margin: 0px;
+    left: 22.5%;
+}
+#opIcon,
+#userIcon {
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: fill;
     z-index: inherit;
-
 }
-#opNameBox, #userNameBox{
+#opNameBox,
+#userNameBox {
     position: absolute;
     width: 100%;
     height: 20%;
-    z-index: inherit; 
-    top:80%;
+    z-index: inherit;
+    top: 80%;
     margin: 0px;
 }
-#opName, #userName{
+#opName,
+#userName {
     font-size: 2.5vw;
     line-height: 0vw;
     padding-top: 10%;
@@ -56,359 +58,356 @@
     margin: auto;
     text-align: center;
 }
-    
-    #board, #whiteMochigoma, #blackMochigoma, #promptBox{
-        display: inherit;
-    }
-    
-    #whiteMochigoma{
-        position: relative;
-        left: 10vw;
-        margin-top: 1vw;
-        height: 9vw;
-        width: 70vw;
-        border-style: double;
-        background-color: rgb(238, 166, 32);
 
-    }
-    #board{
-        position: relative;
-        height: 90.2vw;
-        width: 90.2vw;
-        border-style: outset;
-        border-color: rgba(255, 228, 181, 0.589);
-        left: 4.4vw;
-        margin-top:3vw;
-        background-color: rgb(238, 166, 32);
+#board,
+#whiteMochigoma,
+#blackMochigoma,
+#promptBox {
+    display: inherit;
+}
 
-    }
-    
-    #blackMochigoma{
-        position: relative;
-        margin-left: 18vw;
-        margin-top: 2vw;
-        margin-bottom: 1vw;
-        height: 9vw;
-        width: 70vw;
-        border-style: double;
-        background-color: rgb(238, 166, 32);
+#whiteMochigoma {
+    position: relative;
+    left: 10vw;
+    margin-top: 1vw;
+    height: 9vw;
+    width: 70vw;
+    border-style: double;
+    background-color: rgb(238, 166, 32);
+}
+#board {
+    position: relative;
+    height: 90.2vw;
+    width: 90.2vw;
+    border-style: outset;
+    border-color: rgba(255, 228, 181, 0.589);
+    left: 4.4vw;
+    margin-top: 3vw;
+    background-color: rgb(238, 166, 32);
+}
 
-    }
-    
-    #promptBox{
-        position: relative;
-        margin-left: 5%;
-        margin-top: 1vw;
-        height: 4vw;
-        width: 90%;
-        border-style: solid;
-        z-index: 1;
-    }
-    #playerPrompt{
-        position: relative;
-        height: 100%;
-        width: 100%;
-        top: -100%;
-        left:1vw;
-        font-size: 4vw;
-        text-align: center;
-    }
-    
+#blackMochigoma {
+    position: relative;
+    margin-left: 18vw;
+    margin-top: 2vw;
+    margin-bottom: 1vw;
+    height: 9vw;
+    width: 70vw;
+    border-style: double;
+    background-color: rgb(238, 166, 32);
+}
 
-    #undo{
-        position: absolute;
-        top: 105vw;
-        left: 6vw;
-        height: 12vw;
-        width: 12vw;
-        background-color:red;
-        z-index: 2;
-    }
-    #undoImg{
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        object-fit:fill;
-    }
-    
-    #menuBox{
-        position:absolute;
-        top: 106vw;
-        height: 7vw;
-        width: 7vw;
-        left: 91vw;
-    }
-    .turnRed{
-        background-color: yellow;
-        border: 1vw solid black;
-    }
-    #menuButton{
-        position:absolute;
-        height: 100%;
-        width: 100%;
-        object-fit: fill;
-    }
-    .msgIcon{
-        position:absolute;
-        z-index: 1;
-    }
-    #newMessage{
-        height: 30%;
-        width: 30%;
-    }
-    #newMessageInMenu{
-        top: 0%;
-        height: 2%;
-        Width: 5%;
-    }
+#promptBox {
+    position: relative;
+    margin-left: 5%;
+    margin-top: 1vw;
+    height: 4vw;
+    width: 90%;
+    border-style: solid;
+    z-index: 1;
+}
+#playerPrompt {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    top: -100%;
+    left: 1vw;
+    font-size: 4vw;
+    text-align: center;
+}
 
-    .popupMenu{
-        display: none;
-        position:absolute;
-        top: 10vw;
-        left: 15%;
-        background-color:rgb(238, 166, 32);
-        width:70%;
-        height: 80%;
-        border: 2vw solid rgb(70, 70, 70);
-        z-index: 2;
-    }
-    .popupMenu a{
-        display: block;
-        font-size: 5vw;
-        padding: 1vw 1vw;
-        margin: .5vw;
-        border: 1vw solid black;
-        background-color:#CCCC99;
-    }
-    .menuShow{
-        display:block;
-    }
-    .popupChat{
-        display: none;
-        position:absolute;
-        top: 10vw;
-        left: 10%;
-        background-color:rgb(238, 166, 32);
-        width:80%;
-        height: 80%;
-        border: 2vw solid rgb(70, 70, 70);
-        z-index: 2;
-    }
-    .chatShow{
-        display:block;
-    }
+#undo {
+    position: absolute;
+    top: 105vw;
+    left: 6vw;
+    height: 12vw;
+    width: 12vw;
+    background-color: red;
+    z-index: 2;
+}
+#undoImg {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+}
 
-    #popupChatText{
-        position: absolute;
-        overflow: auto;
-        height: 70%;
-        width: 100%;
-    }
-    .chatNameHeader{
-        font-size: 6vw;
-        margin-bottom: 0vw;
-        
-    }
-    .chatEntryRight{
-        position:relative;
-        font-size: 4vw;
-        background-color: cornsilk;
-        margin: 0vw;
-        width: 90%;
-        right: -10%;
-    }
-    .chatEntryLeft{
-        
-        position:relative;
-        font-size: 4vw;
-        background-color: cornsilk;
-        margin: 0vw;
-        width: 90%;
-    }
-    #popupChatInput{
-        position:absolute;
-        width: 80%;
-        height: 10%;
-        bottom: 0%;
-        right: 15%;
-        font-size: 16px;
-    }
-    #chatSend{
-        position:absolute;
-        width: 15%;
-        height: 10%;
-        bottom: 0%;
-        right: 0%;
-        font-size: 3vw;
-    }
-    #resButtons{
-        position: relative;
-        top: 0vw;
-        width: 45vw;
-        height:10vw;
-        left: 1vw;
-        border-style: double;
-        margin-top: .5vh;
-    }
-    #resTextBox{
-        position: absolute;
-        width: 100%;
-        height: 30%;
-        background-color: rgb(238, 166, 32);
-    }
-    #resText{
-        position: absolute;
-        font-size: 2.5vw;
-        top:-90%;
-    }
-    #resBox1{
-        position: absolute;
-        height: 70%;
-        width:33%;
-        top: 30%;
-    }
-    #resButton1{
-        position:absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: fill;
-    }
-    #resBox2{
-        position: absolute;
-        height: 70%;
-        width:33%;
-        left: 33%;
-        top: 30%;
-    }
-    #resButton2{
-        position:absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: fill;
-    }
-    #resBox3{
-        position: absolute;
-        height: 70%;
-        width:33%;
-        right: 0%;
-        top: 30%;
-    }
-    #resButton3{
-        position:absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: fill;
-    }
+#menuBox {
+    position: absolute;
+    top: 106vw;
+    height: 7vw;
+    width: 7vw;
+    left: 91vw;
+}
+.turnRed {
+    background-color: yellow;
+    border: 1vw solid black;
+}
+#menuButton {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+}
+.msgIcon {
+    position: absolute;
+    z-index: 1;
+}
+#newMessage {
+    height: 30%;
+    width: 30%;
+}
+#newMessageInMenu {
+    top: 0%;
+    height: 2%;
+    width: 5%;
+}
 
+.popupMenu {
+    display: none;
+    position: absolute;
+    top: 10vw;
+    left: 15%;
+    background-color: rgb(238, 166, 32);
+    width: 70%;
+    height: 80%;
+    border: 2vw solid rgb(70, 70, 70);
+    z-index: 2;
+}
+.popupMenu a {
+    display: block;
+    font-size: 5vw;
+    padding: 1vw 1vw;
+    margin: 0.5vw;
+    border: 1vw solid black;
+    background-color: #cccc99;
+}
+.menuShow {
+    display: block;
+}
+.popupChat {
+    display: none;
+    position: absolute;
+    top: 10vw;
+    left: 10%;
+    background-color: rgb(238, 166, 32);
+    width: 80%;
+    height: 80%;
+    border: 2vw solid rgb(70, 70, 70);
+    z-index: 2;
+}
+.chatShow {
+    display: block;
+}
 
-    #skipButtons{
-        position:relative;
-        float: right;
-        right: 1VW;
-        width: 45vw;
-        height: 11vw;
-        max-height: 11vw;
-        margin-top: .5vh;
-    }
-    
-    .skipButton{
-        position: absolute;
-        font-size: 6vw;
-        background-color: rgb(238, 166, 32);
-        width:25%;
-        height:100%;
-    }
-    #fullback{
-        left:0%;
-    }
-    #oneBack{
-       left:25%; 
-    }
-    #oneForward{
-        left:50%;
-    }
-    #fullForward{
-        right:0%;
-    }
-   .boardNum{
-       position:absolute;
-       top: 10.5vw;
-       font-size: 3vw !important;
-       display: inline-block;
-       z-index: 1;
-   }
-   #topNumber1{
-       margin-left: 9vw;
-   }
-    #topNumber2{
-        margin-left: 19vw;
-    }
-    #topNumber3{
-        margin-left: 29vw;
-    }
-    #topNumber4{
-        margin-left: 39vw;
-    }
-    #topNumber5{
-        margin-left: 49vw;
-    }
-    #topNumber6{
-        margin-left: 59vw;
-    }
-    #topNumber7{
-        margin-left: 69vw;
-    }
-    #topNumber8{
-        margin-left: 79vw;
-    }
-    #topNumber9{
-        margin-left: 89vw;
-    }
-    .boardKanji{
-        position:absolute;
-        left: 96vw;
-        font-size: 2.5vw;
-    }
-    #kanji9{
-        top: 18vw;
-    }
-    #kanji8{
-        top: 28vw;
-    }
-    #kanji7{
-        top: 38vw;
-    }
-    #kanji6{
-        top: 48vw;
-    }
-    #kanji5{
-        top: 58vw;
-    }
-    #kanji4{
-        top: 68vw;
-    }
-    #kanji3{
-        top: 78vw;
-    }
-    #kanji2{
-        top: 88vw;
-    }
-    #kanji1{
-        top: 98vw;
-    }
+#popupChatText {
+    position: absolute;
+    overflow: auto;
+    height: 70%;
+    width: 100%;
+}
+.chatNameHeader {
+    font-size: 6vw;
+    margin-bottom: 0vw;
+}
+.chatEntryRight {
+    position: relative;
+    font-size: 4vw;
+    background-color: cornsilk;
+    margin: 0vw;
+    width: 90%;
+    right: -10%;
+}
+.chatEntryLeft {
+    position: relative;
+    font-size: 4vw;
+    background-color: cornsilk;
+    margin: 0vw;
+    width: 90%;
+}
+#popupChatInput {
+    position: absolute;
+    width: 80%;
+    height: 10%;
+    bottom: 0%;
+    right: 15%;
+    font-size: 16px;
+}
+#chatSend {
+    position: absolute;
+    width: 15%;
+    height: 10%;
+    bottom: 0%;
+    right: 0%;
+    font-size: 3vw;
+}
+#resButtons {
+    position: relative;
+    top: 0vw;
+    width: 45vw;
+    height: 10vw;
+    left: 1vw;
+    border-style: double;
+    margin-top: 0.5vh;
+}
+#resTextBox {
+    position: absolute;
+    width: 100%;
+    height: 30%;
+    background-color: rgb(238, 166, 32);
+}
+#resText {
+    position: absolute;
+    font-size: 2.5vw;
+    top: -90%;
+}
+#resBox1 {
+    position: absolute;
+    height: 70%;
+    width: 33%;
+    top: 30%;
+}
+#resButton1 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+#resBox2 {
+    position: absolute;
+    height: 70%;
+    width: 33%;
+    left: 33%;
+    top: 30%;
+}
+#resButton2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+#resBox3 {
+    position: absolute;
+    height: 70%;
+    width: 33%;
+    right: 0%;
+    top: 30%;
+}
+#resButton3 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
 
-    #pNoP{
-        visibility: hidden;
-        position:absolute;
-        background-color:rgb(255, 255, 255);
-        width:30vw;/*20%*/
-        height: 15vw;/*10%*/
-        border: 1vw solid rgb(70, 70, 70);
-        z-index: 2;
-    }
-    #promote, #dontPromote{
-        float:left;
-        width: 50%;
-        height: 100%;
-    }
+#skipButtons {
+    position: relative;
+    float: right;
+    right: 1vw;
+    width: 45vw;
+    height: 11vw;
+    max-height: 11vw;
+    margin-top: 0.5vh;
+}
+
+.skipButton {
+    position: absolute;
+    font-size: 6vw;
+    background-color: rgb(238, 166, 32);
+    width: 25%;
+    height: 100%;
+}
+#fullback {
+    left: 0%;
+}
+#oneBack {
+    left: 25%;
+}
+#oneForward {
+    left: 50%;
+}
+#fullForward {
+    right: 0%;
+}
+.boardNum {
+    position: absolute;
+    top: 10.5vw;
+    font-size: 3vw !important;
+    display: inline-block;
+    z-index: 1;
+}
+#topNumber1 {
+    margin-left: 9vw;
+}
+#topNumber2 {
+    margin-left: 19vw;
+}
+#topNumber3 {
+    margin-left: 29vw;
+}
+#topNumber4 {
+    margin-left: 39vw;
+}
+#topNumber5 {
+    margin-left: 49vw;
+}
+#topNumber6 {
+    margin-left: 59vw;
+}
+#topNumber7 {
+    margin-left: 69vw;
+}
+#topNumber8 {
+    margin-left: 79vw;
+}
+#topNumber9 {
+    margin-left: 89vw;
+}
+.boardKanji {
+    position: absolute;
+    left: 96vw;
+    font-size: 2.5vw;
+}
+#kanji9 {
+    top: 18vw;
+}
+#kanji8 {
+    top: 28vw;
+}
+#kanji7 {
+    top: 38vw;
+}
+#kanji6 {
+    top: 48vw;
+}
+#kanji5 {
+    top: 58vw;
+}
+#kanji4 {
+    top: 68vw;
+}
+#kanji3 {
+    top: 78vw;
+}
+#kanji2 {
+    top: 88vw;
+}
+#kanji1 {
+    top: 98vw;
+}
+
+#pNoP {
+    visibility: hidden;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    width: 30vw; /*20%*/
+    height: 15vw; /*10%*/
+    border: 1vw solid rgb(70, 70, 70);
+    z-index: 2;
+}
+#promote,
+#dontPromote {
+    float: left;
+    width: 50%;
+    height: 100%;
+}
