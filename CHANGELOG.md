@@ -18,6 +18,7 @@ how each of these were addressed for a better code structure and formatting.
 -   Not writing self-explanatory code.
 -   Not having a style-guide for code formatting.
 -   Use of PHP short open tags.
+-   Using == operator to compare values.
 
 ### How issues were addressed
 
@@ -85,3 +86,6 @@ And a final part for a great code is to maintain a consistent style across files
 
 #### Use of PHP short open tags
 Simply not all servers have these enabled, always use `<?php ?>` instead.
+
+#### Using == operator to compare values
+Using == to check if a value is null or false can return false positives if the value is actually an empty string or 0, === checks if the values are _identical_.
